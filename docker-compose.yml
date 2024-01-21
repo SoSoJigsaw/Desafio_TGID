@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: tgid
+      POSTGRES_USER: tgid
+      POSTGRES_PASSWORD: tgid
