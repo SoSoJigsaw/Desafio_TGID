@@ -159,22 +159,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(404).body("Empresa não encontrada");
     }
 
-    @ExceptionHandler(TaxaNaoEncontradaException.class)
-    public ResponseEntity<String> handleTaxaNaoEncontradaException(TaxaNaoEncontradaException ex) {
-
-        logger.error("Erro: Taxa não encontrada - {}", ex.getMessage(), ex);
-
-        return ResponseEntity.status(404).body("Taxa não encontrada");
-    }
-
-    @ExceptionHandler(RecursoExistenteException.class)
-    public ResponseEntity<String> handleRecursoExistenteException(RecursoExistenteException ex) {
-
-        logger.error("Erro: Recurso já existente - {}", ex.getMessage(), ex);
-
-        return ResponseEntity.status(400).body("Recurso já existente");
-    }
-
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<String> handleHttpClientErrorException(HttpClientErrorException ex) {
 
@@ -213,6 +197,36 @@ public class GlobalExceptionHandler {
         logger.error("Erro de E/S (Input/Output): {}", ex.getMessage(), ex);
 
         return ResponseEntity.status(400).body("Erro de E/S (Input/Output)");
+    }
+
+    @ExceptionHandler(ClienteRegistroException.class)
+    public ResponseEntity<String> handleClienteRegistroException(ClienteRegistroException ex) {
+        logger.error("Erro no registro do cliente: {}", ex.getMessage(), ex);
+        return ResponseEntity.status(400).body("Erro no registro do cliente: " + ex.getMessage());
+    }
+
+    @ExceptionHandler(ClienteRemocaoException.class)
+    public ResponseEntity<String> handleClienteRemocaoException(ClienteRemocaoException ex) {
+        logger.error("Erro na remoção do cliente: {}", ex.getMessage(), ex);
+        return ResponseEntity.status(400).body("Erro na remoção do cliente: " + ex.getMessage());
+    }
+
+    @ExceptionHandler(EmpresaRegistroException.class)
+    public ResponseEntity<String> handleEmpresaRegistroException(EmpresaRegistroException ex) {
+        logger.error("Erro no registro da empresa: {}", ex.getMessage(), ex);
+        return ResponseEntity.status(400).body("Erro no registro da empresa: " + ex.getMessage());
+    }
+
+    @ExceptionHandler(EmpresaRemocaoException.class)
+    public ResponseEntity<String> handleEmpresaRemocaoException(EmpresaRemocaoException ex) {
+        logger.error("Erro na remoção da empresa: {}", ex.getMessage(), ex);
+        return ResponseEntity.status(400).body("Erro na remoção da empresa: " + ex.getMessage());
+    }
+
+    @ExceptionHandler(NotificacaoEmpresaException.class)
+    public ResponseEntity<String> handleNotificacaoEmpresaException(NotificacaoEmpresaException ex) {
+        logger.error("Erro na notificação à empresa: {}", ex.getMessage(), ex);
+        return ResponseEntity.status(500).body("Erro na notificação à empresa");
     }
 
     @ExceptionHandler(Exception.class)

@@ -55,6 +55,7 @@ public class NotificacaoCliente {
         } catch (Exception e) {
 
             logger.error("Erro ao enviar mensagem para o Kafka: {}", e.getMessage(), e);
+            throw new KafkaException(e);
 
         }
 

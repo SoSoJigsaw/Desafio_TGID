@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
+import tgid.exception.objetosExceptions.NotificacaoEmpresaException;
 
 @Service
 public class NotificacaoEmpresa {
@@ -35,7 +36,8 @@ public class NotificacaoEmpresa {
 
             } else {
 
-                logger.error("Erro ao enviar callback. Status code: {}", response.getStatusCode());
+                throw new NotificacaoEmpresaException("Erro ao enviar callback. Status code: "
+                                                      + response.getStatusCode());
 
             }
 
@@ -51,8 +53,7 @@ public class NotificacaoEmpresa {
 
         } catch (Exception e) {
 
-            logger.error("Erro ao enviar callback: {}", e.getMessage(), e);
-            throw e;
+            throw new NotificacaoEmpresaException("Erro ao enviar callback: " + e.getMessage());
 
         }
 
