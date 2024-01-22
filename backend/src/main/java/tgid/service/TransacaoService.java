@@ -70,7 +70,7 @@ public class TransacaoService {
                                                                         .ofPattern("dd/MM/yy HH:mm:ss"));
 
             // Realizar callback à empresa
-            notificacaoEmpresa.enviarCallbackParaEmpresa("http://localhost:8080/callback",
+            notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/31b63675-7ea1-4efd-9287-d7b497ab47aa",
                     "Transação recebida: Depósito de " + transacao.getValor() + " reais."
             + "\n Feita por: " + transacao.getCliente().getNome() + ". \n" + dataTransacao + "\n " +
                             "Saldo atual da empresa " + transacao.getEmpresa().getNome() + ": " +
@@ -121,7 +121,7 @@ public class TransacaoService {
                         .ofPattern("dd/MM/yy HH:mm:ss"));
 
                 // Realizar callback à empresa
-                notificacaoEmpresa.enviarCallbackParaEmpresa("http://localhost:8080/callback",
+                notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/31b63675-7ea1-4efd-9287-d7b497ab47aa",
                         "Transação recebida: Saque de " + transacao.getValor() + " reais."
                                 + "\n Feita por: " + transacao.getCliente().getNome() + ". \n" + dataTransacao + "\n " +
                                 "Saldo atual da empresa " + transacao.getEmpresa().getNome() + ": " +
