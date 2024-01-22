@@ -17,7 +17,7 @@ public class TransacaoController {
     @Autowired
     TransacaoService transacaoService;
 
-    @PostMapping("/deposito/{empresaId}/{clienteId}/{valor}")
+    @GetMapping("/deposito/{empresaId}/{clienteId}/{valor}")
     public void deposito(@PathVariable("empresaId") Long empresaId,
                          @PathVariable("clienteId") Long clienteId,
                          @PathVariable("valor") double valor) {
@@ -25,7 +25,7 @@ public class TransacaoController {
         transacaoService.realizarDeposito(empresaId, clienteId, valor);
     }
 
-    @PostMapping("/saque/{empresaId}/{clienteId}/{valor}")
+    @GetMapping("/saque/{empresaId}/{clienteId}/{valor}")
     public void saque(@PathVariable("empresaId") Long empresaId,
                       @PathVariable("clienteId") Long clienteId,
                       @PathVariable("valor") double valor) {
