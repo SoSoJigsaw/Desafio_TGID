@@ -1,64 +1,43 @@
 package tgid.notification;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaProducerException;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.messaging.MessagingException;
-import org.springframework.stereotype.Service;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tgid.exception.KafkaException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.stereotype.Service;
 
-import java.util.concurrent.CompletableFuture;
+import java.io.InputStream;
 
 @Service
 public class NotificacaoCliente {
 
-    @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
-
     private static final Logger logger = LoggerFactory.getLogger(NotificacaoCliente.class);
 
-    private static final String topicoEmail = "Transação concluída";
+    @Autowired
+    JavaMailSender javaMailSender;
 
     public void enviarNotificacaoPorEmail(String destinatario, String assunto, String corpo) {
 
-        String mensagemEmail = "{"
-                + "\"destinatario\": \"" + destinatario + "\","
-                + "\"assunto\": \"" + assunto + "\","
-                + "\"corpo\": \"" + corpo + "\""
-                + "}";
+        SimpleMailMessage mensagem = new SimpleMailMessage();
+        mensagem.setTo(destinatario);
+        mensagem.setSubject(assunto);
+        mensagem.setText(corpo);
 
         try {
 
-            // Enviando a mensagem para o Kafka
-            CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(topicoEmail, mensagemEmail);
-
-            // Adicionando uma callback para lidar com o resultado do envio
-            future.whenComplete((result, ex) -> {
-
-                if (ex != null) {
-
-                    logger.error("Erro ao enviar mensagem para o Kafka: {}", ex.getMessage(), ex);
-                    throw new KafkaException(ex);
-
-                } else {
-
-                    logger.info("Mensagem enviada com sucesso: {}", result.getProducerRecord().value());
-
-                }
-            });
+            javaMailSender.send(mensagem);
+            logger.info("E-mail enviado com sucesso para: {}", destinatario);
 
         } catch (Exception e) {
 
-            logger.error("Erro ao enviar mensagem para o Kafka: {}", e.getMessage(), e);
-            throw new KafkaException(e);
+            throw new RuntimeException("Erro ao enviar e-mail", e);
 
         }
 
     }
 
 }
+

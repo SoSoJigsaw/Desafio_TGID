@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
 import tgid.exception.objetosExceptions.NotificacaoEmpresaException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
+
 
 @Service
 public class NotificacaoEmpresa {
@@ -22,13 +24,16 @@ public class NotificacaoEmpresa {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Retryable(value = { HttpServerErrorException.class }, maxAttempts = 3, backoff = @Backoff(delay = 1000))
     public void enviarCallbackParaEmpresa(String url, String mensagem) {
 
         try {
 
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, null,
-                                                                    String.class, mensagem);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<String> requestEntity = new HttpEntity<>(mensagem, headers);
+
+            ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
 
@@ -36,25 +41,21 @@ public class NotificacaoEmpresa {
 
             } else {
 
-                throw new NotificacaoEmpresaException("Erro ao enviar callback. Status code: "
-                                                      + response.getStatusCode());
+                throw new NotificacaoEmpresaException("Erro ao enviar callback. Status code: " + response.getStatusCode());
 
             }
 
         } catch (HttpServerErrorException e) {
 
             logger.error("Erro no servidor ao enviar callback. Status code: {}", e.getStatusCode(), e);
-            throw e;
 
         } catch (UnknownHttpStatusCodeException e) {
 
             logger.error("Erro desconhecido ao enviar callback. Status code: {}", e.getStatusCode(), e);
-            throw e;
 
         } catch (Exception e) {
 
             throw new NotificacaoEmpresaException("Erro ao enviar callback: " + e.getMessage());
-
         }
 
     }
