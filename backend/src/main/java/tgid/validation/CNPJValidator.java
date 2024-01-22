@@ -38,7 +38,7 @@ public class CNPJValidator implements ConstraintValidator<CNPJ, String> {
         }
 
         soma = 0;
-        for (int i = 0; i < 13; i++) {
+        for (int i = 0; i < 12; i++) {
             soma += Character.getNumericValue(cnpjLimpo.charAt(i)) * multiplicadores[i];
         }
 
@@ -46,7 +46,7 @@ public class CNPJValidator implements ConstraintValidator<CNPJ, String> {
         int digitoVerificador2 = (resto < 2) ? 0 : (11 - resto);
 
         // Verifica se os dígitos verificadores estão corretos
-        return Character.getNumericValue(cnpjLimpo.charAt(13)) == digitoVerificador2;
+        return Character.getNumericValue(cnpjLimpo.charAt(12)) == digitoVerificador2;
 
     }
 
