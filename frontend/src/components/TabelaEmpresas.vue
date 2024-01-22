@@ -10,6 +10,7 @@
                         <th>Saldo</th>
                         <th>Taxa de Depósito</th>
                         <th>Taxa de Saque</th>
+                        <th>Opções</th>
                     </tr>
                 </thead>    
                 <tbody>
@@ -20,6 +21,7 @@
                         <td>{{ c.saldo }}</td>
                         <td>{{ c.taxaDeposito }}</td>
                         <td>{{ c.taxaSaque }}</td>
+                        <td><button @click.prevent="deletarRegistro(c.id)">X</button></td>
                     </tr>
                 </tbody>
             </table>   
@@ -59,6 +61,14 @@ export default {
             
         },
 
+        async deletarRegistro(id: String) {
+
+            await axios.get('http://localhost:8080/delete-empresa/' + id);
+
+            this.getEmpresas();
+
+        },
+
     },
 }
 </script>
@@ -76,16 +86,17 @@ export default {
   
 }
 
-
 button{
-
-    color: aliceblue;
+    color: hsla(0, 100%, 50%, 0.9);
+    font-size: large;
+    font-weight: 600;
     background-color: var(--azul-principal);
     width: 30px;
     height: 30px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
+
 .title {
     color: var(--azul-principal);
     margin-left: 25px;
