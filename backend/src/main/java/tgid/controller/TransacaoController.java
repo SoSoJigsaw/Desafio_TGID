@@ -14,8 +14,12 @@ import java.util.List;
 @RequestMapping
 public class TransacaoController {
 
+    private final TransacaoService transacaoService;
+
     @Autowired
-    TransacaoService transacaoService;
+    public TransacaoController(TransacaoService transacaoService) {
+        this.transacaoService = transacaoService;
+    }
 
     @GetMapping("/deposito/{empresaId}/{clienteId}/{valor}")
     public void deposito(@PathVariable("empresaId") Long empresaId,

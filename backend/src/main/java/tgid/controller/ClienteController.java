@@ -15,12 +15,14 @@ import java.util.List;
 @RequestMapping
 public class ClienteController {
 
-    @Autowired
-    ClienteService clienteService;
+    private final ClienteService clienteService;
+    private final CPFValidator cpfValidator;
 
     @Autowired
-    CPFValidator cpfValidator;
-
+    public ClienteController(ClienteService clienteService, CPFValidator cpfValidator) {
+        this.clienteService = clienteService;
+        this.cpfValidator = cpfValidator;
+    }
 
     @CrossOrigin
     @PostMapping("/registrar-cliente")
@@ -28,15 +30,12 @@ public class ClienteController {
 
         // Validação do CPF
         if (!cpfValidator.isValid(cliente.getCpf(), null)) {
-
             throw new CpfInvalidoException("CPF inválido");
-
         }
 
         clienteService.registrarCliente(cliente.getCpf(), cliente.getNome(), cliente.getEmail(), cliente.getSaldo());
 
         return ResponseEntity.ok("Cadastro realizado com sucesso!");
-
     }
 
     @CrossOrigin
@@ -44,7 +43,6 @@ public class ClienteController {
     public List<Cliente> listarTodosClientes() {
 
         return clienteService.listarTodosClientes();
-
     }
 
     @CrossOrigin
@@ -54,8 +52,6 @@ public class ClienteController {
         clienteService.deleteCliente(id);
 
         return ResponseEntity.ok("Cliente deletado com sucesso!");
-
     }
-
 
 }

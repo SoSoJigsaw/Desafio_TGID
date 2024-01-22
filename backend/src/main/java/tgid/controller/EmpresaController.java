@@ -18,11 +18,14 @@ import java.util.Objects;
 @RequestMapping
 public class EmpresaController {
 
-    @Autowired
-    EmpresaService empresaService;
+    private final EmpresaService empresaService;
+    private final CNPJValidator cnpjValidator;
 
     @Autowired
-    CNPJValidator cnpjValidator;
+    public EmpresaController(EmpresaService empresaService, CNPJValidator cnpjValidator) {
+        this.empresaService = empresaService;
+        this.cnpjValidator = cnpjValidator;
+    }
 
     @CrossOrigin
     @PostMapping("/registrar-empresa")
@@ -30,16 +33,13 @@ public class EmpresaController {
 
         // Validação do CNPJ
         if (!cnpjValidator.isValid(empresa.getCnpj(), null)) {
-
             throw new CnpjInvalidoException("CNPJ inválido");
-
         }
 
         empresaService.registrarEmpresa(empresa.getCnpj(), empresa.getNome(), empresa.getSaldo(),
                                         empresa.getTaxaDeposito(), empresa.getTaxaSaque());
 
         return ResponseEntity.ok("Cadastro realizado com sucesso!");
-
     }
 
     @CrossOrigin
@@ -49,14 +49,12 @@ public class EmpresaController {
                                                    @PathVariable("valor") double valor) {
 
         if (!Objects.equals(tipoTaxa, "DEPÓSITO") || !Objects.equals(tipoTaxa, "SAQUE")) {
-
             throw new TaxaInvalidoException("Taxa inválida");
         }
 
         empresaService.mudarTaxaValorEmpresa(empresaId, tipoTaxa, valor);
 
         return ResponseEntity.ok("Taxa associada com sucesso");
-
     }
 
     @CrossOrigin
@@ -64,7 +62,6 @@ public class EmpresaController {
     public List<Empresa> listarTodasEmpresas() {
 
         return empresaService.listarTodasEmpresas();
-
     }
 
     @CrossOrigin
@@ -74,7 +71,6 @@ public class EmpresaController {
         empresaService.deleteEmpresa(id);
 
         return ResponseEntity.ok("Empresa deletada com sucesso!");
-
     }
 
 }
