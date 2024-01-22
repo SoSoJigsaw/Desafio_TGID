@@ -2,12 +2,11 @@ version: '3'
 
 services:
   postgres:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: postgresql-tgid/sha256:9ca3ecdcbe29
     ports:
       - "5433:5432"
     environment:
       POSTGRES_DB: tgid
       POSTGRES_USER: tgid
       POSTGRES_PASSWORD: tgid
+
