@@ -5,8 +5,8 @@
             <input type="text" placeholder="Digite seu CNPJ..." v-model="empresa.cnpj">
             <input type="text" placeholder="Digite seu nome..." v-model="empresa.nome">
             <input type="number" placeholder="Digite seu saldo..." v-model="empresa.saldo">
-            <input type="number" placeholder="Digite sua taxa para depósito..." v-model="empresa.taxaDeposito">
-            <input type="number" placeholder="Digite sua taxa para saque..." v-model="empresa.taxaSaque">
+            <input type="decimal" placeholder="Digite sua taxa para depósito..." v-model="empresa.taxaDeposito">
+            <input type="decimal" placeholder="Digite sua taxa para saque..." v-model="empresa.taxaSaque">
             <button v-if="empresa.cnpj != '' && empresa.nome != '' && empresa.saldo != '' && empresa.taxaDeposito && empresa.taxaSaque" type="submit">Confirmar</button>
         </form>
     </main>
