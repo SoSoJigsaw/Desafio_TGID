@@ -34,7 +34,7 @@ export default {
 
         async cadastrar() {
 
-            await axios.post('http://localhost:8080/registrar-empresa', this.empresa,  {
+            await axios.post('http://localhost:8080/empresa/registrar-empresa', this.empresa,  {
                     headers: {
                     'Content-Type': 'application/json'
                     }

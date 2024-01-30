@@ -49,7 +49,7 @@ export default {
 
         async getEmpresas() {
 
-            const response = await axios.get('http://localhost:8080/listar-empresas');
+            const response = await axios.get('http://localhost:8080/empresa/listar-empresas');
             this.empresas = response.data.map((e: String) => ({ 
                 id: e.id,
                 cnpj: e.cnpj,
@@ -63,7 +63,7 @@ export default {
 
         async deletarRegistro(id: String) {
 
-            await axios.get('http://localhost:8080/delete-empresa/' + id);
+            await axios.delete('http://localhost:8080/empresa/delete-empresa/' + id);
 
             this.getEmpresas();
 

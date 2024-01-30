@@ -49,7 +49,7 @@ export default {
 
         async getTransacoes() {
 
-            const response = await axios.get('http://localhost:8080/listar-transacoes');
+            const response = await axios.get('http://localhost:8080/transacoes/listar-transacoes');
             this.transacoes = response.data.map((t: String) => ({ 
                 id: t.id,
                 tipo: t.tipo,
@@ -63,7 +63,7 @@ export default {
 
         async deletarRegistro(id: String) {
 
-            await axios.get('http://localhost:8080/delete-transacao/' + id);
+            await axios.delete('http://localhost:8080/transacoes/delete-transacao/' + id);
 
             this.getTransacoes();
 

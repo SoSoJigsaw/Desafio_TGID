@@ -39,7 +39,7 @@ export default {
 
         async getClientes() {
 
-            const response = await axios.get('http://localhost:8080/listar-clientes');
+            const response = await axios.get('http://localhost:8080/cliente/listar-clientes');
             this.clientes = response.data.map((cliente: String) => ({ 
                 id: cliente.id,
                 nome: cliente.nome, 
@@ -49,7 +49,7 @@ export default {
 
         async getEmpresas() {
 
-            const response = await axios.get('http://localhost:8080/listar-empresas');
+            const response = await axios.get('http://localhost:8080/empresa/listar-empresas');
             this.empresas = response.data.map((empresa: String) => ({ 
                 id: empresa.id,
                 nome: empresa.nome, 
@@ -59,7 +59,11 @@ export default {
 
         async depositar() {
 
-            await axios.get('http://localhost:8080/deposito/' + this.empresaId + '/' + this.clienteId + '/' + this.valor);
+            await axios.post('http://localhost:8080/transacoes/deposito/' + this.empresaId + '/' + this.clienteId, this.valor, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
 
             this.empresaId = '';
             this.clienteId = '';

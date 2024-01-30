@@ -32,7 +32,7 @@ export default {
 
         async cadastrar() {
 
-            await axios.post('http://localhost:8080/registrar-cliente', this.cliente,  {
+            await axios.post('http://localhost:8080/cliente/registrar-cliente', this.cliente,  {
                     headers: {
                     'Content-Type': 'application/json'
                     }

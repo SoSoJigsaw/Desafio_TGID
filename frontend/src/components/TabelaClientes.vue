@@ -47,7 +47,7 @@ export default {
 
         async getClientes() {
 
-            const response = await axios.get('http://localhost:8080/listar-clientes');
+            const response = await axios.get('http://localhost:8080/cliente/listar-clientes');
             this.clientes = response.data.map((cliente: String) => ({ 
                 id: cliente.id,
                 cpf: cliente.cpf,
@@ -60,7 +60,7 @@ export default {
 
         async deletarRegistro(id: number) {
 
-            await axios.get('http://localhost:8080/delete-cliente/' + id);
+            await axios.delete('http://localhost:8080/cliente/delete-cliente/' + id);
 
             this.getClientes();
 

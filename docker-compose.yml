@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   postgres:
     image: postgresql-tgid/sha256:9ca3ecdcbe29
     ports:
@@ -9,4 +10,16 @@ services:
       POSTGRES_DB: tgid
       POSTGRES_USER: tgid
       POSTGRES_PASSWORD: tgid
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
 
