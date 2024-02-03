@@ -1,20 +1,15 @@
 package tgid.controller;
 
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import tgid.entity.Cliente;
+import tgid.dto.TaxaDTO;
 import tgid.entity.Empresa;
-import tgid.exception.objetosExceptions.CnpjInvalidoException;
-import tgid.exception.objetosExceptions.TaxaInvalidoException;
 import tgid.service.EmpresaService;
 import tgid.validation.CNPJValidator;
+import tgid.validation.TaxaValidator;
 
 import java.util.List;
-import java.util.Objects;
 
 @CrossOrigin
 @RestController
@@ -23,19 +18,22 @@ public class EmpresaController {
 
     private final EmpresaService empresaService;
     private final CNPJValidator cnpjValidator;
+    private final TaxaValidator taxaValidator;
 
-    public EmpresaController(EmpresaService empresaService, CNPJValidator cnpjValidator) {
+    public EmpresaController(EmpresaService empresaService, CNPJValidator cnpjValidator, TaxaValidator taxaValidator) {
         this.empresaService = empresaService;
         this.cnpjValidator = cnpjValidator;
+        this.taxaValidator = taxaValidator;
     }
 
     @PostMapping("/registrar-empresa")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> registrarEmpresa(@RequestBody @Valid Empresa empresa) {
+    public ResponseEntity<?> registrarEmpresa(@RequestBody Empresa empresa) {
 
         // Validação do CNPJ
         if (!cnpjValidator.isValid(empresa.getCnpj(), null)) {
-            throw new CnpjInvalidoException("CNPJ inválido");
+            System.err.println("CNPJ Inválido. Tente novamente");
+            return ResponseEntity.badRequest().body("CNPJ Inválido");
         }
 
         empresaService.registrarEmpresa(empresa.getCnpj(), empresa.getNome(), empresa.getSaldo(),
@@ -44,17 +42,16 @@ public class EmpresaController {
         return ResponseEntity.ok("Cadastro realizado com sucesso!");
     }
 
-    @PostMapping("/atualizar-taxa/{empresaId}/{tipoTaxa}/{valor}")
+    @PostMapping("/atualizar-taxa")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> mudarTaxaValorEmpresa(@PathVariable("empresaId") Long empresaId,
-                                                   @PathVariable("tipoTaxa") String tipoTaxa,
-                                                   @PathVariable("valor") double valor) {
+    public ResponseEntity<?> mudarTaxaValorEmpresa(@RequestBody TaxaDTO taxaDTO) {
 
-        if (!Objects.equals(tipoTaxa, "DEPÓSITO") || !Objects.equals(tipoTaxa, "SAQUE")) {
-            throw new TaxaInvalidoException("Taxa inválida");
+        if (!taxaValidator.isValid(taxaDTO.getTipoTaxa(), null)) {
+            System.err.println("Taxa Inválida: a taxa deve ser ou DEPÓSITO ou SAQUE");
+            return ResponseEntity.badRequest().body("Taxa Inválida");
         }
 
-        empresaService.mudarTaxaValorEmpresa(empresaId, tipoTaxa, valor);
+        empresaService.mudarTaxaValorEmpresa(taxaDTO.getId(), taxaDTO.getTipoTaxa(), taxaDTO.getValor());
 
         return ResponseEntity.ok("Taxa associada com sucesso");
     }
@@ -74,14 +71,5 @@ public class EmpresaController {
 
         return ResponseEntity.ok("Empresa deletada com sucesso!");
     }
-    
-    @ControllerAdvice
-    public static class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-        @ExceptionHandler(CnpjInvalidoException.class)
-        public ResponseEntity<?> handleCnpjInvalidoException(CnpjInvalidoException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
-    }
-    
 
 }

@@ -1,12 +1,30 @@
 <template>
     <main>
-        <h1>Cadastro Empresa</h1>
+        <h3>Cadastro Empresa</h3>
+        
+        <div v-if="mostrarAlerta" class="filter-download">
+            <p class="title-popup">CNPJ Inválido! Revise e tente novamente</p>
+            <button class="btn-popup" @click.prevent="mostrarAlerta = false">OK</button>
+        </div>
+
+        <div v-if="mostrarSucesso" class="filter-download">
+            <p class="title-popup">Empresa <strong>{{ empresaNome }}</strong> registrada com sucesso</p>
+            <button class="btn-popup" @click.prevent="mostrarSucesso = false">OK</button>
+        </div>
+        
         <form @submit.prevent="cadastrar()">
-            <input type="text" placeholder="Digite seu CNPJ..." v-model="empresa.cnpj">
-            <input type="text" placeholder="Digite seu nome..." v-model="empresa.nome">
-            <input type="number" placeholder="Digite seu saldo..." v-model="empresa.saldo">
-            <input type="decimal" placeholder="Digite sua taxa para depósito..." v-model="empresa.taxaDeposito">
-            <input type="decimal" placeholder="Digite sua taxa para saque..." v-model="empresa.taxaSaque">
+            <div class="primeira-linha">
+                <input type="text" placeholder="Digite seu CNPJ..." v-model="empresa.cnpj">
+                <input type="text" placeholder="Digite o nome da empresa..." v-model="empresa.nome">
+            </div>
+            <div class="segunda-linha">
+                <input type="number" placeholder="Digite seu saldo..." v-model="empresa.saldo">
+            </div>
+            <div class="terceira-linha">
+                <input type="decimal" placeholder="Digite sua taxa para depósito..." v-model="empresa.taxaDeposito">
+                <input type="decimal" placeholder="Digite sua taxa para saque..." v-model="empresa.taxaSaque">
+            </div>
+
             <button v-if="empresa.cnpj != '' && empresa.nome != '' && empresa.saldo != '' && empresa.taxaDeposito && empresa.taxaSaque" type="submit">Confirmar</button>
         </form>
     </main>
@@ -27,6 +45,9 @@ export default {
                 taxaDeposito: '',
                 taxaSaque: ''
             },
+            mostrarAlerta: false,
+            mostrarSucesso: false,
+            empresaNome: '',
         }
     },
 
@@ -34,18 +55,30 @@ export default {
 
         async cadastrar() {
 
-            await axios.post('http://localhost:8080/empresa/registrar-empresa', this.empresa,  {
-                    headers: {
-                    'Content-Type': 'application/json'
-                    }
+            this.empresaNome = this.empresa.nome;
 
-            });
-            
-            this.empresa.cnpj = '';
-            this.empresa.nome = '';
-            this.empresa.saldo = '';
-            this.empresa.taxaDeposito = '';
-            this.empresa.taxaSaque = '';
+            try {
+
+                const response = await axios.post('http://localhost:8080/empresa/registrar-empresa', this.empresa,  {
+                        headers: {
+                        'Content-Type': 'application/json'
+                        }
+
+                });
+
+                this.mostrarSucesso = true;
+
+                this.empresa.cnpj = '';
+                this.empresa.nome = '';
+                this.empresa.saldo = '';
+                this.empresa.taxaDeposito = '';
+                this.empresa.taxaSaque = '';
+
+            } catch (error) {
+                console.log('Erro:', error.message);
+                this.mostrarAlerta = true;
+            }
+
         },
 
     },
@@ -54,34 +87,72 @@ export default {
 
 <style scoped>
 main {
-
+    display: flex;
 }
 
-.botoes {
-
+button:not(.btn-popup) {
+    background-color: var(--verde);
+    border-color: var(--cor-contraste-dark);
+    padding: 0;
+    width: 10rem;
+    height: 2.5rem;
 }
 
-button {
-
-}
-
-.cadastro {
-    
+.btn-popup {
+    padding: 0;
+    width: 10rem;
+    height: 2.5rem;
 }
 
 form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+form input {
+    padding: 7px;
+    margin-left: 25px;
+    background-color: var(--cor-contraste-light);
+}
+
+.terceira-linha input {
+    width: 21rem;
+}
+
+h3 {
+    background-color: var(--cor-contraste);
+    padding: 3rem 25rem;
+    border-radius: 5px;
+    opacity: 0.6;
+}
+
+.filter-download {
+    position: fixed;
+    background-color: var(--cor-contraste-light);
+    border-radius: 10px;
+    text-align: center;
+    width: 60%;
+    padding-top: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 25px;
+    margin-right: 25px;
+    padding: 40px;
+    box-shadow: 2px 2px 20px 5px var(--silver);
+    transition: 2s;
+    z-index: 9999;
+}
+
+.title-popup {
 
 }
 
-select {
-
-}
-
-option {
-
-}
-
-h1 {
-    
+.title-popup strong {
+    color: var(--laranja-light);
+    padding: 5px;
 }
 </style>

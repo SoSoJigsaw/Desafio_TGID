@@ -1,11 +1,27 @@
 <template>
     <main>
-        <h1>Cadastro Cliente</h1>
+        <h3>Cadastro Cliente</h3>
+
+        <div v-if="mostrarAlerta" class="filter-download">
+            <p class="title-popup">CPF Inválido! Revise e tente novamente</p>
+            <button class="btn-popup" @click.prevent="mostrarAlerta = false">OK</button>
+        </div>
+
+        <div v-if="mostrarSucesso" class="filter-download">
+            <p class="title-popup">Cliente <strong>{{ clienteNome }}</strong> registrado com sucesso</p>
+            <button class="btn-popup" @click.prevent="mostrarSucesso = false">OK</button>
+        </div>
+
         <form @submit.prevent="cadastrar()">
-            <input type="text" placeholder="Digite seu CPF..." v-model="cliente.cpf">
-            <input type="text" placeholder="Digite seu nome..." v-model="cliente.nome">
-            <input type="email" placeholder="Digite seu email..." v-model="cliente.email">
-            <input type="number" placeholder="Digite seu saldo..." v-model="cliente.saldo">
+            <div class="primeira-linha">
+                <input type="text" placeholder="Digite seu CPF..." v-model="cliente.cpf">
+                <input type="text" placeholder="Digite seu nome..." v-model="cliente.nome">
+            </div>
+            <div class="segunda-linha">
+                <input type="email" placeholder="Digite seu email..." v-model="cliente.email">
+                <input type="number" placeholder="Digite seu saldo..." v-model="cliente.saldo">
+            </div>
+
             <button v-if="cliente.cpf != '' && cliente.nome != '' && cliente.email != '' && cliente.saldo != ''" type="submit">Confirmar</button>
         </form>
     </main>
@@ -25,6 +41,9 @@ export default {
                 email: '',
                 saldo: '',
             },
+            mostrarAlerta: false,
+            mostrarSucesso : false,
+            clienteNome: '',
         }
     },
 
@@ -32,17 +51,28 @@ export default {
 
         async cadastrar() {
 
-            await axios.post('http://localhost:8080/cliente/registrar-cliente', this.cliente,  {
-                    headers: {
-                    'Content-Type': 'application/json'
-                    }
+            this.clienteNome = this.cliente.nome;
 
-            });
-            
-            this.cliente.cpf = '';
-            this.cliente.nome = '';
-            this.cliente.email = '';
-            this.cliente.saldo = '';
+            try {
+
+                const response = await axios.post('http://localhost:8080/cliente/registrar-cliente', this.cliente,  {
+                        headers: {
+                        'Content-Type': 'application/json'
+                        }
+
+                });
+
+                this.mostrarSucesso = true;
+                
+                this.cliente.cpf = '';
+                this.cliente.nome = '';
+                this.cliente.email = '';
+                this.cliente.saldo = '';
+
+            } catch (error) {
+                console.log('Erro:', error.message);
+                this.mostrarAlerta = true;
+            }
         },
 
     },
@@ -50,35 +80,71 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/base.css";
+
 main {
-
+    display: flex;
 }
 
-.botoes {
-
+button:not(.btn-popup) {
+    background-color: var(--verde);
+    border-color: var(--cor-contraste-dark);
+    padding: 0;
+    width: 10rem;
+    height: 2.5rem;
 }
 
-button {
-
-}
-
-.cadastro {
-    
+.btn-popup {
+    padding: 0;
+    width: 10rem;
+    height: 2.5rem;
 }
 
 form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+form input {
+    padding: 7px;
+    margin-left: 25px;
+    background-color: var(--cor-contraste-light);
+}
+
+h3 {
+    background-color: var(--cor-contraste);
+    padding: 3rem 25rem;
+    border-radius: 5px;
+    opacity: 0.6;
+}
+
+.filter-download {
+    position: fixed;
+    background-color: var(--cor-contraste-light);
+    border-radius: 10px;
+    text-align: center;
+    width: 60%;
+    padding-top: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 25px;
+    margin-right: 25px;
+    padding: 40px;
+    box-shadow: 2px 2px 20px 5px var(--silver);
+    transition: 2s;
+    z-index: 9999;
+}
+
+.title-popup {
 
 }
 
-select {
-
-}
-
-option {
-
-}
-
-h1 {
-    
+.title-popup strong {
+    color: var(--laranja-light);
+    padding: 5px;
 }
 </style>

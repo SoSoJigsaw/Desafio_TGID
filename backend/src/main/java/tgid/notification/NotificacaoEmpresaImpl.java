@@ -2,15 +2,13 @@ package tgid.notification;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
-import tgid.exception.objetosExceptions.NotificacaoEmpresaException;
+import tgid.exception.NotificacaoEmpresaException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
@@ -36,7 +34,7 @@ public class NotificacaoEmpresaImpl implements NotificacaoEmpresa {
 
             ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
-            if (response.getStatusCode() == HttpStatus.OK) {
+            if (response.getStatusCode().is2xxSuccessful()) {
                 logger.info("Callback enviado com sucesso. Resposta: {}", response.getBody());
             } else {
                 throw new NotificacaoEmpresaException("Erro ao enviar callback. Status code: " + response.getStatusCode());

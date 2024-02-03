@@ -7,10 +7,12 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
 
     <div class="wrapper">
-      <h3>
-        Uma interface bem básica apenas para testar todos os endpoints da aplicação springboot! Se eventure...
-      </h3>
-
+      <div>
+        <h1>Transform and grow in digital</h1>
+        <h3>
+          Uma interface bem básica apenas para testar todos os endpoints da aplicação springboot! Se aventure...
+        </h3>
+      </div>
       <nav>
         <RouterLink to="/">Transações</RouterLink>
         <RouterLink to="/cadastro">Cadastrar</RouterLink>
@@ -29,32 +31,37 @@ import { RouterLink, RouterView } from 'vue-router'
 
 header {
   line-height: 1.5;
-  max-height: 100vh;
+  height: 100%;
   position: initial;
   text-align: center;
   transition: transform 2s linear;
-  margin: 50px;
+  padding-bottom: 100px;
+  margin: 0 0;
+  padding-top: 20px;
+  background-image: url("./assets/logo.png");
+  background-repeat: no-repeat;
+  background-size: 30%;
+  background-position: right;
 }
 
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
   margin-top: 2rem;
+  margin-left: 10rem;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
 }
 
 nav a {
   display: inline-block;
-  padding: 0 1rem;
-  border: 1px solid #1781E3;
-  background-color: #1781E3;
+  padding: 1rem 4.5rem;
+  background-color: var(--laranja-light);
   border-radius: 5px;
   color: #fff;
   margin: 25px;
-  padding: 10px;
 }
 
 nav a:hover {
@@ -66,17 +73,17 @@ nav a:first-of-type {
 }
 
 h1 {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 2.6rem;
   top: -10px;
   padding-top: 15px;
-  color: #0916A3;
+  color: black;
 }
 
 h3 {
   padding-top: 5px;
   font-size: 1.2rem;
-  color: #0916A3;
+  color: black;
 }
 
 h2 {
@@ -84,7 +91,7 @@ h2 {
   text-align: center;
   opacity: 0.8;
   font-size: 1rem;
-  color: #0916A3;
+  color: black;
 }
 
 @media (min-width: 1024px) {

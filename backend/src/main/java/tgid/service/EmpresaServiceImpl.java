@@ -1,10 +1,10 @@
 package tgid.service;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tgid.entity.Empresa;
-import tgid.exception.objetosExceptions.TaxaInvalidoException;
+import tgid.exception.EmpresaNaoEncontradaException;
+import tgid.exception.TaxaInvalidoException;
 import tgid.repository.EmpresaRepository;
 import tgid.repository.TransacaoRepository;
 import java.util.List;
@@ -16,7 +16,6 @@ public class EmpresaServiceImpl implements EmpresaService {
     private final EmpresaRepository empresaRepository;
     private final TransacaoRepository transacaoRepository;
 
-    @Autowired
     public EmpresaServiceImpl(EmpresaRepository empresaRepository, TransacaoRepository transacaoRepository) {
         this.empresaRepository = empresaRepository;
         this.transacaoRepository = transacaoRepository;
@@ -24,12 +23,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public void registrarEmpresa(String cnpj, String nome, Double saldo, double taxaDeposito, double taxaSaque) {
-        Empresa empresa = new Empresa();
-        empresa.setCnpj(cnpj);
-        empresa.setNome(nome);
-        empresa.setSaldo(saldo);
-        empresa.setTaxaDeposito(taxaDeposito);
-        empresa.setTaxaSaque(taxaSaque);
+        Empresa empresa = new Empresa(cnpj, nome, saldo, taxaDeposito, taxaSaque);
         empresaRepository.save(empresa);
     }
 
@@ -56,9 +50,11 @@ public class EmpresaServiceImpl implements EmpresaService {
     public void deleteEmpresa(Long id) {
         Empresa empresa = empresaRepository.getReferenceById(id);
 
-        if (empresa != null) {
-            transacaoRepository.deleteApartirDaEmpresa(empresa);
-            empresaRepository.delete(empresa);
+        if (empresa == null) {
+            throw new EmpresaNaoEncontradaException("Não há empresa com esse id: " + id);
         }
+
+        transacaoRepository.deleteApartirDaEmpresa(empresa);
+        empresaRepository.delete(empresa);
     }
 }

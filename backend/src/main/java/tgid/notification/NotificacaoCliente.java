@@ -1,6 +1,9 @@
 package tgid.notification;
 
+import tgid.dto.EmailDTO;
+
 public interface NotificacaoCliente {
-    void enviarNotificacaoPorEmail(String destinatario, String assunto, String corpo);
+    void enviarNotificacaoKafka(String destinatario, String assunto, String corpo);
+
 }
 

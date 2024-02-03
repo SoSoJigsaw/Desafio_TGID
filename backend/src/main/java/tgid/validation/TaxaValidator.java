@@ -17,7 +17,6 @@ public class TaxaValidator implements ConstraintValidator<Taxa, String> {
     public boolean isValid(String taxa, ConstraintValidatorContext context) {
 
         return Objects.equals(taxa, "DEPÓSITO") || Objects.equals(taxa, "SAQUE");
-
     }
 
 }

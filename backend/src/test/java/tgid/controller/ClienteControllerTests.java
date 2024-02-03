@@ -3,12 +3,13 @@ package tgid.controller;
 import jakarta.validation.ConstraintValidatorContext;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 import tgid.entity.Cliente;
-import tgid.exception.objetosExceptions.CpfInvalidoException;
+import tgid.exception.CpfInvalidoException;
 import tgid.service.ClienteService;
 import tgid.validation.CPFValidator;
 
@@ -21,13 +22,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 @WebMvcTest(ClienteController.class)
 public class ClienteControllerTests {
 
-    // Should successfully register a new client with valid CPF
+    // Deve registrar com sucesso um novo cliente com CPF válido
     @Test
-    public void test_register_new_client_with_valid_cpf() {
+    public void test_registrar_novo_cliente_com_cpf_valido() {
         // Arrange
         ClienteService clienteService = mock(ClienteService.class);
         CPFValidator cpfValidator = mock(CPFValidator.class);
@@ -38,7 +40,7 @@ public class ClienteControllerTests {
         cliente.setEmail("johndoe@example.com");
         cliente.setSaldo(100.0);
 
-        // Mock the isValid method of cpfValidator to return true
+        // Simular o método isValid do cpfValidator para retornar true
         when(cpfValidator.isValid(anyString(), any(ConstraintValidatorContext.class))).thenReturn(true);
 
         // Act
@@ -50,9 +52,9 @@ public class ClienteControllerTests {
                 .registrarCliente("12345678901", "John Doe", "johndoe@example.com", 100.0);
     }
 
-    // Should successfully list all clients
+    // Deve listar com sucesso todos os clientes
     @Test
-    public void test_list_all_clients() {
+    public void test_listar_todos_os_clientes() {
         // Arrange
         ClienteService clienteService = mock(ClienteService.class);
         CPFValidator cpfValidator = mock(CPFValidator.class);
@@ -61,7 +63,7 @@ public class ClienteControllerTests {
         expectedClients.add(new Cliente());
         expectedClients.add(new Cliente());
 
-        // Mock the listarTodosClientes method of clienteService to return the expected clients
+        // Simular o método listarTodosClientes do clienteService para retornar os clientes esperados
         when(clienteService.listarTodosClientes()).thenReturn(expectedClients);
 
         // Act
@@ -71,9 +73,9 @@ public class ClienteControllerTests {
         assertEquals(expectedClients, clients);
     }
 
-    // Should successfully delete a client by ID
+    // Deve deletar com sucesso um cliente pelo ID
     @Test
-    public void test_delete_client_by_id() {
+    public void test_deletar_cliente_por_id() {
         // Arrange
         ClienteService clienteService = mock(ClienteService.class);
         CPFValidator cpfValidator = mock(CPFValidator.class);
@@ -88,9 +90,9 @@ public class ClienteControllerTests {
         verify(clienteService, times(1)).deleteCliente(clientId);
     }
 
-    // Should throw exception when registering a new client with null CPF
+    // Deve lançar exceção ao registrar um novo cliente com CPF nulo
     @Test
-    public void test_throw_exception_when_registering_new_client_with_null_cpf() {
+    public void test_lancar_excecao_ao_registrar_novo_cliente_com_cpf_nulo() {
         // Arrange
         ClienteService clienteService = mock(ClienteService.class);
         CPFValidator cpfValidator = mock(CPFValidator.class);
@@ -101,16 +103,16 @@ public class ClienteControllerTests {
         cliente.setEmail("johndoe@example.com");
         cliente.setSaldo(100.0);
 
-        // Mock the isValid method of cpfValidator to return false
+        // Simular o método isValid do cpfValidator para retornar false
         when(cpfValidator.isValid(anyString(), any(ConstraintValidatorContext.class))).thenReturn(false);
 
         // Act and Assert
         assertThrows(CpfInvalidoException.class, () -> clienteController.registrarCliente(cliente));
     }
 
-    // Should throw exception when registering a new client with null name
+    // Deve lançar exceção ao registrar um novo cliente com nome nulo
     @Test
-    public void test_throw_exception_when_registering_new_client_with_null_name() {
+    public void test_lancar_excecao_ao_registrar_novo_cliente_com_nome_nulo() {
         // Arrange
         ClienteService clienteService = mock(ClienteService.class);
         CPFValidator cpfValidator = mock(CPFValidator.class);
@@ -125,9 +127,9 @@ public class ClienteControllerTests {
         assertThrows(ConstraintViolationException.class, () -> clienteController.registrarCliente(cliente));
     }
 
-    // Should throw exception when registering a new client with null email
+    // Deve lançar exceção ao registrar um novo cliente com email nulo
     @Test
-    public void test_throw_exception_when_registering_new_client_with_null_email() {
+    public void test_lancar_excecao_ao_registrar_novo_cliente_com_email_nulo() {
         // Arrange
         ClienteService clienteService = mock(ClienteService.class);
         CPFValidator cpfValidator = mock(CPFValidator.class);

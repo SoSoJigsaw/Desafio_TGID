@@ -1,36 +1,50 @@
 package tgid.notification;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import tgid.dto.EmailDTO;
+import tgid.kafka.producer.KafkaProducer;
 
 @Service
 public class NotificacaoClienteImpl implements NotificacaoCliente {
 
     private static final Logger logger = LoggerFactory.getLogger(NotificacaoCliente.class);
-    private final JavaMailSender javaMailSender;
 
     @Autowired
-    public NotificacaoClienteImpl(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
+    public KafkaProducer kafkaProducer;
+
+    public NotificacaoClienteImpl(KafkaProducer kafkaProducerMock) {
+        this.kafkaProducer = kafkaProducerMock;
+    }
+
+    public NotificacaoClienteImpl() {
+
     }
 
     @Override
-    public void enviarNotificacaoPorEmail(String destinatario, String assunto, String corpo) {
-        SimpleMailMessage mensagem = new SimpleMailMessage();
-        mensagem.setTo(destinatario);
-        mensagem.setSubject(assunto);
-        mensagem.setText(corpo);
+    public void enviarNotificacaoKafka(String destinatario, String assunto, String corpo) {
+
+        if (destinatario == null || destinatario.isEmpty()) {
+            throw new IllegalArgumentException("Destinatario não pode ser nulo");
+        }
+        if (assunto == null || assunto.isEmpty()) {
+            throw new IllegalArgumentException("Assunto não pode ser nulo");
+        }
+        if (corpo == null || corpo.isEmpty()) {
+            throw new IllegalArgumentException("Corpo não pode ser nulo");
+        }
+
+        EmailDTO emailDTO = new EmailDTO(destinatario, assunto, corpo);
 
         try {
-            javaMailSender.send(mensagem);
-            logger.info("E-mail enviado com sucesso para: {}", destinatario);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao enviar e-mail", e);
+            kafkaProducer.enviarMensagemTransacao(emailDTO);
+        } catch (JsonProcessingException e) {
+            logger.info("Houve um erro ao solicitar o email: " + e.getMessage());
         }
     }
+
 }
 

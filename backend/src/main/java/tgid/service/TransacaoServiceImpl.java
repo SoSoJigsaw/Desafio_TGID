@@ -1,14 +1,15 @@
 package tgid.service;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tgid.dto.TransacaoDTO;
 import tgid.entity.Cliente;
 import tgid.entity.Empresa;
 import tgid.entity.Transacao;
-import tgid.exception.objetosExceptions.EmpresaNaoEncontradaException;
-import tgid.exception.objetosExceptions.SaldoInsuficienteException;
+import tgid.exception.ClienteNaoEncontradoException;
+import tgid.exception.EmpresaNaoEncontradaException;
+import tgid.exception.SaldoInsuficienteException;
+import tgid.exception.TransacaoNaoEncontradaException;
 import tgid.notification.NotificacaoCliente;
 import tgid.notification.NotificacaoEmpresa;
 import tgid.repository.ClienteRepository;
@@ -31,7 +32,6 @@ public class TransacaoServiceImpl implements TransacaoService {
     private final NotificacaoEmpresa notificacaoEmpresa;
     private final NotificacaoCliente notificacaoCliente;
 
-    @Autowired
     public TransacaoServiceImpl(TransacaoRepository transacaoRepository, EmpresaRepository empresaRepository,
                                 ClienteRepository clienteRepository, CalcularTaxa calcularTaxa,
                                 NotificacaoEmpresa notificacaoEmpresa, NotificacaoCliente notificacaoCliente) {
@@ -51,39 +51,40 @@ public class TransacaoServiceImpl implements TransacaoService {
 
         if (empresa != null) {
 
-            // Lógica para calcular a taxa correspondente ao depósito
-            double taxa = calcularTaxa.calcularTaxaDeposito(valor, empresa.getTaxaDeposito());
+            if (cliente != null) {
 
-            // Atualiza o saldo da empresa considerando a taxa
-            double saldoAtualizado = empresa.getSaldo() + (valor - taxa);
-            empresa.setSaldo(saldoAtualizado);
-            empresaRepository.atualizarSaldo(empresa.getId(), empresa.getSaldo());
+                // Lógica para calcular a taxa correspondente ao depósito
+                double taxa = calcularTaxa.calcularTaxaDeposito(valor, empresa.getTaxaDeposito());
 
-            // Registra a transação
-            Transacao transacao = new Transacao();
-            transacao.setValor(valor);
-            transacao.setTipo("DEPÓSITO");
-            transacao.setDataTransacao(LocalDateTime.now());
-            transacao.setCliente(cliente);
-            transacao.setEmpresa(empresa);
-            transacaoRepository.save(transacao);
+                // Atualiza o saldo da empresa considerando a taxa
+                double saldoAtualizado = empresa.getSaldo() + (valor - taxa);
+                empresa.setSaldo(saldoAtualizado);
+                empresaRepository.atualizarSaldo(empresa.getId(), empresa.getSaldo());
 
-            String dataTransacao = transacao.getDataTransacao().format(DateTimeFormatter
-                                                                        .ofPattern("dd/MM/yy HH:mm:ss"));
+                // Registra a transação
+                Transacao transacao = new Transacao(valor, "DEPÓSITO", LocalDateTime.now(), cliente, empresa);
+                transacaoRepository.save(transacao);
 
-            // Realizar callback à empresa
-            notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/31b63675-7ea1-4efd-9287-d7b497ab47aa",
-                    "Transação recebida: Depósito de " + transacao.getValor() + " reais."
-            + "\n Feita por: " + transacao.getCliente().getNome() + ". \n" + dataTransacao + "\n " +
-                            "Saldo atual da empresa " + transacao.getEmpresa().getNome() + ": " +
-                            transacao.getEmpresa().getSaldo() + " reais.");
+                String dataTransacao = transacao.getDataTransacao().format(DateTimeFormatter
+                        .ofPattern("dd/MM/yy HH:mm:ss"));
+                int saldoInt = empresa.getSaldo().intValue();
 
-            // Realizar notificação ao cliente por email
-            notificacaoCliente.enviarNotificacaoPorEmail(transacao.getCliente().getEmail(),
-                    "Depósito de " + transacao.getValor() + " reais concluída",
-                    "Seu depósito no valor de " + transacao.getValor() + " reais na empresa " +
-                    transacao.getEmpresa().getNome() + " foi concluída com sucesso. \n Data/Hora da operação: "
-                    + dataTransacao);
+                // Realizar callback à empresa
+                notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
+                        "Transação recebida: Depósito de " + (int) transacao.getValor() + " reais."
+                                + "\n Feita por: " + transacao.getCliente().getNome() + ". \n" + dataTransacao + "\n " +
+                                "Saldo atual da empresa " + transacao.getEmpresa().getNome() + ": " +
+                                 saldoInt + " reais.");
+
+                // Realizar notificação ao cliente por email
+                notificacaoCliente.enviarNotificacaoKafka(transacao.getCliente().getEmail(),
+                        "Depósito de " + (int) transacao.getValor() + " reais concluída",
+                        "Seu depósito no valor de " + (int) transacao.getValor() + " reais na empresa " +
+                                transacao.getEmpresa().getNome() + " foi concluída com sucesso. \n Data/Hora da operação: "
+                                + dataTransacao);
+            } else {
+                throw new ClienteNaoEncontradoException("ERRO: o cliente buscado para a operação não existe");
+            }
 
         } else {
             throw new EmpresaNaoEncontradaException("ERRO: a empresa buscada para a operação não existe.");
@@ -98,45 +99,46 @@ public class TransacaoServiceImpl implements TransacaoService {
 
         if (empresa != null) {
 
-            // Lógica para calcular a taxa correspondente ao saque
-            double taxa = calcularTaxa.calcularTaxaSaque(valor, empresa.getTaxaSaque());
+            if (cliente != null) {
 
-            if (empresa.getSaldo() >= (valor + taxa)) {
+                // Lógica para calcular a taxa correspondente ao saque
+                double taxa = calcularTaxa.calcularTaxaSaque(valor, empresa.getTaxaSaque());
 
-                // Atualiza o saldo da empresa considerando a taxa
-                double saldoAtualizado = empresa.getSaldo() - (valor + taxa);
-                empresa.setSaldo(saldoAtualizado);
-                empresaRepository.atualizarSaldo(empresa.getId(), empresa.getSaldo());
+                if (empresa.getSaldo() >= (valor + taxa)) {
 
-                // Registra a transação
-                Transacao transacao = new Transacao();
-                transacao.setValor(valor);
-                transacao.setTipo("SAQUE");
-                transacao.setDataTransacao(LocalDateTime.now());
-                transacao.setCliente(cliente);
-                transacao.setEmpresa(empresa);
-                transacaoRepository.save(transacao);
+                    // Atualiza o saldo da empresa considerando a taxa
+                    double saldoAtualizado = empresa.getSaldo() - (valor + taxa);
+                    empresa.setSaldo(saldoAtualizado);
+                    empresaRepository.atualizarSaldo(empresa.getId(), empresa.getSaldo());
 
-                String dataTransacao = transacao.getDataTransacao().format(DateTimeFormatter
-                        .ofPattern("dd/MM/yy HH:mm:ss"));
+                    // Registra a transação
+                    Transacao transacao = new Transacao(valor, "SAQUE", LocalDateTime.now(), cliente, empresa);
+                    transacaoRepository.save(transacao);
 
-                // Realizar callback à empresa
-                notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/31b63675-7ea1-4efd-9287-d7b497ab47aa",
-                        "Transação recebida: Saque de " + transacao.getValor() + " reais."
-                                + "\n Feita por: " + transacao.getCliente().getNome() + ". \n" + dataTransacao + "\n " +
-                                "Saldo atual da empresa " + transacao.getEmpresa().getNome() + ": " +
-                                transacao.getEmpresa().getSaldo() + " reais.");
+                    String dataTransacao = transacao.getDataTransacao().format(DateTimeFormatter
+                            .ofPattern("dd/MM/yy HH:mm:ss"));
+                    int saldoInt = empresa.getSaldo().intValue();
 
-                // Realizar notificação ao cliente por email
-                notificacaoCliente.enviarNotificacaoPorEmail(transacao.getCliente().getEmail(),
-                        "Saque de " + transacao.getValor() + " reais concluída",
-                        "Seu saque no valor de " + transacao.getValor() + " reais na empresa " +
-                                transacao.getEmpresa().getNome() + " foi concluída com sucesso. \n Data/Hora da operação: "
-                                + dataTransacao);
+                    // Realizar callback à empresa
+                    notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
+                            "Transação recebida: Saque de " + (int) transacao.getValor() + " reais."
+                                    + "\n Feita por: " + transacao.getCliente().getNome() + ". \n" + dataTransacao + "\n " +
+                                    "Saldo atual da empresa " + transacao.getEmpresa().getNome() + ": " +
+                                    saldoInt + " reais.");
 
+                    // Realizar notificação ao cliente por email
+                    notificacaoCliente.enviarNotificacaoKafka(transacao.getCliente().getEmail(),
+                            "Saque de " + (int) transacao.getValor() + " reais concluída",
+                            "Seu saque no valor de " + (int) transacao.getValor() + " reais na empresa " +
+                                    transacao.getEmpresa().getNome() + " foi concluída com sucesso. \n Data/Hora da operação: "
+                                    + dataTransacao);
+
+                } else {
+                    throw new SaldoInsuficienteException("Não foi possível concluir a operação: " +
+                            "saldo insuficiente para a transição.");
+                }
             } else {
-                throw new SaldoInsuficienteException("Não foi possível concluir a operação: " +
-                                                     "saldo insuficiente para a transição.");
+                throw new ClienteNaoEncontradoException("ERRO: o cliente buscaso para a operação não existe.");
             }
         } else {
             throw new EmpresaNaoEncontradaException("ERRO: a empresa buscada para a operação não existe.");
@@ -173,6 +175,11 @@ public class TransacaoServiceImpl implements TransacaoService {
     @Transactional
     public void deleteTransacao(Long id) {
         Transacao transacao = transacaoRepository.getReferenceById(id);
+
+        if (transacao == null) {
+            throw new TransacaoNaoEncontradaException(id);
+        }
+
         transacaoRepository.delete(transacao);
     }
 }

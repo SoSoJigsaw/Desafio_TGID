@@ -1,13 +1,11 @@
 package tgid.controller;
 
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import tgid.entity.Cliente;
-import tgid.exception.objetosExceptions.CpfInvalidoException;
+import tgid.exception.CpfInvalidoException;
 import tgid.service.ClienteService;
 import tgid.validation.CPFValidator;
 
@@ -28,11 +26,12 @@ public class ClienteController {
 
     @PostMapping("/registrar-cliente")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> registrarCliente(@RequestBody @Valid Cliente cliente) {
+    public ResponseEntity<?> registrarCliente(@RequestBody Cliente cliente) {
 
         // Validação do CPF
         if (!cpfValidator.isValid(cliente.getCpf(), null)) {
-            throw new CpfInvalidoException("CPF Inválido");
+            System.err.println("CPF Inválido. Tente novamente");
+            return ResponseEntity.badRequest().body("CPF Inválido");
         }
 
         clienteService.registrarCliente(cliente.getCpf(), cliente.getNome(), cliente.getEmail(), cliente.getSaldo());

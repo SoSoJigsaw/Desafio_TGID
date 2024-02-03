@@ -66,6 +66,11 @@ main {
 }
 
 h1 {
-    color: #1F3C92;
+    color: black;
+}
+
+.tabelas {
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 </style>

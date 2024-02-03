@@ -1,4 +1,4 @@
-package tgid.exception.objetosExceptions;
+package tgid.exception;
 
 public class EmpresaRemocaoException extends RuntimeException {
 

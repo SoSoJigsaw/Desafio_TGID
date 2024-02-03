@@ -1,9 +1,10 @@
 package tgid.service;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tgid.entity.Cliente;
+import tgid.exception.ClienteRegistroException;
+import tgid.exception.ClienteRemocaoException;
 import tgid.repository.ClienteRepository;
 import tgid.repository.TransacaoRepository;
 import java.util.List;
@@ -14,7 +15,6 @@ public class ClienteServiceImpl implements ClienteService {
     private final ClienteRepository clienteRepository;
     private final TransacaoRepository transacaoRepository;
 
-    @Autowired
     public ClienteServiceImpl(ClienteRepository clienteRepository, TransacaoRepository transacaoRepository) {
         this.clienteRepository = clienteRepository;
         this.transacaoRepository = transacaoRepository;
@@ -22,11 +22,12 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public void registrarCliente(String cpf, String nome, String email, Double saldo) {
-        Cliente cliente = new Cliente();
-        cliente.setCpf(cpf);
-        cliente.setNome(nome);
-        cliente.setEmail(email);
-        cliente.setSaldo(saldo);
+
+        if (cpf == null || nome == null || email == null || saldo == null) {
+            throw new ClienteRegistroException("Os parâmetros do input não podem ser nulos");
+        }
+
+        Cliente cliente = new Cliente(cpf, nome, email, saldo);
         clienteRepository.save(cliente);
     }
 
@@ -40,9 +41,11 @@ public class ClienteServiceImpl implements ClienteService {
     public void deleteCliente(Long id) {
         Cliente cliente = clienteRepository.getReferenceById(id);
 
-        if (cliente != null) {
-            transacaoRepository.deleteApartirDoCliente(cliente);
-            clienteRepository.delete(cliente);
+        if (cliente == null) {
+            throw new ClienteRemocaoException("Não há cliente com esse id: " + id);
         }
+
+        transacaoRepository.deleteApartirDoCliente(cliente);
+        clienteRepository.delete(cliente);
     }
 }

@@ -1,15 +1,15 @@
 package tgid.controller;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import tgid.dto.TaxaDTO;
 import tgid.entity.Empresa;
-import tgid.exception.objetosExceptions.CnpjInvalidoException;
-import tgid.exception.objetosExceptions.TaxaInvalidoException;
+import tgid.exception.CnpjInvalidoException;
+import tgid.exception.TaxaInvalidoException;
 import tgid.service.EmpresaService;
 import tgid.validation.CNPJValidator;
+import tgid.validation.TaxaValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +20,17 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
 @WebMvcTest(EmpresaController.class)
 public class EmpresaControllerTests {
 
-    // can register a new empresa with valid CNPJ
+    // Pode registrar uma nova empresa com CNPJ válido
     @Test
-    public void test_register_empresa_with_valid_cnpj() {
+    public void test_registrar_empresa_com_cnpj_valido() {
         // Arrange
         EmpresaService empresaService = mock(EmpresaService.class);
         CNPJValidator cnpjValidator = mock(CNPJValidator.class);
-        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator);
+        TaxaValidator taxaValidator = mock(TaxaValidator.class);
+        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator, taxaValidator);
         Empresa empresa = new Empresa();
         empresa.setCnpj("valid_cnpj");
         empresa.setNome("Test Empresa");
@@ -38,7 +38,7 @@ public class EmpresaControllerTests {
         empresa.setTaxaDeposito(0.1);
         empresa.setTaxaSaque(0.2);
 
-        // Mock CNPJ validation
+        // Simular validação de CNPJ
         when(cnpjValidator.isValid(anyString(), any())).thenReturn(true);
 
         // Act
@@ -49,37 +49,41 @@ public class EmpresaControllerTests {
         verify(empresaService).registrarEmpresa("valid_cnpj", "Test Empresa", 1000.0, 0.1, 0.2);
     }
 
-    // can update taxaDeposito and taxaSaque for an existing empresa
+    // Pode atualizar taxaDeposito e taxaSaque para uma empresa existente
     @Test
-    public void test_update_taxa_for_existing_empresa() {
+    public void test_atualizar_taxa_para_empresa_existente() {
         // Arrange
         EmpresaService empresaService = mock(EmpresaService.class);
         CNPJValidator cnpjValidator = mock(CNPJValidator.class);
-        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator);
-        Long empresaId = 1L;
-        String tipoTaxa = "DEPÓSITO";
-        double valor = 0.2;
+        TaxaValidator taxaValidator = mock(TaxaValidator.class);
+        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator, taxaValidator);
+
+        TaxaDTO taxaDTO = mock(TaxaDTO.class);
+        taxaDTO.setId(1L);
+        taxaDTO.setTipoTaxa("DEPÓSITO");
+        taxaDTO.setValor(0.2);
 
         // Act
-        ResponseEntity<?> response = empresaController.mudarTaxaValorEmpresa(empresaId, tipoTaxa, valor);
+        ResponseEntity<?> response = empresaController.mudarTaxaValorEmpresa(taxaDTO);
 
         // Assert
         assertEquals(ResponseEntity.ok("Taxa associada com sucesso"), response);
-        verify(empresaService).mudarTaxaValorEmpresa(empresaId, tipoTaxa, valor);
+        verify(empresaService).mudarTaxaValorEmpresa(taxaDTO.getId(), taxaDTO.getTipoTaxa(), taxaDTO.getValor());
     }
 
-    // can list all empresas
+    // Pode listar todas as empresas
     @Test
-    public void test_list_all_empresas() {
+    public void test_listar_todas_as_empresas() {
         // Arrange
         EmpresaService empresaService = mock(EmpresaService.class);
         CNPJValidator cnpjValidator = mock(CNPJValidator.class);
-        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator);
+        TaxaValidator taxaValidator = mock(TaxaValidator.class);
+        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator, taxaValidator);
         List<Empresa> empresas = new ArrayList<>();
         empresas.add(new Empresa());
         empresas.add(new Empresa());
 
-        // Mock empresaService.listarTodasEmpresas()
+        // Simular empresaService.listarTodasEmpresas()
         when(empresaService.listarTodasEmpresas()).thenReturn(empresas);
 
         // Act
@@ -89,54 +93,61 @@ public class EmpresaControllerTests {
         assertEquals(empresas, result);
     }
 
-    // throws CnpjInvalidoException when registering empresa with invalid CNPJ
+    // Lança CnpjInvalidoException ao registrar empresa com CNPJ inválido
     @Test
-    public void test_throw_cnpj_invalido_exception_when_registering_with_invalid_cnpj() {
+    public void test_lancar_cnpj_invalido_exception_ao_registrar_com_cnpj_invalido() {
         // Arrange
         EmpresaService empresaService = mock(EmpresaService.class);
         CNPJValidator cnpjValidator = mock(CNPJValidator.class);
-        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator);
+        TaxaValidator taxaValidator = mock(TaxaValidator.class);
+        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator, taxaValidator);
         Empresa empresa = new Empresa();
         empresa.setCnpj("invalid_cnpj");
 
-        // Mock CNPJ validation
+        // Simular validação de CNPJ
         when(cnpjValidator.isValid(anyString(), any())).thenReturn(false);
 
         // Act and Assert
         assertThrows(CnpjInvalidoException.class, () -> empresaController.registrarEmpresa(empresa));
     }
 
-    // throws TaxaInvalidoException when updating taxa with invalid type
+    // Lança TaxaInvalidoException ao atualizar com tipo inválido
     @Test
-    public void test_throw_taxa_invalido_exception_when_updating_with_invalid_type() {
+    public void test_lancar_taxa_invalido_exception_ao_atualizar_com_tipo_invalido() {
         // Arrange
         EmpresaService empresaService = mock(EmpresaService.class);
         CNPJValidator cnpjValidator = mock(CNPJValidator.class);
-        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator);
-        Long empresaId = 1L;
-        String tipoTaxa = "INVALID_TYPE";
-        double valor = 0.2;
+        TaxaValidator taxaValidator = mock(TaxaValidator.class);
+        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator, taxaValidator);
+
+        TaxaDTO taxaDTO = mock(TaxaDTO.class);
+        taxaDTO.setId(1L);
+        taxaDTO.setTipoTaxa("TIPO_INVÁLIDO");
+        taxaDTO.setValor(0.2);
 
         // Act and Assert
-        assertThrows(TaxaInvalidoException.class, () -> empresaController.mudarTaxaValorEmpresa(empresaId, tipoTaxa, valor));
+        assertThrows(TaxaInvalidoException.class, () -> empresaController.mudarTaxaValorEmpresa(taxaDTO));
     }
 
-    // throws exception when trying to update taxa for non-existing empresa
+    // Lança exceção ao tentar atualizar taxa para empresa não existente
     @Test
-    public void test_throw_exception_when_updating_taxa_for_non_existing_empresa() {
+    public void test_lancar_excecao_ao_atualizar_taxa_para_empresa_nao_existente() {
         // Arrange
         EmpresaService empresaService = mock(EmpresaService.class);
         CNPJValidator cnpjValidator = mock(CNPJValidator.class);
-        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator);
-        Long empresaId = 1L;
-        String tipoTaxa = "DEPÓSITO";
-        double valor = 0.2;
+        TaxaValidator taxaValidator = mock(TaxaValidator.class);
+        EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator, taxaValidator);
 
-        // Mock empresaService.mudarTaxaValorEmpresa() to throw exception
-        doThrow(new RuntimeException()).when(empresaService).mudarTaxaValorEmpresa(empresaId, tipoTaxa, valor);
+        TaxaDTO taxaDTO = mock(TaxaDTO.class);
+        taxaDTO.setId(1L);
+        taxaDTO.setTipoTaxa("DEPÓSITO");
+        taxaDTO.setValor(0.2);
+
+        // Simular empresaService.mudarTaxaValorEmpresa() para lançar exceção
+        doThrow(new RuntimeException()).when(empresaService).mudarTaxaValorEmpresa(taxaDTO.getId(), taxaDTO.getTipoTaxa(), taxaDTO.getValor());
 
         // Act and Assert
-        assertThrows(RuntimeException.class, () -> empresaController.mudarTaxaValorEmpresa(empresaId, tipoTaxa, valor));
+        assertThrows(RuntimeException.class, () -> empresaController.mudarTaxaValorEmpresa(taxaDTO));
     }
 
 }
