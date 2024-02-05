@@ -80,25 +80,18 @@
 <div style="position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;">
 
  <table style="width: 100%; border-collapse: collapse; border-color: transparent">
-      <tbody>
-        <tr>
-            <td>
-              <img src="img/perfil-card.png" alt="Sobre mim">
-              <div style="display: flex; flex-direction: row; justify-content: center; align-itens: center">
-                <a href="https://github.com/SoSoJigsaw" style="width: 25%; height: auto; position: absolute; top: 80%; transform: translate(-50%, -50%); padding-left: 10%; margin-left: 1%">
-                  <img src="img/github.png" style="width: 50%;">
-                </a>
-                <a href="https://www.linkedin.com/in/sosojigsaw/" style="width: 23%; height: auto; position: absolute; top: 80%; transform: translate(-50%, -50%); padding-left: 10%; margin-left: 15%;">
-                  <img src="img/linkedin.png" style="width: 50%;">
-                </a>
-              </div>
-            </td>
-            <td>
-
-            </td>
-            <td>Avançado</td>
-            <td>5 anos</td>
-        </tr>
+      
+<img src="img/perfil-card.png" alt="Sobre mim">
+              
+<div style="display: flex; flex-direction: row; justify-content: center; align-itens: center">
+  <a href="https://github.com/SoSoJigsaw" style="width: 25%; height: auto; position: absolute; top: 80%; transform: translate(-50%, -50%); padding-left: 10%; margin-left: 1%">
+    <img src="img/github.png" style="width: 50%;">
+  </a>
+  <a href="https://www.linkedin.com/in/sosojigsaw/" style="width: 23%; height: auto; position: absolute; top: 80%; transform: translate(-50%, -50%); padding-left: 10%; margin-left: 15%;">
+    <img src="img/linkedin.png" style="width: 50%;">
+  </a>
+</div>
+            
 
 
 
