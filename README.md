@@ -11,7 +11,7 @@
   <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Frontend Framework%3A-Vue.js-green"/></a>
   <a href="http://fatecsjc-prd.azurewebsites.net/"><img src="https://img.shields.io/badge/Banco de Dados%3A-PostgreSQL-green"/></a>
   <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/DevOps%3A-Docker e Docker Compose-silver"/></a>
-  <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Testes Unitários%3A-JUnit e Mockito-red"/></a>
+  <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Testes Unitários%3A-JUnit5 e Mockito-red"/></a>
 </div>
 
 ## Desafio
@@ -77,9 +77,9 @@
 
 ## Sobre o desenvolvedor
 
-<div style="display: flex; flex-direction: row; gap: 10px; justify-content: center; align-items: center;">
+<div style="display: flex; flex-direction: row; gap: 10px;">
 
-<img src="img/logoTgid.png" width="100%" height="20%">
+<img src="https://github.com/SoSoJigsaw/bertoti/blob/main/Metodologia/Imagens/profile.jpeg" width="40%" height="20%" style="justify-self: flex-start;">
 
 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">      
    
@@ -101,16 +101,22 @@
           </thead>
           <tbody>
               <tr>
-                  <td>oi</td>
+                  <td></td>
                   <td><em>Java</em></td>
                   <td>Avançado</td>
                   <td>5 anos</td>
               </tr>
               <tr>
-                  <td>oi</td>
+                  <td></td>
                   <td><em>SpringBoot</em></td>
                   <td>Avançado</td>
                   <td>4 anos</td>
+              </tr>
+              <tr>
+                    <td></td>
+                    <td><em>JPA e Hibernate</em></td>
+                    <td>Avançado</td>
+                    <td>4 anos</td>
               </tr>
               <tr>
                     <td></td>
@@ -122,146 +128,124 @@
                     <td></td>
                     <td><em>SQL e PL/SQL</em></td>
                     <td>Avançado</td>
-                    <td></td>
+                    <td>5 anos</td>
               </tr>
               <tr>
                     <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
+                    <td><em>JUnit5</em></td>
+                    <td>Intermediário</td>
+                    <td>1 ano</td>
               </tr>
               <tr>
                     <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
+                    <td><em>Mockito</em></td>
+                    <td>Intermediário</td>
+                    <td>1 ano</td>
               </tr>
               <tr>
                     <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
-              </tr>  
-              <tr>
-                    <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
-              </tr>  
-              <tr>
-                    <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
-              </tr>  
-              <tr>
-                    <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
-              </tr>  
-              <tr>
-                    <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
-              </tr>  
-              <tr>
-                    <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
-              </tr>  
-              <tr>
-                    <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
+                    <td><em>Git e Github</em></td>
+                    <td>Avançado</td>
+                    <td>5 anos</td>
               </tr>
               <tr>
                     <td></td>
-                    <td><em></em></td>
+                    <td><em>Metodologia Ágil Scrum</em></td>
+                    <td>Avançado</td>
+                    <td>4 anos</td>
+              </tr>  
+              <tr>
                     <td></td>
+                    <td><em>Docker</em></td>
+                    <td>Intermediário</td>
+                    <td>1 ano</td>
+              </tr>  
+              <tr>
                     <td></td>
+                    <td><em>Docker Compose</em></td>
+                    <td>Intermediário</td>
+                    <td>1 ano</td>
+              </tr>  
+              <tr>
+                    <td></td>
+                    <td><em>Apache Kafka</em></td>
+                    <td>Intermediário</td>
+                    <td>1 ano</td>
+              </tr>  
+              <tr>
+                    <td></td>
+                    <td><em>JavaScript</em></td>
+                    <td>Avançado</td>
+                    <td>3 anos</td>
+              </tr>  
+              <tr>
+                    <td></td>
+                    <td><em>TypeScript</em></td>
+                    <td>Avançado</td>
+                    <td>2 anos</td>
               </tr>
               <tr>
                     <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
+                    <td><em>Vue.js</em></td>
+                    <td>Avançado</td>
+                    <td>3 anos</td>
               </tr>
               <tr>
                     <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
+                    <td><em>React.js</em></td>
+                    <td>Intermediário</td>
+                    <td>1 ano</td>
               </tr>
               <tr>
                     <td></td>
-                    <td><em></em></td>
+                    <td><em>CSS3</em></td>
+                    <td>Avançado</td>
+                    <td>5 anos</td>
+              </tr>
+              <tr>
                     <td></td>
-                    <td></td>
+                    <td><em>HTML5</em></td>
+                    <td>Avançado</td>
+                    <td>5 anos</td>
               </tr>  
               <tr>
                     <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
+                    <td><em>JavaFx</em></td>
+                    <td>Intermediário</td>
+                    <td>2 anos</td>
               </tr>  
               <tr>
                     <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
+                    <td><em><b>Python</b></em></td>
+                    <td>Avançado</td>
+                    <td>5 anos</td>
               </tr>  
               <tr>
                     <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
+                    <td><em>Flask</em></td>
+                    <td>Avançado</td>
+                    <td>4 anos</td>
               </tr>  
               <tr>
                     <td></td>
-                    <td><em></em></td>
-                    <td></td>
-                    <td></td>
+                    <td><em>Pandas</em></td>
+                    <td>Avançado</td>
+                    <td>3 anos</td>
               </tr>  
               <tr>
                     <td></td>
-                    <td><em></em></td>
+                    <td><em>SQLAlchemy</em></td>
+                    <td>Avançado</td>
+                    <td>4 anos</td>
+              </tr>   
+              <tr>
                     <td></td>
-                    <td></td>
+                    <td><em>Selenium</em></td>
+                    <td>Intermediário</td>
+                    <td>3 anos</td>
               </tr>   
           </tbody>
       </table>
-      
-
-|     |  Tecnologia               |  Experiência   |  Tempo de Uso  |
-|-----|---------------------------|----------------|----------------|
-| oi  | _Java_                    | Avançado       |  5 anos        |
-| oi  | SpringBoot                | Avançado       |  4 anos        |
-| oi  | SpringBoot Security       | Avançado       |  4 anos        |  
-| oi  | SQL                       | Avançado       |  5 anos        |
-| oi  | Git e Github              | Avançado       |  5 anos        |
-| oi  | JUnit5                    | Intermedíario  |  3 anos        |
-| oi  | Mockito                   | Intermediário  |  3 anos        |
-| oi  | Metodologia Ágil Scrum    | Avançado       |  5 anos        |
-| oi  | Docker                    | Intermediário  |  2 anos        |
-| oi  | Docker Compose            | Intermediário  |  2 anos        |
-| oi  | Apache Kafka              | Intermediário  |  2 anos        |
-| oi  | JavaScript                | Avançado       |  4 anos        |
-| oi  | Typescript                | Avançado       |  3 anos        |
-| oi  | Vue.js                    | Avançado       |  3 anos        |
-| oi  | React.js                  | Intermediário  |  2 anos        |
-| oi  | CSS3                      | Avançado       |  4 anos        |
-| oi  | HTML5                     | Avançado       |  4 anos        |
-| oi  | JavaFX                    | Avançado       |  4 anos        |
-| oi  | Python                    | Avançado       |  5 anos        |
-| oi  | Flask                     | Avançado       |  4 anos        |
-| oi  | Pandas                    | Intermediário  |  4 anos        |
-| oi  | SQLAlchemy                | Avançado       |  4 anos        |
-| oi  | Selenium                  | Intermediário  |  3 anos        |
-
 </div>              
 </div>
 
