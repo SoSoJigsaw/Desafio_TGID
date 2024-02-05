@@ -77,17 +77,34 @@
 
 ## Sobre o desenvolvedor
 
-<div style="position: relative; display: flex; justify-content: center; align-items: center">
+<div style="position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;">
 
-<img src="img/perfil-card.png" alt="Sobre mim">
+ <table style="width: 100%; border-collapse: collapse; border-color: transparent">
+      <tbody>
+        <tr>
+            <td>
+              <img src="img/perfil-card.png" alt="Sobre mim">
+              <div style="display: flex; flex-direction: row; justify-content: center; align-itens: center">
+                <a href="https://github.com/SoSoJigsaw" style="width: 25%; height: auto; position: absolute; top: 80%; transform: translate(-50%, -50%); padding-left: 10%; margin-left: 1%">
+                  <img src="img/github.png" style="width: 50%;">
+                </a>
+                <a href="https://www.linkedin.com/in/sosojigsaw/" style="width: 23%; height: auto; position: absolute; top: 80%; transform: translate(-50%, -50%); padding-left: 10%; margin-left: 15%;">
+                  <img src="img/linkedin.png" style="width: 50%;">
+                </a>
+              </div>
+            </td>
+            <td>
 
-<a href="https://github.com/SoSoJigsaw" style="width: fit-content; height: auto; position: absolute; top: 85%; left: 37%; transform: translate(-50%, -50%);">
-  <img src="https://bit.ly/3f9Xo0P">
-</a>
-<a href="https://www.linkedin.com/in/sosojigsaw/" style="width: fit-content; height: auto; position: absolute; top: 85%; left: 59%; transform: translate(-50%, -50%);">
-  <img src="https://bit.ly/2P1ZogM">
-</a>
-</div>
+            </td>
+            <td>Avançado</td>
+            <td>5 anos</td>
+        </tr>
+
+
+
+
+
+
 
 
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">      
