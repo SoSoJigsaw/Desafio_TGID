@@ -80,7 +80,7 @@
 <div style="display: flex; flex-direction: column; gap: 50px;">
 
 <p align="center">
-      <img src="img/perfil.png" height="100%" width="100%">
+      <img src="img/perfil-card.png" height="100%" width="100%">
    <p align="center">
 
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">      
