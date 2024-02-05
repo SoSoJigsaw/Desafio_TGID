@@ -77,9 +77,9 @@
 
 ## Sobre o desenvolvedor
 
-<div style="display: flex; flex-direction: row; gap: 10px;">
+<div style="display: flex; flex-direction: row; gap: 500px;">
 
-<img src="https://github.com/SoSoJigsaw/bertoti/blob/main/Metodologia/Imagens/profile.jpeg" width="40%" height="20%" style="justify-self: flex-start;">
+<img src="https://github.com/SoSoJigsaw/bertoti/blob/main/Metodologia/Imagens/profile.jpeg" width="40%" height="20%" style="justify-self: flex-start; align-items: flex-start;">
 
 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">      
    
