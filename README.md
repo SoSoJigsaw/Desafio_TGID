@@ -7,13 +7,13 @@
 <p align="center"> 
   <a href="https://www.java.com/pt-BR/"><img src="https://img.shields.io/badge/Backend Langugage%3A-Java-orange"/></a>
  <a href="https://www.java.com/pt-BR/"><img src="https://img.shields.io/badge/Backend Framework%3A-SpringBoot-green"/></a>
+  <a href="https://www.java.com/pt-BR/"><img src="https://img.shields.io/badge/Gerenciador de Dependências%3A-Maven-purple"/></a>    
   <a href="https://embraer.com/br/pt"><img src="https://img.shields.io/badge/Frontend%20Language%3A-Typescript-blue"/></a>
  <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Frontend Language%3A-JavaScript-yellow"/></a>
  <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Frontend Framwork%3A-Vue.js-green"/></a>
   <a href="http://fatecsjc-prd.azurewebsites.net/"><img src="https://img.shields.io/badge/Banco de Dados%3A-PostgreSQL-green"/></a>
-  <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/DevOps%3A-Docker-silver"/></a>
-   <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Testes Unitários%3A-JUnit e Mockito-purple"/></a>
- <a href="http://fatecsjc-prd.azurewebsites.net/"><img src="https://img.shields.io/badge/Cliente%3A-Tgid-yellow"/></a>
+  <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/DevOps%3A-Docker e Docker Compose-silver"/></a>
+  <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Testes Unitários%3A-JUnit e Mockito-purple"/></a>
 </p>
 
 ## Desafio
