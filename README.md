@@ -81,7 +81,10 @@
   
 <img src="img/perfil-card.png" alt="Sobre mim">
 
-<p align="center" "> Acesse meu portfólio ou rede profissional:</p>
+<br>
+<br>
+
+<h3 align="center"> Acesse meu portfólio ou rede profissional:</h3>
               
 <div style="display: flex; flex-direction: row;">
   <p align="center" ">                                                      
@@ -97,16 +100,17 @@
 
 
 
-
+<br>
+<br>
 
 
 
 
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">      
 
-   
+   <h3 align="center">Meu Set Skill:</h3>
 
-   <table style="width: 100%; border-collapse: collapse;">
+   <table style="width: 100%; border-collapse: collapse;" align="center">
           <thead>
               <tr>
                   <th></th>
