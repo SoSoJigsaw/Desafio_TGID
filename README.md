@@ -1,7 +1,7 @@
 # Desafio Tgid
 <div id="top"></div>
 <p align="center">
-      <img src="img/logo.png" width="100%" height="20%">
+      <img src="img/logoTgid.png" width="100%" height="20%">
 <p align="center">
 
 <p align="center"> 
