@@ -77,15 +77,16 @@
 
 ## Sobre o desenvolvedor
 
-<div style="display: flex; flex-direction: row; gap: 500px;">
+<div style="display: flex; flex-direction: column; gap: 50px;">
 
 <img src="https://github.com/SoSoJigsaw/bertoti/blob/main/Metodologia/Imagens/profile.jpeg" width="40%" height="20%" style="justify-self: flex-start; align-items: flex-start;">
 
-<div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">      
-   
-   <h3>Felipe Sobral</h3
+<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">      
 
-   <p>Desenvolvedor Full Stack com 4 anos de experência em desenvolvimento de APIs RESTful, miro-serviços, bancos de dado relacionais e práticas de DevOps.</p>
+   <div >
+       <h3>Felipe Sobral</h3
+       <p>Desenvolvedor Full Stack com 4 anos de experência em desenvolvimento de APIs RESTful, miro-serviços, bancos de dado relacionais e práticas de DevOps.</p>
+   </div>
 
    <a href="https://github.com/SoSoJigsaw"><img src="https://bit.ly/3f9Xo0P"></a>
    <a href="https://www.linkedin.com/in/sosojigsaw/"><img src="https://bit.ly/2P1ZogM"></a>
@@ -248,5 +249,9 @@
       </table>
 </div>              
 </div>
+
+<p align="center">
+      <img src="img/perfil.png" height="100%">
+<p align="center">
 
 <p align="right">(<a href="#top">Voltar ao Topo</a>)</p>
