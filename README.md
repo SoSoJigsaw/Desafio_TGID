@@ -79,13 +79,11 @@
 
 <div style="display: flex; flex-direction: column; gap: 50px;">
 
-<img src="https://github.com/SoSoJigsaw/bertoti/blob/main/Metodologia/Imagens/profile.jpeg" width="40%" height="20%" style="justify-self: flex-start; align-items: flex-start;">
+<p align="center">
+      <img src="img/perfil.png" height="100%" width="100%">
+   <p align="center">
 
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">      
-
-   <p align="center">
-      <img src="img/perfil.png" height="100%">
-   <p align="center">
 
    <a href="https://github.com/SoSoJigsaw"><img src="https://bit.ly/3f9Xo0P"></a>
    <a href="https://www.linkedin.com/in/sosojigsaw/"><img src="https://bit.ly/2P1ZogM"></a>
