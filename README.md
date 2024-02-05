@@ -79,12 +79,11 @@
 
 <div style="display: flex; flex-direction: column; gap: 50px;">
 
-<div style="position: relative; display: inline-block;">
-  <img src="img/perfil-card.png" alt="Imagem">
+<div style="background-image: url('https://raw.githubusercontent.com/SoSoJigsaw/Desafio_TGID/main/img/perfil-card.png'); background-size: cover; background-position: center; padding: 100px; width: 100%; height: auto" >
 <a href="https://github.com/SoSoJigsaw">
-  <img src="https://bit.ly/3f9Xo0P" style="position: absolute; top: 80%; left: 35%; transform: translate(-50%, -50%);">
+  <img src="https://bit.ly/3f9Xo0P">
 </a>
-<a href="https://www.linkedin.com/in/sosojigsaw/" style="position: absolute; top: 80.5%; left: 51%; transform: translate(-50%, -50%);">
+<a href="https://www.linkedin.com/in/sosojigsaw/">
   <img src="https://bit.ly/2P1ZogM">
 </a>
 </div>
