@@ -251,7 +251,7 @@
 </div>
 
 <p align="center">
-      <img src="img/perfil.png" height="100%">
+      
 <p align="center">
 
 <p align="right">(<a href="#top">Voltar ao Topo</a>)</p>
