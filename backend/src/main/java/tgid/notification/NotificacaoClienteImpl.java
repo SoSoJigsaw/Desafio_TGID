@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import tgid.dto.EmailDTO;
 import tgid.kafka.producer.KafkaProducer;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 @Service
 public class NotificacaoClienteImpl implements NotificacaoCliente {
 
@@ -44,6 +48,59 @@ public class NotificacaoClienteImpl implements NotificacaoCliente {
         } catch (JsonProcessingException e) {
             logger.info("Houve um erro ao solicitar o email: " + e.getMessage());
         }
+    }
+
+    @Override
+    public String formatAssuntoOperacaoRealizada(String tipoTransacao, int valorTransacao) {
+        return tipoTransacao + " de " + valorTransacao + " reais concluída";
+    }
+
+    @Override
+    public String formatCorpoOperacaoRealizada(String tipoTransacao, int valorTransacao,
+                                               String nomeEmpresa, LocalDateTime dataTransacao,
+                                               Double saldo) {
+
+        String dataTransacaoFormatada = dataTransacao.format(DateTimeFormatter
+                .ofPattern("dd/MM/yy HH:mm:ss"));
+        int saldoInt = saldo.intValue();
+
+        return "Seu " + tipoTransacao + " no valor de " + valorTransacao + " reais na empresa " +
+                nomeEmpresa + " foi concluída com sucesso. " +
+                "\n Seu saldo agora é de " + saldoInt + " reais." +
+                "\n Data/Hora da operação: " + dataTransacaoFormatada;
+    }
+
+    @Override
+    public String formatAssuntoOperacaoNegada(String tipoTransacao, int valorTransacao) {
+        return "Operação de " + tipoTransacao + " negada";
+    }
+
+    @Override
+    public String formatCorpoOperacaoNegadaEmpresa(String tipoTransacao, int valorTransacao,
+                                                   String nomeEmpresa, LocalDateTime dataTransacao,
+                                                   Double saldo) {
+        String dataTransacaoFormatada = dataTransacao.format(DateTimeFormatter
+                .ofPattern("dd/MM/yy HH:mm:ss"));
+        int saldoInt = saldo.intValue();
+
+        return "Tentativa de " + tipoTransacao + " no valor de " + valorTransacao + " reais na empresa " +
+                nomeEmpresa + " não pôde ser concluída. A empresa não possui saldo suficiente para a transação. " +
+                "\n Seu saldo continua sendo de " + saldoInt + " reais." +
+                "\n Data/Hora da operação: " + dataTransacaoFormatada;
+    }
+
+    @Override
+    public String formatCorpoOperacaoNegadaCliente(String tipoTransacao, int valorTransacao,
+                                            String nomeEmpresa, LocalDateTime dataTransacao,
+                                            Double saldo) {
+        String dataTransacaoFormatada = dataTransacao.format(DateTimeFormatter
+                .ofPattern("dd/MM/yy HH:mm:ss"));
+        int saldoInt = saldo.intValue();
+
+        return "Tentativa de " + tipoTransacao + " no valor de " + valorTransacao + " reais na empresa " +
+                nomeEmpresa + " não pôde ser concluída. Você não possui saldo suficiente para a transação. " +
+                "\n Seu saldo continua sendo de " + saldoInt + " reais." +
+                "\n Data/Hora da operação: " + dataTransacaoFormatada;
     }
 
 }

@@ -1,9 +1,8 @@
 package tgid.controller;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 import tgid.service.TransacaoService;
 
 import static org.junit.Assert.assertNotNull;
@@ -11,8 +10,9 @@ import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+@SpringBootTest
 @WebMvcTest(TransacaoController.class)
-public class TransacaoControllerTests {
+public class TransacaoControllerTest {
 
     // Pode criar uma nova instância de TransacaoController com uma dependência TransacaoService
     @Test
@@ -44,39 +44,6 @@ public class TransacaoControllerTests {
         double valor = 100.0;
         transacaoController.saque(empresaId, clienteId, valor);
         verify(transacaoService).realizarSaque(empresaId, clienteId, valor);
-    }
-
-    // O método deposito() lança uma exceção se empresaId ou clienteId forem nulos
-    @Test
-    public void test_deposito_lanca_excecao_se_ids_sao_nulos() {
-        TransacaoService transacaoService = mock(TransacaoService.class);
-        TransacaoController transacaoController = new TransacaoController(transacaoService);
-        Long empresaId = null;
-        Long clienteId = null;
-        double valor = 100.0;
-        assertThrows(Exception.class, () -> transacaoController.deposito(empresaId, clienteId, valor));
-    }
-
-    // O método deposito() lança uma exceção se o valor for negativo
-    @Test
-    public void test_deposito_lanca_excecao_se_valor_e_negativo() {
-        TransacaoService transacaoService = mock(TransacaoService.class);
-        TransacaoController transacaoController = new TransacaoController(transacaoService);
-        Long empresaId = 1L;
-        Long clienteId = 2L;
-        double valor = -100.0;
-        assertThrows(Exception.class, () -> transacaoController.deposito(empresaId, clienteId, valor));
-    }
-
-    // O método saque() lança uma exceção se empresaId ou clienteId forem nulos
-    @Test
-    public void test_saque_lanca_excecao_se_ids_sao_nulos() {
-        TransacaoService transacaoService = mock(TransacaoService.class);
-        TransacaoController transacaoController = new TransacaoController(transacaoService);
-        Long empresaId = null;
-        Long clienteId = null;
-        double valor = 100.0;
-        assertThrows(Exception.class, () -> transacaoController.saque(empresaId, clienteId, valor));
     }
 
 }

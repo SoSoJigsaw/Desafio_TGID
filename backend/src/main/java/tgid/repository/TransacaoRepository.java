@@ -10,6 +10,9 @@ import tgid.entity.Cliente;
 import tgid.entity.Empresa;
 import tgid.entity.Transacao;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Repository
 public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
 
@@ -23,4 +26,5 @@ public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
     @Query("DELETE FROM Transacao t WHERE t.cliente = :cliente")
     void deleteApartirDoCliente(@Param("cliente") Cliente cliente);
 
+    Optional<Transacao> findByDataTransacao(LocalDateTime data);
 }

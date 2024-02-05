@@ -1,7 +1,9 @@
 package tgid.service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import tgid.dto.SaldoInsuficienteDTO;
 import tgid.dto.TransacaoDTO;
 import tgid.entity.Cliente;
 import tgid.entity.Empresa;
@@ -44,44 +46,66 @@ public class TransacaoServiceImpl implements TransacaoService {
     }
 
     @Override
-    public void realizarDeposito(Long empresaId, Long clienteId, double valor) {
+    public ResponseEntity<?> realizarDeposito(Long empresaId, Long clienteId, double valor) {
 
         Empresa empresa = empresaRepository.getReferenceById(empresaId);
         Cliente cliente = clienteRepository.getReferenceById(clienteId);
 
         if (empresa != null) {
 
+            // Lógica para calcular a taxa correspondente ao depósito
+            double taxa = calcularTaxa.calcularTaxaDeposito(valor, empresa.getTaxaDeposito());
+
             if (cliente != null) {
 
-                // Lógica para calcular a taxa correspondente ao depósito
-                double taxa = calcularTaxa.calcularTaxaDeposito(valor, empresa.getTaxaDeposito());
+                if ((cliente.getSaldo() - valor) < 0) {
+
+                    int saldo = cliente.getSaldo().intValue();
+                    SaldoInsuficienteDTO saldoInsuficienteDTO = new SaldoInsuficienteDTO(
+                            "Cliente", cliente.getNome(), saldo, "Depósito", (int) valor);
+
+                    // Realizar callback à empresa de falha por falta de saldo na transação
+                    notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
+                            notificacaoEmpresa.formatCallbackFalhaCliente("Depósito", (int) valor,
+                                    cliente.getNome(), empresa.getNome(),
+                                    LocalDateTime.now(), empresa.getSaldo(),
+                                    empresa.getSaldo() + (valor - taxa)));
+
+
+                    // Realizar notificação ao cliente por email de falha por falta de saldo na transação
+                    notificacaoCliente.enviarNotificacaoKafka(cliente.getEmail(),
+                            notificacaoCliente.formatAssuntoOperacaoNegada("Depósito", (int) valor),
+                            notificacaoCliente.formatCorpoOperacaoNegadaCliente("depósito", (int) valor,
+                                    empresa.getNome(), LocalDateTime.now(), cliente.getSaldo()));
+
+                    return ResponseEntity.badRequest().body(saldoInsuficienteDTO);
+                }
+
+                // Atualiza o saldo do cliente
+                double saldoClienteAtualizado = cliente.getSaldo() - valor;
+                cliente.setSaldo(saldoClienteAtualizado);
+                clienteRepository.atualizarSaldo(cliente.getId(), cliente.getSaldo());
 
                 // Atualiza o saldo da empresa considerando a taxa
-                double saldoAtualizado = empresa.getSaldo() + (valor - taxa);
-                empresa.setSaldo(saldoAtualizado);
+                double saldoEmpresaAtualizado = empresa.getSaldo() + (valor - taxa);
+                empresa.setSaldo(saldoEmpresaAtualizado);
                 empresaRepository.atualizarSaldo(empresa.getId(), empresa.getSaldo());
 
                 // Registra a transação
                 Transacao transacao = new Transacao(valor, "DEPÓSITO", LocalDateTime.now(), cliente, empresa);
                 transacaoRepository.save(transacao);
 
-                String dataTransacao = transacao.getDataTransacao().format(DateTimeFormatter
-                        .ofPattern("dd/MM/yy HH:mm:ss"));
-                int saldoInt = empresa.getSaldo().intValue();
-
-                // Realizar callback à empresa
+                // Realizar callback à empresa de sucesso na transação
                 notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
-                        "Transação recebida: Depósito de " + (int) transacao.getValor() + " reais."
-                                + "\n Feita por: " + transacao.getCliente().getNome() + ". \n" + dataTransacao + "\n " +
-                                "Saldo atual da empresa " + transacao.getEmpresa().getNome() + ": " +
-                                 saldoInt + " reais.");
+                        notificacaoEmpresa.formatCallbackSucesso("Depósito", (int) transacao.getValor(),
+                                transacao.getCliente().getNome(), transacao.getEmpresa().getNome(),
+                                transacao.getDataTransacao(), empresa.getSaldo()));
 
-                // Realizar notificação ao cliente por email
+                // Realizar notificação ao cliente por email de sucesso na transação
                 notificacaoCliente.enviarNotificacaoKafka(transacao.getCliente().getEmail(),
-                        "Depósito de " + (int) transacao.getValor() + " reais concluída",
-                        "Seu depósito no valor de " + (int) transacao.getValor() + " reais na empresa " +
-                                transacao.getEmpresa().getNome() + " foi concluída com sucesso. \n Data/Hora da operação: "
-                                + dataTransacao);
+                        notificacaoCliente.formatAssuntoOperacaoRealizada("Depósito", (int) transacao.getValor()),
+                        notificacaoCliente.formatCorpoOperacaoRealizada("depósito", (int) transacao.getValor(),
+                                transacao.getEmpresa().getNome(), transacao.getDataTransacao(), cliente.getSaldo()));
             } else {
                 throw new ClienteNaoEncontradoException("ERRO: o cliente buscado para a operação não existe");
             }
@@ -89,10 +113,12 @@ public class TransacaoServiceImpl implements TransacaoService {
         } else {
             throw new EmpresaNaoEncontradaException("ERRO: a empresa buscada para a operação não existe.");
         }
+
+        return ResponseEntity.ok().body("Transação de Depósito realizada com sucesso");
     }
 
     @Override
-    public void realizarSaque(Long empresaId, Long clienteId, double valor) {
+    public ResponseEntity<?> realizarSaque(Long empresaId, Long clienteId, double valor) {
 
         Empresa empresa = empresaRepository.getReferenceById(empresaId);
         Cliente cliente = clienteRepository.getReferenceById(clienteId);
@@ -106,6 +132,11 @@ public class TransacaoServiceImpl implements TransacaoService {
 
                 if (empresa.getSaldo() >= (valor + taxa)) {
 
+                    // Atualiza o saldo do cliente
+                    double saldoClienteAtualizado = cliente.getSaldo() + valor;
+                    cliente.setSaldo(saldoClienteAtualizado);
+                    clienteRepository.atualizarSaldo(cliente.getId(), cliente.getSaldo());
+
                     // Atualiza o saldo da empresa considerando a taxa
                     double saldoAtualizado = empresa.getSaldo() - (valor + taxa);
                     empresa.setSaldo(saldoAtualizado);
@@ -115,34 +146,48 @@ public class TransacaoServiceImpl implements TransacaoService {
                     Transacao transacao = new Transacao(valor, "SAQUE", LocalDateTime.now(), cliente, empresa);
                     transacaoRepository.save(transacao);
 
-                    String dataTransacao = transacao.getDataTransacao().format(DateTimeFormatter
-                            .ofPattern("dd/MM/yy HH:mm:ss"));
-                    int saldoInt = empresa.getSaldo().intValue();
-
-                    // Realizar callback à empresa
+                    // Realizar callback à empresa de sucesso na transação
                     notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
-                            "Transação recebida: Saque de " + (int) transacao.getValor() + " reais."
-                                    + "\n Feita por: " + transacao.getCliente().getNome() + ". \n" + dataTransacao + "\n " +
-                                    "Saldo atual da empresa " + transacao.getEmpresa().getNome() + ": " +
-                                    saldoInt + " reais.");
+                            notificacaoEmpresa.formatCallbackSucesso("Saque", (int) transacao.getValor(),
+                                    transacao.getCliente().getNome(), transacao.getEmpresa().getNome(),
+                                    transacao.getDataTransacao(), empresa.getSaldo()));
 
-                    // Realizar notificação ao cliente por email
+
+                    // Realizar notificação ao cliente por email de sucesso na transação
                     notificacaoCliente.enviarNotificacaoKafka(transacao.getCliente().getEmail(),
-                            "Saque de " + (int) transacao.getValor() + " reais concluída",
-                            "Seu saque no valor de " + (int) transacao.getValor() + " reais na empresa " +
-                                    transacao.getEmpresa().getNome() + " foi concluída com sucesso. \n Data/Hora da operação: "
-                                    + dataTransacao);
+                            notificacaoCliente.formatAssuntoOperacaoRealizada("Saque", (int) transacao.getValor()),
+                            notificacaoCliente.formatCorpoOperacaoRealizada("saque", (int) transacao.getValor(),
+                                    transacao.getEmpresa().getNome(), transacao.getDataTransacao(), cliente.getSaldo()));
 
                 } else {
-                    throw new SaldoInsuficienteException("Não foi possível concluir a operação: " +
-                            "saldo insuficiente para a transição.");
+                    int saldo = empresa.getSaldo().intValue();
+                    SaldoInsuficienteDTO saldoInsuficienteDTO = new SaldoInsuficienteDTO(
+                            "Empresa", empresa.getNome(), saldo, "Saque", (int) valor);
+
+                    // Realizar callback à empresa de falha por falta de saldo na transação
+                    notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
+                            notificacaoEmpresa.formatCallbackFalhaEmpresa("Saque", (int) valor,
+                                    cliente.getNome(), empresa.getNome(),
+                                    LocalDateTime.now(), empresa.getSaldo(),
+                                    empresa.getSaldo() - (valor + taxa)));
+
+
+                    // Realizar notificação ao cliente por email de falha por falta de saldo na transação
+                    notificacaoCliente.enviarNotificacaoKafka(cliente.getEmail(),
+                            notificacaoCliente.formatAssuntoOperacaoNegada("Saque", (int) valor),
+                            notificacaoCliente.formatCorpoOperacaoNegadaEmpresa("Saque", (int) valor,
+                                    empresa.getNome(), LocalDateTime.now(), cliente.getSaldo()));
+
+                    return ResponseEntity.badRequest().body(saldoInsuficienteDTO);
                 }
             } else {
-                throw new ClienteNaoEncontradoException("ERRO: o cliente buscaso para a operação não existe.");
+                throw new ClienteNaoEncontradoException("ERRO: o cliente buscado para a operação não existe.");
             }
         } else {
             throw new EmpresaNaoEncontradaException("ERRO: a empresa buscada para a operação não existe.");
         }
+
+        return ResponseEntity.ok().body("Transação de Saque realizada com sucesso");
     }
 
     @Override

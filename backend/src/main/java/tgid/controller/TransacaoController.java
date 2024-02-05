@@ -24,20 +24,20 @@ public class TransacaoController {
 
     @PostMapping("/deposito/{empresaId}/{clienteId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deposito(@PathVariable("empresaId") Long empresaId,
+    public ResponseEntity<?> deposito(@PathVariable("empresaId") Long empresaId,
                          @PathVariable("clienteId") Long clienteId,
                          @RequestBody double valor) {
 
-        transacaoService.realizarDeposito(empresaId, clienteId, valor);
+        return transacaoService.realizarDeposito(empresaId, clienteId, valor);
     }
 
     @PostMapping("/saque/{empresaId}/{clienteId}")
     @ResponseStatus(HttpStatus.OK)
-    public void saque(@PathVariable("empresaId") Long empresaId,
+    public ResponseEntity<?> saque(@PathVariable("empresaId") Long empresaId,
                       @PathVariable("clienteId") Long clienteId,
                       @RequestBody double valor) {
 
-        transacaoService.realizarSaque(empresaId, clienteId, valor);
+        return transacaoService.realizarSaque(empresaId, clienteId, valor);
     }
 
     @GetMapping("listar-transacoes")

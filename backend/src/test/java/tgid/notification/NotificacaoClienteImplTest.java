@@ -2,17 +2,19 @@ package tgid.notification;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
 import tgid.dto.EmailDTO;
 import tgid.kafka.producer.KafkaProducer;
 
 import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
 
-@TestConfiguration
-@Import(NotificacaoClienteImpl.class)
-public class NotificacaoClienteImplTests {
+@SpringBootTest
+public class NotificacaoClienteImplTest {
 
     // Deve enviar com sucesso um e-mail de notificação quando todos os parâmetros forem válidos
     @Test

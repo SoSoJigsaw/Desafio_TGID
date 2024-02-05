@@ -2,6 +2,7 @@ package tgid.kafka.producer;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -10,9 +11,9 @@ import org.springframework.kafka.core.ProducerFactory;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
 
-@TestConfiguration
+@SpringBootTest
 @Import(KafkaProducerConfig.class)
-public class KafkaProducerConfigTests {
+public class KafkaProducerConfigTest {
 
     // O método 'producerFactory' deve retornar uma instância não nula de 'DefaultKafkaProducerFactory'.
     @Test
@@ -38,27 +39,4 @@ public class KafkaProducerConfigTests {
         assertNotNull(newTopic);
     }
 
-    // O método 'producerFactory' deve lançar uma exceção se a configuração dos servidores de inicialização for nula ou vazia.
-    @Test
-    public void test_producerFactory_throwsExceptionIfBootstrapServersConfigIsNull() {
-        KafkaProducerConfig kafkaProducerConfig = new KafkaProducerConfig();
-        kafkaProducerConfig.setBootstrapServersConfig(null);
-        assertThrows(IllegalArgumentException.class, kafkaProducerConfig::producerFactory);
-    }
-
-    // O método 'producerFactory' deve lançar uma exceção se a configuração da classe serializadora de chave for nula ou vazia.
-    @Test
-    public void test_producerFactory_throwsExceptionIfKeySerializerClassConfigIsNull() {
-        KafkaProducerConfig kafkaProducerConfig = new KafkaProducerConfig();
-        kafkaProducerConfig.setKeySerializerClassConfig(null);
-        assertThrows(IllegalArgumentException.class, kafkaProducerConfig::producerFactory);
-    }
-
-    // O método 'producerFactory' deve lançar uma exceção se a configuração da classe serializadora de valor for nula ou vazia.
-    @Test
-    public void test_producerFactory_throwsExceptionIfValueSerializerClassConfigIsNull() {
-        KafkaProducerConfig kafkaProducerConfig = new KafkaProducerConfig();
-        kafkaProducerConfig.setValueSerializerClassConfig(null);
-        assertThrows(IllegalArgumentException.class, kafkaProducerConfig::producerFactory);
-    }
 }

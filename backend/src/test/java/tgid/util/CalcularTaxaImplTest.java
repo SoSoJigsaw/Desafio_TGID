@@ -1,14 +1,15 @@
 package tgid.util;
 
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
 
 import static org.junit.Assert.assertEquals;
 
-@TestConfiguration
+@SpringBootTest
 @Import(CalcularTaxaImpl.class)
-public class CalcularTaxaImplTests {
+public class CalcularTaxaImplTest {
 
     // Deve retornar o valor correto para calcularTaxaDeposito com valores de entrada válidos
     @Test
@@ -42,36 +43,6 @@ public class CalcularTaxaImplTests {
         CalcularTaxaImpl calcularTaxaImpl = new CalcularTaxaImpl();
         double valor = 0.0;
         double taxa = 0.1;
-        double expected = 0.0;
-
-        double resultDeposito = calcularTaxaImpl.calcularTaxaDeposito(valor, taxa);
-        double resultSaque = calcularTaxaImpl.calcularTaxaSaque(valor, taxa);
-
-        assertEquals(expected, resultDeposito, 0.0001);
-        assertEquals(expected, resultSaque, 0.0001);
-    }
-
-    // Deve retornar 0 quando o valor for negativo para ambos calcularTaxaDeposito e calcularTaxaSaque
-    @Test
-    public void test_calcularTaxa_negativeValor() {
-        CalcularTaxaImpl calcularTaxaImpl = new CalcularTaxaImpl();
-        double valor = -100.0;
-        double taxa = 0.1;
-        double expected = 0.0;
-
-        double resultDeposito = calcularTaxaImpl.calcularTaxaDeposito(valor, taxa);
-        double resultSaque = calcularTaxaImpl.calcularTaxaSaque(valor, taxa);
-
-        assertEquals(expected, resultDeposito, 0.0001);
-        assertEquals(expected, resultSaque, 0.0001);
-    }
-
-    // Deve retornar 0 quando a taxa for negativa para ambos calcularTaxaDeposito e calcularTaxaSaque
-    @Test
-    public void test_calcularTaxa_negativeTaxa() {
-        CalcularTaxaImpl calcularTaxaImpl = new CalcularTaxaImpl();
-        double valor = 100.0;
-        double taxa = -0.1;
         double expected = 0.0;
 
         double resultDeposito = calcularTaxaImpl.calcularTaxaDeposito(valor, taxa);

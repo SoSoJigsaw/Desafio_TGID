@@ -19,10 +19,10 @@
             </div>
             <div class="segunda-linha">
                 <input type="email" placeholder="Digite seu email..." v-model="cliente.email">
-                <input type="number" placeholder="Digite seu saldo..." v-model="cliente.saldo">
+                <input type="number" placeholder="Digite seu saldo..." v-model="cliente.saldo" required>
             </div>
 
-            <button v-if="cliente.cpf != '' && cliente.nome != '' && cliente.email != '' && cliente.saldo != ''" type="submit">Confirmar</button>
+            <button v-if="cliente.cpf != '' && cliente.nome != '' && cliente.email != '' && cliente.saldo != null" type="submit">Confirmar</button>
         </form>
     </main>
 </template>
@@ -39,7 +39,7 @@ export default {
                 cpf: '',
                 nome: '',
                 email: '',
-                saldo: '',
+                saldo: null,
             },
             mostrarAlerta: false,
             mostrarSucesso : false,
@@ -67,7 +67,7 @@ export default {
                 this.cliente.cpf = '';
                 this.cliente.nome = '';
                 this.cliente.email = '';
-                this.cliente.saldo = '';
+                this.cliente.saldo = null;
 
             } catch (error) {
                 console.log('Erro:', error.message);

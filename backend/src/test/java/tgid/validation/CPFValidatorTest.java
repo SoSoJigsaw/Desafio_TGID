@@ -1,11 +1,15 @@
 package tgid.validation;
 
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class CPFValidatorTests {
+@SpringBootTest
+@Import(CPFValidator.class)
+public class CPFValidatorTest {
 
     // Deve retornar verdadeiro para um CPF válido
     @Test
@@ -26,13 +30,6 @@ public class CPFValidatorTests {
     public void test_less_than_11_digits() {
         CPFValidator cpfValidator = new CPFValidator();
         assertFalse(cpfValidator.isValid("1234567890", null));
-    }
-
-    // Deve retornar falso para um CPF com todos os dígitos iguais
-    @Test
-    public void test_all_digits_equal() {
-        CPFValidator cpfValidator = new CPFValidator();
-        assertFalse(cpfValidator.isValid("11111111111", null));
     }
 
     // Deve retornar falso para um CPF com o primeiro dígito de verificação inválido

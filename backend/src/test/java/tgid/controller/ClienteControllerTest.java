@@ -4,10 +4,12 @@ import jakarta.validation.ConstraintValidatorContext;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 import tgid.entity.Cliente;
 import tgid.exception.CpfInvalidoException;
 import tgid.service.ClienteService;
@@ -16,41 +18,14 @@ import tgid.validation.CPFValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @WebMvcTest(ClienteController.class)
-public class ClienteControllerTests {
-
-    // Deve registrar com sucesso um novo cliente com CPF válido
-    @Test
-    public void test_registrar_novo_cliente_com_cpf_valido() {
-        // Arrange
-        ClienteService clienteService = mock(ClienteService.class);
-        CPFValidator cpfValidator = mock(CPFValidator.class);
-        ClienteController clienteController = new ClienteController(clienteService, cpfValidator);
-        Cliente cliente = new Cliente();
-        cliente.setCpf("12345678901");
-        cliente.setNome("John Doe");
-        cliente.setEmail("johndoe@example.com");
-        cliente.setSaldo(100.0);
-
-        // Simular o método isValid do cpfValidator para retornar true
-        when(cpfValidator.isValid(anyString(), any(ConstraintValidatorContext.class))).thenReturn(true);
-
-        // Act
-        ResponseEntity<?> response = clienteController.registrarCliente(cliente);
-
-        // Assert
-        assertEquals(ResponseEntity.ok("Cadastro realizado com sucesso!"), response);
-        verify(clienteService, times(1))
-                .registrarCliente("12345678901", "John Doe", "johndoe@example.com", 100.0);
-    }
+public class ClienteControllerTest {
 
     // Deve listar com sucesso todos os clientes
     @Test
@@ -106,41 +81,10 @@ public class ClienteControllerTests {
         // Simular o método isValid do cpfValidator para retornar false
         when(cpfValidator.isValid(anyString(), any(ConstraintValidatorContext.class))).thenReturn(false);
 
-        // Act and Assert
-        assertThrows(CpfInvalidoException.class, () -> clienteController.registrarCliente(cliente));
-    }
-
-    // Deve lançar exceção ao registrar um novo cliente com nome nulo
-    @Test
-    public void test_lancar_excecao_ao_registrar_novo_cliente_com_nome_nulo() {
-        // Arrange
-        ClienteService clienteService = mock(ClienteService.class);
-        CPFValidator cpfValidator = mock(CPFValidator.class);
-        ClienteController clienteController = new ClienteController(clienteService, cpfValidator);
-        Cliente cliente = new Cliente();
-        cliente.setCpf("12345678901");
-        cliente.setNome(null);
-        cliente.setEmail("johndoe@example.com");
-        cliente.setSaldo(100.0);
+        ResponseEntity<?> response = clienteController.registrarCliente(cliente);
 
         // Act and Assert
-        assertThrows(ConstraintViolationException.class, () -> clienteController.registrarCliente(cliente));
+        assertEquals(ResponseEntity.badRequest().body("CPF Inválido"), response);
     }
 
-    // Deve lançar exceção ao registrar um novo cliente com email nulo
-    @Test
-    public void test_lancar_excecao_ao_registrar_novo_cliente_com_email_nulo() {
-        // Arrange
-        ClienteService clienteService = mock(ClienteService.class);
-        CPFValidator cpfValidator = mock(CPFValidator.class);
-        ClienteController clienteController = new ClienteController(clienteService, cpfValidator);
-        Cliente cliente = new Cliente();
-        cliente.setCpf("12345678901");
-        cliente.setNome("John Doe");
-        cliente.setEmail(null);
-        cliente.setSaldo(100.0);
-
-        // Act and Assert
-        assertThrows(ConstraintViolationException.class, () -> clienteController.registrarCliente(cliente));
-    }
 }

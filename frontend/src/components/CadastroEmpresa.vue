@@ -18,14 +18,14 @@
                 <input type="text" placeholder="Digite o nome da empresa..." v-model="empresa.nome">
             </div>
             <div class="segunda-linha">
-                <input type="number" placeholder="Digite seu saldo..." v-model="empresa.saldo">
+                <input type="number" placeholder="Digite seu saldo..." v-model="empresa.saldo" required>
             </div>
             <div class="terceira-linha">
                 <input type="decimal" placeholder="Digite sua taxa para depósito..." v-model="empresa.taxaDeposito">
                 <input type="decimal" placeholder="Digite sua taxa para saque..." v-model="empresa.taxaSaque">
             </div>
 
-            <button v-if="empresa.cnpj != '' && empresa.nome != '' && empresa.saldo != '' && empresa.taxaDeposito && empresa.taxaSaque" type="submit">Confirmar</button>
+            <button v-if="empresa.cnpj != '' && empresa.nome != '' && empresa.saldo != null  && empresa.taxaDeposito && empresa.taxaSaque" type="submit">Confirmar</button>
         </form>
     </main>
 </template>
@@ -41,7 +41,7 @@ export default {
             empresa: {
                 cnpj: '',
                 nome: '',
-                saldo: '',
+                saldo: null,
                 taxaDeposito: '',
                 taxaSaque: ''
             },
@@ -70,7 +70,7 @@ export default {
 
                 this.empresa.cnpj = '';
                 this.empresa.nome = '';
-                this.empresa.saldo = '';
+                this.empresa.saldo = null;
                 this.empresa.taxaDeposito = '';
                 this.empresa.taxaSaque = '';
 

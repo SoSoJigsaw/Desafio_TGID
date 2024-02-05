@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tgid.entity.Empresa;
 
+import java.util.Optional;
+
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
@@ -26,4 +28,5 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     @Query("UPDATE Empresa e SET e.saldo = :novoSaldo WHERE e.id = :id")
     void atualizarSaldo(@Param("id") Long id, @Param("novoSaldo") double novoSaldo);
 
+    Optional<Empresa> findByCnpj(String cnpj);
 }

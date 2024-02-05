@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import static org.junit.Assert.*;
 
 @SpringBootTest
-public class TransacaoTests {
+public class TransacaoTest {
 
     // Criar uma transação com um 'tipo', 'valor', 'dataTransacao', 'cliente' e 'empresa' válidos
     @Test

@@ -16,10 +16,11 @@
         </div>
 
         <div class="legenda">
-            <p class="saldo-positivo"><span>•</span> Saldo positivo</p>
-            <p class="saldo-negativo"><span>•</span> Saldo zerado ou negativo</p>
+            <p class="saldo-positivo"><span>•</span> Saldo positivo <input type="checkbox" v-model="mostrarPositivo" @change="checkBoxHandler"></p>
+            <p class="saldo-negativo"><span>•</span> Saldo zerado <input type="checkbox" v-model="mostrarNegativo" @change="checkBoxHandler"></p>
             <input type="text" v-model="searchTerm" placeholder="Filtre aqui...">
         </div>
+        
         <div class="table-wrapper">
             <table cellspacing="0">
                 <thead>
@@ -125,6 +126,8 @@ export default {
             confirmarDelete: false,
             edicaoId: '',
             empresaNome: '',
+            mostrarPositivo: true,
+            mostrarNegativo: true,
         }
     },
 
@@ -147,6 +150,25 @@ export default {
                 taxaDeposito: e.taxaDeposito,
                 taxaSaque: e.taxaSaque
             }));
+
+            for (let i = 0; i < this.empresas.length; i++) {
+                let saldo = parseInt(this.empresas[i].saldo);
+                if (saldo === 0 || saldo === 0.0 || saldo === 0.00) {
+                    this.empresas[i].saldo = 'Sem Saldo';
+                }
+            }
+
+            if (this.mostrarPositivo && !this.mostrarNegativo) {
+                this.empresas = this.empresas.filter(empresa => parseInt(empresa.saldo) > 0);    
+            }
+
+            if (!this.mostrarPositivo && this.mostrarNegativo) {
+                this.empresas = this.empresas.filter(empresa => empresa.saldo === 'Sem Saldo')
+            }
+
+            if (!this.mostrarPositivo && !this.mostrarNegativo) {
+                this.empresas = [];
+            }
 
             this.empresas.sort((a, b) => a.id - b.id);
             
@@ -194,7 +216,11 @@ export default {
             }
             
             this.taxaDTO = {};
-        }
+        },
+
+        checkBoxHandler() {
+            this.getEmpresas();
+        },
 
     },
 
@@ -233,10 +259,25 @@ h3 {
     align-items: center;
 }
 
-.legenda input {
+.legenda input:not(.legenda p input) {
     width: fit-content;
     background-color: var(--cor-contraste-light);
     padding-left: 10px;
+}
+
+.legenda p {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.legenda p input {
+    width: 20px;
+    justify-content: center;
+    align-self: flex-end;
+    justify-content: flex-end;
 }
 
 p span {

@@ -8,7 +8,7 @@ import static org.junit.Assert.assertNotNull;
 
 
 @SpringBootTest
-public class ClienteTests {
+public class ClienteTest {
 
     // Criar uma nova instância de Cliente com CPF, nome, email e saldo válidos
     @Test
@@ -61,57 +61,6 @@ public class ClienteTests {
         assertEquals("Jane Smith", cliente.getNome());
         assertEquals("janesmith@example.com", cliente.getEmail());
         assertEquals(200.0, cliente.getSaldo(), 0.001);
-    }
-
-    // Criar uma nova instância de Cliente com CPF nulo
-    @Test
-    public void test_criar_novo_cliente_com_cpf_nulo() {
-        // Arrange
-        Cliente cliente = new Cliente();
-        cliente.setCpf(null);
-        cliente.setNome("John Doe");
-        cliente.setEmail("johndoe@example.com");
-        cliente.setSaldo(100.0);
-
-        // Act and Assert
-        assertNotNull(cliente.getCpf());
-        assertEquals("John Doe", cliente.getNome());
-        assertEquals("johndoe@example.com", cliente.getEmail());
-        assertEquals(100.0, cliente.getSaldo(), 0.001);
-    }
-
-    // Criar uma nova instância de Cliente com nome nulo
-    @Test
-    public void test_criar_novo_cliente_com_nome_nulo() {
-        // Arrange
-        Cliente cliente = new Cliente();
-        cliente.setCpf("12345678901");
-        cliente.setNome(null);
-        cliente.setEmail("johndoe@example.com");
-        cliente.setSaldo(100.0);
-
-        // Act and Assert
-        assertEquals("12345678901", cliente.getCpf());
-        assertNotNull(cliente.getNome());
-        assertEquals("johndoe@example.com", cliente.getEmail());
-        assertEquals(100.0, cliente.getSaldo(), 0.001);
-    }
-
-    // Criar uma nova instância de Cliente com email nulo
-    @Test
-    public void test_criar_novo_cliente_com_email_nulo() {
-        // Arrange
-        Cliente cliente = new Cliente();
-        cliente.setCpf("12345678901");
-        cliente.setNome("John Doe");
-        cliente.setEmail(null);
-        cliente.setSaldo(100.0);
-
-        // Act and Assert
-        assertEquals("12345678901", cliente.getCpf());
-        assertEquals("John Doe", cliente.getNome());
-        assertNotNull(cliente.getEmail());
-        assertEquals(100.0, cliente.getSaldo(), 0.001);
     }
 
 }

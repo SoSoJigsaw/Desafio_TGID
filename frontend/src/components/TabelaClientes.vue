@@ -11,10 +11,11 @@
         </div>
 
         <div class="legenda">
-            <p class="saldo-positivo"><span>•</span> Saldo positivo</p>
-            <p class="saldo-negativo"><span>•</span> Saldo zerado ou negativo</p>
+            <p class="saldo-positivo"><span>•</span> Saldo positivo <input type="checkbox" v-model="mostrarPositivo" @change="checkBoxHandler"></p>
+            <p class="saldo-negativo"><span>•</span> Saldo zerado <input type="checkbox" v-model="mostrarNegativo" @change="checkBoxHandler"></p>
             <input type="text" v-model="searchTerm" placeholder="Filtre aqui...">
         </div>
+
         <div class="table-wrapper">
             <table cellspacing="0">
                 <thead>
@@ -61,6 +62,8 @@ export default {
             confirmarDelete: false,
             edicaoId: '',
             clienteNome: '',
+            mostrarPositivo: true,
+            mostrarNegativo: true,
         }
     },
 
@@ -82,6 +85,27 @@ export default {
                 email: cliente.email,
                 saldo: cliente.saldo
             }));
+
+            for (let i = 0; i < this.clientes.length; i++) {
+                let saldo = parseInt(this.clientes[i].saldo);
+                if (saldo === 0 || saldo === 0.0 || saldo === 0.00) {
+                    this.clientes[i].saldo = 'Sem Saldo';
+                }
+            }
+
+            if (this.mostrarPositivo && !this.mostrarNegativo) {
+                this.clientes = this.clientes.filter(cliente => parseInt(cliente.saldo) > 0);    
+            }
+
+            if (!this.mostrarPositivo && this.mostrarNegativo) {
+                this.clientes = this.clientes.filter(cliente => cliente.saldo === 'Sem Saldo')
+            }
+
+            if (!this.mostrarPositivo && !this.mostrarNegativo) {
+                this.clientes = [];
+            }
+
+            this.clientes.sort((a, b) => a.id - b.id);
             
         },
 
@@ -93,6 +117,10 @@ export default {
 
             this.getClientes();
 
+        },
+
+        checkBoxHandler() {
+            this.getClientes();
         },
 
     },
@@ -132,10 +160,25 @@ h3 {
     align-items: center;
 }
 
-.legenda input {
+.legenda input:not(.legenda p input) {
     width: fit-content;
     background-color: var(--cor-contraste-light);
     padding-left: 10px;
+}
+
+.legenda p {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.legenda p input {
+    width: 20px;
+    justify-content: center;
+    align-self: flex-end;
+    justify-content: flex-end;
 }
 
 p span {

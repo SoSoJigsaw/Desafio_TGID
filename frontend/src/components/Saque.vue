@@ -2,6 +2,15 @@
     <main>
         <h3>Sacar</h3>
 
+        <div v-if="mostrarAlerta" class="filter-download">
+            <p class="title-popup">
+                Operação de {{ saldoInsuficiente.operacao }} não pôde ser realizada. O valor excede o
+                saldo atual da empresa <strong>{{ saldoInsuficiente.nome }}</strong> de
+                <strong>{{ saldoInsuficiente.saldo }}</strong> reais. Tente novamente.
+            </p>
+            <button class="btn-popup" @click.prevent="mostrarAlerta = false">OK</button>
+        </div>
+
         <div v-if="mostrarSucesso" class="filter-download">
             <p class="title-popup">Saque realizado com sucesso</p>
             <button class="btn-popup" @click.prevent="mostrarSucesso = false">OK</button>
@@ -39,6 +48,8 @@ export default {
             empresas: [],
             clientes: [],
             mostrarSucesso: false,
+            mostrarAlerta: false,
+            saldoInsuficiente: {},
         }
     },
 
@@ -73,17 +84,30 @@ export default {
 
         async sacar() {
 
-            await axios.post('http://localhost:8080/transacoes/saque/' + this.empresaId + '/' + this.clienteId, this.valor, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            try {
 
-            this.mostrarSucesso = true;
+                const response = await axios.post('http://localhost:8080/transacoes/saque/' + this.empresaId + '/' + this.clienteId, this.valor, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
 
-            this.empresaId = '';
-            this.clienteId = '';
-            this.valor = '';
+                this.mostrarSucesso = true;
+
+                this.empresaId = '';
+                this.clienteId = '';
+                this.valor = '';
+
+            } catch (error) {
+               
+                console.log('Erro:', error.message);
+
+                this.saldoInsuficiente = error.response.data;
+
+                this.mostrarAlerta = true;
+
+            }
+
         },
 
     },
@@ -159,5 +183,10 @@ h3 {
 
 .title-popup {
 
+}
+
+.title-popup strong {
+    color: var(--laranja-light);
+    padding: 5px;
 }
 </style>

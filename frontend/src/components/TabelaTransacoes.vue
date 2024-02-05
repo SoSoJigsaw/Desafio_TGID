@@ -11,10 +11,11 @@
         </div>
 
         <div class="legenda">
-            <p class="deposito"><span>•</span> Depósito</p>
-            <p class="saque"><span>•</span> Saque</p>
+            <p class="deposito"><span>•</span> Depósito <input type="checkbox" v-model="mostrarDeposito" @change="checkBoxHandler"></p>
+            <p class="saque"><span>•</span> Saque <input type="checkbox" v-model="mostrarSaque" @change="checkBoxHandler"></p>
             <input type="text" v-model="searchTerm" placeholder="Filtre aqui...">
         </div>
+
         <div class="table-wrapper">
             <table cellspacing="0">
                 <thead>
@@ -63,6 +64,8 @@ export default {
             searchTerm: '',
             confirmarDelete: false,
             edicaoId: '',
+            mostrarDeposito: true,
+            mostrarSaque: true,
         }
     },
 
@@ -85,6 +88,20 @@ export default {
                 clienteNome: t.clienteNome,
                 empresaNome: t.empresaNome
             }));
+
+            if (this.mostrarDeposito && !this.mostrarSaque) {
+                this.transacoes = this.transacoes.filter(transacao => transacao.tipo === 'DEPÓSITO');    
+            }
+
+            if (!this.mostrarDeposito && this.mostrarSaque) {
+                this.transacoes = this.transacoes.filter(transacao => transacao.tipo === 'SAQUE')
+            }
+
+            if (!this.mostrarDeposito && !this.mostrarSaque) {
+                this.transacoes = [];
+            }
+
+            this.transacoes.sort((a, b) => a.id - b.id);
             
         },
 
@@ -96,6 +113,10 @@ export default {
 
             this.getTransacoes();
 
+        },
+
+        checkBoxHandler() {
+            this.getTransacoes();
         },
 
     },
@@ -135,10 +156,25 @@ h3 {
     align-items: center;
 }
 
-.legenda input {
+.legenda input:not(.legenda p input) {
     width: fit-content;
     background-color: var(--cor-contraste-light);
     padding-left: 10px;
+}
+
+.legenda p {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.legenda p input {
+    width: 20px;
+    justify-content: center;
+    align-self: flex-end;
+    justify-content: flex-end;
 }
 
 p span {

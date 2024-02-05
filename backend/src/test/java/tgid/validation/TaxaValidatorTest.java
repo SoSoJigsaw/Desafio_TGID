@@ -1,11 +1,15 @@
 package tgid.validation;
 
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class TaxaValidatorTests {
+@SpringBootTest
+@Import(TaxaValidator.class)
+public class TaxaValidatorTest {
 
     // Testa se uma entrada válida de "SAQUE" retorna verdadeiro
     @Test
