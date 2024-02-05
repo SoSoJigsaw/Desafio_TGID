@@ -39,7 +39,7 @@
                         <td>{{ c.id }}</td>
                         <td>{{ c.nome }}</td>
                         <td>{{ c.cnpj }}</td>
-                        <td :style="c.saldo > 0 ? 'color: hsla(120, 100%, 25%, 0.9)' : 'color: hsla(0, 100%, 50%, 0.9)'">{{ c.saldo }}</td>
+                        <td :style="c.saldo > 0 ? 'color: hsla(120, 100%, 25%, 0.9)' : 'color: hsla(0, 100%, 50%, 0.9)'" class="saldo"><p v-if="c.saldo != 'Sem Saldo'">R$ </p>{{ c.saldo }}</td>
                         <td v-if="editTaxaDeposito !== c.id">
                             {{ c.taxaDeposito }}
                             <button class="button-edit" @click.prevent="editTaxaDeposito = c.id">
@@ -72,7 +72,7 @@
                         <td>{{ c.id }}</td>
                         <td>{{ c.nome }}</td>
                         <td>{{ c.cnpj }}</td>
-                        <td :style="c.saldo > 0 ? 'color: hsla(120, 100%, 25%, 0.9)' : 'color: hsla(0, 100%, 50%, 0.9)'">{{ c.saldo }}</td>
+                        <td :style="c.saldo > 0 ? 'color: hsla(120, 100%, 25%, 0.9)' : 'color: hsla(0, 100%, 50%, 0.9)'" class="saldo"><p v-if="c.saldo != 'Sem Saldo'">R$ </p>{{ c.saldo }}</td>
                         <td v-if="editTaxaDeposito !== c.id">
                             {{ c.taxaDeposito }}
                             <button class="button-edit" @click.prevent="editTaxaDeposito = c.id">
@@ -150,6 +150,13 @@ export default {
                 taxaDeposito: e.taxaDeposito,
                 taxaSaque: e.taxaSaque
             }));
+
+            for (let i = 0; i < this.empresas.length; i++) {
+                
+                let saldo = parseInt(this.empresas[i].saldo);
+                
+                this.empresas[i].saldo = saldo; 
+            }
 
             for (let i = 0; i < this.empresas.length; i++) {
                 let saldo = parseInt(this.empresas[i].saldo);
@@ -385,6 +392,14 @@ td {
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
+}
+
+.saldo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
 }
 
 tr:nth-child(even)    { background-color: rgba(224, 224, 225, 0.6);}

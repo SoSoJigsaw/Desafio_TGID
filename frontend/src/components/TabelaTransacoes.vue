@@ -33,7 +33,7 @@
                     <tr v-if="searchTerm.length === 0" v-for="c in transacoes" :key="c.id">
                         <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.id }}</td>
                         <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.tipo }}</td>
-                        <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.valor }}</td>
+                        <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">R$ {{ c.valor }}</td>
                         <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.dataTransacao }}</td>
                         <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.clienteNome }}</td>
                         <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.empresaNome }}</td>
@@ -42,7 +42,7 @@
                     <tr v-if="searchTerm.length > 0" v-for="c in filtro" :key="c.id">
                         <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.id }}</td>
                         <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.tipo }}</td>
-                        <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.valor }}</td>
+                        <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">R$ {{ c.valor }}</td>
                         <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.dataTransacao }}</td>
                         <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.clienteNome }}</td>
                         <td :style="c.tipo == 'DEPÓSITO' ? 'color: #F29F80' : 'color: #F26363'">{{ c.empresaNome }}</td>
@@ -88,6 +88,13 @@ export default {
                 clienteNome: t.clienteNome,
                 empresaNome: t.empresaNome
             }));
+
+            for (let i = 0; i < this.transacoes.length; i++) {
+                
+                let valor = parseInt(this.transacoes[i].valor);
+                
+                this.transacoes[i].valor = valor; 
+            }
 
             if (this.mostrarDeposito && !this.mostrarSaque) {
                 this.transacoes = this.transacoes.filter(transacao => transacao.tipo === 'DEPÓSITO');    
