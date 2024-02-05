@@ -77,13 +77,14 @@
 
 ## Sobre o desenvolvedor
 
-<div style="display: flex; flex-direction: column; gap: 50px;">
+<div style="position: relative; display: flex; justify-content: center; align-items: center">
 
-<div style="background-image: url('https://raw.githubusercontent.com/SoSoJigsaw/Desafio_TGID/main/img/perfil-card.png'); background-size: cover; background-position: center; padding: 100px; width: 100%; height: auto" >
-<a href="https://github.com/SoSoJigsaw">
+<img src="img/perfil-card.png" alt="Sobre mim">
+
+<a href="https://github.com/SoSoJigsaw" style="width: fit-content; height: auto; position: absolute; top: 85%; left: 37%; transform: translate(-50%, -50%);">
   <img src="https://bit.ly/3f9Xo0P">
 </a>
-<a href="https://www.linkedin.com/in/sosojigsaw/">
+<a href="https://www.linkedin.com/in/sosojigsaw/" style="width: fit-content; height: auto; position: absolute; top: 85%; left: 59%; transform: translate(-50%, -50%);">
   <img src="https://bit.ly/2P1ZogM">
 </a>
 </div>
