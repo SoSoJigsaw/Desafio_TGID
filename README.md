@@ -198,7 +198,10 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
                   <td>4 anos</td>
               </tr>
               <tr>
-                    <td align="center"><div align="center"><img src="img/hibernate.png" width="100px" height="auto" align="center"><img src="https://www.baeldung.com/wp-content/uploads/2021/02/lsd-module-icon-1.png" width="50px" height="auto" align="center"></div>
+                    <td align="center">
+                      <p align="center">
+                        <img src="img/hibernate.png" width="100px" height="auto" align="center">
+                        <img src="https://www.baeldung.com/wp-content/uploads/2021/02/lsd-module-icon-1.png" width="50px" height="auto" align="center"></p>
                     </td>
                     <td><em>JPA e Hibernate</em></td>
                     <td>Avançado</td>
@@ -239,8 +242,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
                         <img src="img/git.svg" width="50px" height="auto" align="center">
                         <img src="img/github.png" width="50px" height="auto" align="center">
                       </p>  
-                    </td>
-                        
+                    </td> 
                     <td><em>Git e Github</em></td>
                     <td>Avançado</td>
                     <td>5 anos</td>
