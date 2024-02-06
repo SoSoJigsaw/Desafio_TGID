@@ -231,7 +231,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
                     <td>1 ano</td>
               </tr>
               <tr>
-                    <td align="center"><img src="img/tecnologias/mockito.png" width="100px" height="auto" align="center"></td>
+                    <td align="center"><img src="img/tecnologias/mockito.png" width="150px" height="auto" align="center"></td>
                     <td><em>Mockito</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
@@ -240,7 +240,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
                     <td align="center">
                       <p align="center">
                         <img src="img/tecnologias/git.svg" width="50px" height="auto" align="center">
-                        <img src="img/tecnologias/github.png" width="50px" height="auto" align="center">
+                        <img src="img/tecnologias/github.png" width="75px" height="auto" align="center">
                       </p>  
                     </td> 
                     <td><em>Git e Github</em></td>
