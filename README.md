@@ -198,7 +198,10 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
                   <td>4 anos</td>
               </tr>
               <tr>
-                    <td align="center"><div align="center"><img src="https://w7.pngwing.com/pngs/709/504/png-transparent-hibernate-spring-framework-java-persistence-api-java-annotation-others-text-logo-map-thumbnail.png" width="100px" height="auto" align="center"><img src="https://www.baeldung.com/wp-content/uploads/2021/02/lsd-module-icon-1.png" width="50px" height="auto" align="center"></div>
+                    <td align="center">
+                      <p align="center">
+                        <img src="img/hibernate.png" width="100px" height="auto" align="center">
+                        <img src="https://www.baeldung.com/wp-content/uploads/2021/02/lsd-module-icon-1.png" width="50px" height="auto" align="center"></p>
                     </td>
                     <td><em>JPA e Hibernate</em></td>
                     <td>Avançado</td>
@@ -211,31 +214,41 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
                     <td>4 anos</td>
               </tr>
               <tr>
-                    <td align="center"><img src="img/tecnologias/postgre.svg" width="50px" height="auto" align="center"></td>
+                    <td align="center">
+                      <p align="center">
+                        <img src="img/tecnologias/postgre.svg" width="50px" height="auto" align="center">
+                        <img src="img/tecnologias/oracle.svg" width="50px" height="auto" align="center">
+                        <img src="img/tecnologias/MySQL.svg" width="50px" height="auto" align="center">
+                    </td>
                     <td><em>SQL e PL/SQL</em></td>
                     <td>Avançado</td>
                     <td>5 anos</td>
               </tr>
               <tr>
-                    <td align="center"><img src="img/tecnologias/java.svg" width="50px" height="auto" align="center"></td>
+                    <td align="center"><img src="img/tecnologias/junit.png" width="50px" height="auto" align="center"></td>
                     <td><em>JUnit5</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
               </tr>
               <tr>
-                    <td align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Mockito_Logo.png" width="100px" height="auto" align="center"></td>
+                    <td align="center"><img src="img/tecnologias/mockito.png" width="100px" height="auto" align="center"></td>
                     <td><em>Mockito</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
               </tr>
               <tr>
-                    <td align="center"><img src="https://w7.pngwing.com/pngs/928/911/png-transparent-junit-software-testing-spring-framework-unit-testing-java-others-miscellaneous-text-trademark-thumbnail.png" width="50px" height="auto" align="center"></td>
+                    <td align="center">
+                      <p align="center">
+                        <img src="img/git.svg" width="50px" height="auto" align="center">
+                        <img src="img/github.png" width="50px" height="auto" align="center">
+                      </p>  
+                    </td> 
                     <td><em>Git e Github</em></td>
                     <td>Avançado</td>
                     <td>5 anos</td>
               </tr>
               <tr>
-                    <td align="center"><img src="https://camo.githubusercontent.com/b35dd0981426447472fb2625ac694ec7957d6343c89b56475cdb2cbac1c7e85a/68747470733a2f2f7777772e6b696e64706e672e636f6d2f706963632f6d2f35332d3533393736305f736372756d2d6c6f676f2d68642d706e672d646f776e6c6f61642e706e67" width="50px" height="auto" align="center"></td>
+                    <td align="center"><img src="img/tecnologias/scrum.png" width="50px" height="auto" align="center"></td>
                     <td><em>Metodologia Ágil Scrum</em></td>
                     <td>Avançado</td>
                     <td>4 anos</td>
@@ -253,7 +266,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
                     <td>1 ano</td>
               </tr>  
               <tr>
-                    <td align="center"><img src="img/tecnologias/apache-kafka.svg" width="50px" height="auto" align="center"></td>
+                    <td align="center"><img src="img/tecnologias/apache-kafka.png" width="50px" height="auto" align="center"></td>
                     <td><em>Apache Kafka</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
