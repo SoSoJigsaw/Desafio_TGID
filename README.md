@@ -93,7 +93,10 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
 - Caso tenha interesse em executar o projeto, o Manual de Uso ensina como instalar as dependências e como funciona cada uma das funcionalidades do projeto. [Acesse ele aqui]().
 
 ## Sumarização de Classes
-- Caso tenha interesse em analisar para qual funcionalidade cada classe serve, assim como a motivação de cada um de seus atributos e métodos, seus retornos, [acesse a sumarização por aqui]().
+- Caso tenha interesse em analisar para qual funcionalidade cada classe serve, assim como a motivação de cada um de seus atributos e métodos, seus retornos, [acesse a sumarização de classes por aqui]().
+
+## Sumarização de Testes
+- Caso tenha interesse em analisar os testes realizados e os resultados esperados, [acesse a sumarização de testes aqui]().
 
 ## Documentação Técnica
 - Nessa seção, exploraremos alguns conceitos que foram implementados ao projeto e especificamente ao código, com o intuito de diminuir as chances de erros ocorrerem e para seguir as boas práticas convencionadas no desenvolvimento SpringBoot.
