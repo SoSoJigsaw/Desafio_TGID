@@ -130,51 +130,56 @@ Caso tenha interesse em analisar os testes realizados e os resultados esperados,
 <br>
 
 ## Documentação Técnica
-Nessa seção, exploraremos alguns conceitos que foram implementados ao projeto e especificamente ao código, com o intuito de diminuir as chances de erros ocorrerem e para seguir as boas práticas convencionadas no desenvolvimento SpringBoot.
+Nessa seção, será explorado alguns conceitos que foram implementados ao projeto e especificamente ao código, com o intuito de diminuir as chances de erros ocorrerem e para seguir as boas práticas convencionadas no desenvolvimento SpringBoot.
 
 <br>
 
-### 1. O uso de contâiners Docker e o Docker Compose
-
-
-<br>
-
-### 2. Tratamento de Erros/Exceções
+### 1. Implementação da Lógica de Negócios
 
 
 <br>
 
-### 3. Injeção de Dependências
+### 2. O uso de contâiners Docker e o Docker Compose
 
 
 <br>
 
-### 4. Arquitetura em camadas (ou Arquitetura de três camadas)
+### 3. Tratamento de Erros/Exceções
 
 
 <br>
 
-### 5. Desacoplamento de componentes
+### 4. Injeção de Dependências
 
 
 <br>
 
-### 6. Menssageria com Apache Kafka
+### 5. Arquitetura em camadas (ou Arquitetura de três camadas)
 
 
 <br>
 
-### 7. Callback com
+### 6. Desacoplamento de componentes
 
 
 <br>
 
-### 8. Testes Unitários e de Integração
+### 7. Menssageria com Apache Kafka
 
 
 <br>
 
-### 9. Validação de CPF e CNPJ
+### 8. Callback com
+
+
+<br>
+
+### 9. Testes Unitários e de Integração
+
+
+<br>
+
+### 10. Validação de CPF e CNPJ
 
 
 <br>
