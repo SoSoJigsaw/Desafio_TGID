@@ -212,7 +212,7 @@ Nessa seção, exploraremos alguns conceitos que foram implementados ao projeto 
 
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">      
 
-   <h3 align="center">Meu Set Skill:</h3>
+   <h3 align="center">Meu <b>Skill Set</b>:</h3>
 
    <table align="left">
      <tbody>
