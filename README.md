@@ -15,21 +15,33 @@
 </div>
 
 ## Desafio
+- Criação de um sistema utilizando ao menos dois usuários (Empresa e Cliente). Tanto o CPF quanto o CNPJ precisam serem validados. Para cada Empresa, deve haver ao menos um tipo de taxa de sistema que será 
+incidida no momento da transação (seja saque ou depósito ). As Empresas devem ter um saldo que advém dos depósitos e saques realizados por Clientes na sua empresa, e já com o abate das taxas de administração. Clientes podem fazer depósitos e saques pelas Empresas (a depender dos saldos das empresas). No momento em que a transação é realizada, deve ser enviado um callback para Empresa informando a transação, e algum tipo de 
+notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
+- Pontos principais: Lógica para regras de negócio, Modelagem de Dados, Clean Code, Manutenibilidade de código, Tratamento de Erros e Desacoplamento de componentes.
 
-## Requisitos
+## Requisitos (Diferenciais)
+- SpringBoot
+- Documentação
+- Propostas de Arquitetura
+- Testes
 
 ## Solução
-
 ![gif]()
+- Foi desenvolvida uma aplicação baseada em web que permite realizar transações (depósito ou saque), cadastrar novos clientes ou empresas, assim como ter acesso aos dados existentes no banco de dados. Muito além da criação da API no backend, foi também realizada uma interface simples e intuitiva que facilita o uso do usuário. Todas as exceções conhecidas foram tratadas e, com relação ao CPF e o CNPJ, foram criados algoritmos de autenticação, considerando não apenas o número de dígitos, mas também fazendo a verificação dos dígitos de controle, que são os dois últimos presentes tanto no CPF quanto no CNPJ.
+- Além do tratamento de erros dentro do Spring Boot, foi configurado para o frontend Vue.js lidar com os erros retornados pelos controllers, realizando assim um evento que informa ao usuário a respeito da exceção ocorrida.
+- Foram criados também métodos de envio de Callbacks para as empresas, assim como notificações por email aos clientes (usando o Spring Kafka), a respeito das transações que eles estão envolvidos e alterando então o saldo para o valor esperado. Esse saldo, no caso das empresas, é calculado considerando o valor da taxa para o tipo de transação definido anteriormente.
+- Por fim, as funções vitais dos Controllers, Repositories e Services foram testados criando métodos de teste com a utilização de JUnit5 e Mockito.  
 
 ## Tecnologias Utilizadas
 <details>
 <summary>Front-End</summary>
 
 * [JavaScript (ES6)](https://www.javascript.com)
+* [TypeScript](https://www.typescriptlang.org/)
 * [HTML5](https://www.w3schools.com/css/)
 * [CSS3](https://www.w3schools.com/css/)
-* [Vue.js 2](https://vuejs.org/)
+* [Vue.js](https://vuejs.org/)
 
 
 </details>
@@ -37,43 +49,56 @@
 <details>
 <summary>Back-End</summary>
 
-* [Java](https://www.java.com/pt-BR/?msclkid=7faa842eb8f811ecab39772d4c1ae90b)
-
 * [Spring boot](https://spring.io/projects/spring-boot)
+* [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
+* [Hibernate](https://hibernate.org/)
+* [Apache Kafka](https://spring.io/projects/spring-kafka)
+* [Apache Maven](https://maven.apache.org/)
 
 </details>
 
 <details>
-<summary>Database</summary>
+<summary>Banco de Dados e DevOps</summary>
 
-* [Oracle Autonomous Database](https://www.oracle.com/br/autonomous-database/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [Docker](https://www.docker.com/)
+* [Docker Compose](https://docs.docker.com/compose/)
 
 </details>
 <details>
-<summary>Meetings and Communication</summary>
+<summary>Testes Unitários e de Integração</summary>
 
-* [Discord](https://discord.com/?msclkid=b4f5af84b8f811ecbd81c127a0ae68a7)
+* [JUnit5](https://junit.org/junit5/)
 
-* [Whatsapp](https://www.whatsapp.com/)
+* [Mockito](https://site.mockito.org/)
 
-* [Slack](https://slack.com/intl/pt-br/?msclkid=c00e628eb8f811ecaef374bb86d7f056)
 </details>
 
 <details>
-<summary>Other Tools</summary>
+<summary>Outras ferramentas</summary>
 
 * [Github](https://github.com/)
 
-* [Eclipse IDE](https://www.eclipse.org/downloads/)
+* [IntelliJ IDE](https://www.jetbrains.com/pt-br/idea/)
 
-* [IntelliJ IDE](https://www.jetbrains.com/idea/promo/?msclkid=6ae44e88c2811d86c0ae2cdbd94ffcfb&utm_source=bing&utm_medium=cpc&utm_campaign=AMER_en_BR_IDEA_Branded&utm_term=intellij&utm_content=intellij%20idea)
+* [Visual Studio Code](https://code.visualstudio.com/)
 
-* [Jira](https://apifluffy.atlassian.net/jira/software/projects/EA/boards/1)
-
-* [Photoshop](https://www.adobe.com/br/products/photoshop.html?sdid=KQPOM&mv=search&ef_id=d67181c6b224183a4875e395ae54f4bf:G:s&s_kwcid=AL!3085!10!79302406606568!79302288716688&msclkid=d67181c6b224183a4875e395ae54f4bf)
 </details>
 
-## DER
+## Estrutura do Banco (DER)
+![DER]
+- O projeto conta com três entidades, sendo que em uma delas, a entidade `Transacao`, possui duas chaves estrangeiras, portanto possui relacionamento com as demais. As outras duas entidades são `Cliente` e `Empresa`.
+
+## Manual de Uso
+- Caso tenha interesse em executar o projeto, o Manual de Uso ensina como instalar as dependências e como funciona cada uma das funcionalidades do projeto. [Acesse ele aqui]().
+
+## Sumarização de Classes
+- Caso tenha interesse em analisar para qual funcionalidade cada classe serve, assim como a motivação de cada um de seus atributos e métodos, seus retornos, [acesse a sumarização por aqui]().
+
+## Documentação Técnica
+- Nessa seção, exploraremos alguns conceitos que foram implementados ao projeto e especificamente ao código, com o intuito de diminuir as chances de erros ocorrerem e para seguir as boas práticas convencionadas no desenvolvimento SpringBoot.
+
+### 1. 
 
 ## Sobre o desenvolvedor
 
