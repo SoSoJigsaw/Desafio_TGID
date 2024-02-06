@@ -2,16 +2,22 @@
 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
 
   <img src="img/logoTgid.png" width="100%" height="20%">
- 
+
+ - Backend:
   <a href="https://www.java.com/pt-BR/"><img src="https://img.shields.io/badge/Backend Langugage%3A-Java-orange"/></a>
   <a href="https://www.java.com/pt-BR/"><img src="https://img.shields.io/badge/Backend Framework%3A-SpringBoot-green"/></a>
-  <a href="https://www.java.com/pt-BR/"><img src="https://img.shields.io/badge/Gerenciador de Dependências%3A-Maven-purple"/></a>         
+  <a href="https://www.java.com/pt-BR/"><img src="https://img.shields.io/badge/Gerenciador de Dependências%3A-Maven-purple"/></a>
+  <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Testes Unitários%3A-JUnit5 e Mockito-red"/></a>
+
+  - Frontend:
   <a href="https://embraer.com/br/pt"><img src="https://img.shields.io/badge/Frontend%20Language%3A-Typescript-blue"/></a>
   <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Frontend Language%3A-JavaScript-yellow"/></a>
   <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Frontend Framework%3A-Vue.js-green"/></a>
+  
+  - Banco de Dados e DevOps:
   <a href="http://fatecsjc-prd.azurewebsites.net/"><img src="https://img.shields.io/badge/Banco de Dados%3A-PostgreSQL-green"/></a>
   <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/DevOps%3A-Docker e Docker Compose-silver"/></a>
-  <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Testes Unitários%3A-JUnit5 e Mockito-red"/></a>
+  
 </div>
 
 ## Desafio
@@ -85,9 +91,10 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
 
 </details>
 
-## Estrutura do Banco (DER)
-![DER]
+## Estrutura do Banco (DER e Modelo Lógico)
 - O projeto conta com três entidades, sendo que em uma delas, a entidade `Transacao`, possui duas chaves estrangeiras, portanto possui relacionamento com as demais. As outras duas entidades são `Cliente` e `Empresa`.
+![DER]()
+![Modelo Lógico]()
 
 ## Manual de Uso
 - Caso tenha interesse em executar o projeto, o Manual de Uso ensina como instalar as dependências e como funciona cada uma das funcionalidades do projeto. [Acesse ele aqui]().
@@ -101,7 +108,32 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
 ## Documentação Técnica
 - Nessa seção, exploraremos alguns conceitos que foram implementados ao projeto e especificamente ao código, com o intuito de diminuir as chances de erros ocorrerem e para seguir as boas práticas convencionadas no desenvolvimento SpringBoot.
 
-### 1. 
+### 1. O uso de contâiners Docker e o Docker Compose
+
+
+### 2. Tratamento de Erros/Exceções
+
+
+### 3. Injeção de Dependências
+
+
+### 4. Arquitetura em camadas (ou Arquitetura de três camadas)
+
+
+### 5. Desacoplamento de componentes
+
+
+### 6. Menssageria com Apache Kafka
+
+
+### 7. Callback com
+
+
+### 8. Testes Unitários e de Integração
+
+
+### 9. Validação de CPF e CNPJ
+
 
 ## Sobre o desenvolvedor
 
@@ -149,145 +181,145 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
           </thead>
           <tbody>
               <tr>
-                  <td></td>
+                  <td><img src="img/tecnologias/java.svg" width="50px" height="auto"></td>
                   <td><em>Java</em></td>
                   <td>Avançado</td>
                   <td>5 anos</td>
               </tr>
               <tr>
-                  <td></td>
+                  <td><img src="img/tecnologias/springboot.svg" width="50px" height="auto"></td>
                   <td><em>SpringBoot</em></td>
                   <td>Avançado</td>
                   <td>4 anos</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/springboot.svg" width="50px" height="auto"></td>
                     <td><em>JPA e Hibernate</em></td>
                     <td>Avançado</td>
                     <td>4 anos</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/springboot.svg" width="50px" height="auto"></td>
                     <td><em>SpringBoot Security</em></td>
                     <td>Avançado</td>
                     <td>4 anos</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/postgre.svg" width="50px" height="auto"></td>
                     <td><em>SQL e PL/SQL</em></td>
                     <td>Avançado</td>
                     <td>5 anos</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/java.svg" width="50px" height="auto"></td>
                     <td><em>JUnit5</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/java.svg" width="50px" height="auto"></td>
                     <td><em>Mockito</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/git.svg" width="50px" height="auto"></td>
                     <td><em>Git e Github</em></td>
                     <td>Avançado</td>
                     <td>5 anos</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="https://camo.githubusercontent.com/b35dd0981426447472fb2625ac694ec7957d6343c89b56475cdb2cbac1c7e85a/68747470733a2f2f7777772e6b696e64706e672e636f6d2f706963632f6d2f35332d3533393736305f736372756d2d6c6f676f2d68642d706e672d646f776e6c6f61642e706e67" width="50px" height="auto"></td>
                     <td><em>Metodologia Ágil Scrum</em></td>
                     <td>Avançado</td>
                     <td>4 anos</td>
               </tr>  
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/docker.svg" width="50px" height="auto"></td>
                     <td><em>Docker</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
               </tr>  
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/docker.svg" width="50px" height="auto"></td>
                     <td><em>Docker Compose</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
               </tr>  
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/apache-kafka.svg" width="50px" height="auto"></td>
                     <td><em>Apache Kafka</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
               </tr>  
               <tr>
-                    <td></td>
+                    <td><img src="https://profilinator.rishav.dev/skills-assets/javascript-original.svg" width="50px" height="auto"></td>
                     <td><em>JavaScript</em></td>
                     <td>Avançado</td>
                     <td>3 anos</td>
               </tr>  
               <tr>
-                    <td></td>
+                    <td><img src="https://profilinator.rishav.dev/skills-assets/typescript-original.svg" width="50px" height="auto"></td>
                     <td><em>TypeScript</em></td>
                     <td>Avançado</td>
                     <td>2 anos</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="https://profilinator.rishav.dev/skills-assets/vuejs-original-wordmark.svg" width="50px" height="auto"></td>
                     <td><em>Vue.js</em></td>
                     <td>Avançado</td>
                     <td>3 anos</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="https://profilinator.rishav.dev/skills-assets/react-original-wordmark.svg" width="50px" height="auto"></td>
                     <td><em>React.js</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/css3.svg" width="50px" height="auto"></td>
                     <td><em>CSS3</em></td>
                     <td>Avançado</td>
                     <td>5 anos</td>
               </tr>
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/html5.svg" width="50px" height="auto"></td>
                     <td><em>HTML5</em></td>
                     <td>Avançado</td>
                     <td>5 anos</td>
               </tr>  
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/java.svg" width="50px" height="auto"></td>
                     <td><em>JavaFx</em></td>
                     <td>Intermediário</td>
                     <td>2 anos</td>
               </tr>  
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/python.svg" width="50px" height="auto"></td>
                     <td><em><b>Python</b></em></td>
                     <td>Avançado</td>
                     <td>5 anos</td>
               </tr>  
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/flask.png" width="50px" height="auto"></td>
                     <td><em>Flask</em></td>
                     <td>Avançado</td>
                     <td>4 anos</td>
               </tr>  
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/pandas.png" width="50px" height="auto"></td>
                     <td><em>Pandas</em></td>
                     <td>Avançado</td>
                     <td>3 anos</td>
               </tr>  
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/sqlAlchmy.png" width="50px" height="auto"></td>
                     <td><em>SQLAlchemy</em></td>
                     <td>Avançado</td>
                     <td>4 anos</td>
               </tr>   
               <tr>
-                    <td></td>
+                    <td><img src="img/tecnologias/selenium.png" width="50px" height="auto"></td>
                     <td><em>Selenium</em></td>
                     <td>Intermediário</td>
                     <td>3 anos</td>
