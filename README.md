@@ -320,7 +320,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
                     <td>5 anos</td>
               </tr>  
               <tr>
-                    <td align="center"><img src="img/tecnologias/flask.png" width="50px" height="auto" align="center" 
+                    <td align="center"><img src="img/tecnologias/flask-python.png" width="50px" height="auto" align="center" 
                                          filter: sepia(100%) hue-rotate(60deg) brightness(0.6) saturate(5);></td>
                     <td><em>Flask</em></td>
                     <td>Avançado</td>
