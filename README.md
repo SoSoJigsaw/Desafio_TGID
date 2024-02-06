@@ -139,7 +139,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
 
 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;">
   
-<img src="img/perfil.png" alt="Sobre mim">
+<img src="img/perfil_felipe.png" alt="Sobre mim">
 
 <br>
 <br>
