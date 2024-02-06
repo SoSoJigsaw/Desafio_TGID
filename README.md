@@ -186,7 +186,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
           </thead>
           <tbody>
               <tr>
-                  <td align="center"><img src="img/tecnologias/java.svg" width="50px" height="auto" align="center"></td>
+                  <td align="center"><img src="img/tecnologias/java.svg" width="75px" height="auto" align="center"></td>
                   <td><em>Java</em></td>
                   <td>Avançado</td>
                   <td>5 anos</td>
@@ -200,7 +200,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
               <tr>
                     <td align="center">
                       <p align="center">
-                        <img src="img/hibernate.png" width="100px" height="auto" align="center">
+                        <img src="img/tecnologias/hibernate.png" width="150px" height="auto" align="center">
                         <img src="https://www.baeldung.com/wp-content/uploads/2021/02/lsd-module-icon-1.png" width="50px" height="auto" align="center"></p>
                     </td>
                     <td><em>JPA e Hibernate</em></td>
@@ -216,9 +216,9 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
               <tr>
                     <td align="center">
                       <p align="center">
-                        <img src="img/tecnologias/postgre.svg" width="50px" height="auto" align="center">
-                        <img src="img/tecnologias/oracle.svg" width="50px" height="auto" align="center">
-                        <img src="img/tecnologias/MySQL.svg" width="50px" height="auto" align="center">
+                        <img src="img/tecnologias/postgre.svg" width="60px" height="auto" align="center">
+                        <img src="img/tecnologias/oracle.svg" width="75px" height="auto" align="center">
+                        <img src="img/tecnologias/MySQL.svg" width="75px" height="auto" align="center">
                     </td>
                     <td><em>SQL e PL/SQL</em></td>
                     <td>Avançado</td>
@@ -239,8 +239,8 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
               <tr>
                     <td align="center">
                       <p align="center">
-                        <img src="img/git.svg" width="50px" height="auto" align="center">
-                        <img src="img/github.png" width="50px" height="auto" align="center">
+                        <img src="img/tecnologias/git.svg" width="50px" height="auto" align="center">
+                        <img src="img/tecnologias/github.png" width="50px" height="auto" align="center">
                       </p>  
                     </td> 
                     <td><em>Git e Github</em></td>
@@ -260,7 +260,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
                     <td>1 ano</td>
               </tr>  
               <tr>
-                    <td align="center"><img src="img/tecnologias/docker-compose.png" width="50px" height="auto" align="center"></td>
+                    <td align="center"><img src="img/tecnologias/docker-compose.png" width="75px" height="auto" align="center"></td>
                     <td><em>Docker Compose</em></td>
                     <td>Intermediário</td>
                     <td>1 ano</td>
@@ -308,7 +308,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
                     <td>5 anos</td>
               </tr>  
               <tr>
-                    <td align="center"><img src="https://www.qfs.de/fileadmin/Webdata/logos-icons/JavaFX.png" width="50px" height="auto" align="center"></td>
+                    <td align="center"><img src="https://www.qfs.de/fileadmin/Webdata/logos-icons/JavaFX.png" width="75px" height="auto" align="center"></td>
                     <td><em>JavaFx</em></td>
                     <td>Intermediário</td>
                     <td>2 anos</td>
