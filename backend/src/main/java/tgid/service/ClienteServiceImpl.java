@@ -3,6 +3,7 @@ package tgid.service;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import tgid.entity.Cliente;
+import tgid.exception.ClienteNaoEncontradoException;
 import tgid.exception.ClienteRegistroException;
 import tgid.exception.ClienteRemocaoException;
 import tgid.repository.ClienteRepository;
@@ -21,7 +22,8 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public void registrarCliente(String cpf, String nome, String email, Double saldo) {
+    public void registrarCliente(String cpf, String nome, String email, Double saldo)
+            throws ClienteRegistroException {
 
         if (cpf == null || nome == null || email == null || saldo == null) {
             throw new ClienteRegistroException("Os parâmetros do input não podem ser nulos");
@@ -32,13 +34,13 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public List<Cliente> listarTodosClientes() {
+    public List<Cliente> listarTodosClientes() throws ClienteNaoEncontradoException {
         return clienteRepository.findAll();
     }
 
     @Override
     @Transactional
-    public void deleteCliente(Long id) {
+    public void deleteCliente(Long id) throws ClienteRemocaoException {
         Cliente cliente = clienteRepository.getReferenceById(id);
 
         if (cliente == null) {

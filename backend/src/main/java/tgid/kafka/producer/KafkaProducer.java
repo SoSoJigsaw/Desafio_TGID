@@ -37,11 +37,16 @@ public class KafkaProducer {
 
     public void enviarMensagemTransacao(EmailDTO email) throws JsonProcessingException {
 
-        String conteudo = objectMapper.writeValueAsString(email);
+        try {
+            String conteudo = objectMapper.writeValueAsString(email);
 
-        logger.info("Email enviado para processamento");
+            logger.info("Email enviado para processamento");
 
-        kafkaTemplate.send(transacaoResquestTopic, conteudo);
+            kafkaTemplate.send(transacaoResquestTopic, conteudo);
+
+        } catch(JsonProcessingException e) {
+            logger.info("Erro ao converter o JSON em String: {}", e.getMessage());
+        }
     }
 
     public void setKafkaTemplate(Object o) {

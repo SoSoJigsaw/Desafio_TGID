@@ -6,8 +6,8 @@ public class TransacaoNaoEncontradaException extends RuntimeException {
         super();
     }
 
-    public TransacaoNaoEncontradaException(Long id) {
-        super("Transação não encontrada para ID: " + id);
+    public TransacaoNaoEncontradaException(String message) {
+        super(message);
     }
 
     public TransacaoNaoEncontradaException(String message, Throwable cause) {

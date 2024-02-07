@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import tgid.dto.TransacaoDTO;
 import tgid.entity.Cliente;
 import tgid.entity.Transacao;
+import tgid.exception.TransacaoInvalidaException;
+import tgid.exception.TransacaoNaoEncontradaException;
+import tgid.exception.TransacaoRemocaoException;
 import tgid.service.TransacaoService;
 
 import java.util.List;
@@ -27,8 +30,12 @@ public class TransacaoController {
     public ResponseEntity<?> deposito(@PathVariable("empresaId") Long empresaId,
                          @PathVariable("clienteId") Long clienteId,
                          @RequestBody double valor) {
-
-        return transacaoService.realizarDeposito(empresaId, clienteId, valor);
+        try {
+            return transacaoService.realizarDeposito(empresaId, clienteId, valor);
+        } catch (TransacaoInvalidaException e) {
+            System.err.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Depósito não pôde ser realizado");
+        }
     }
 
     @PostMapping("/saque/{empresaId}/{clienteId}")
@@ -36,26 +43,39 @@ public class TransacaoController {
     public ResponseEntity<?> saque(@PathVariable("empresaId") Long empresaId,
                       @PathVariable("clienteId") Long clienteId,
                       @RequestBody double valor) {
-
-        return transacaoService.realizarSaque(empresaId, clienteId, valor);
+        try {
+            return transacaoService.realizarSaque(empresaId, clienteId, valor);
+        } catch (TransacaoInvalidaException e) {
+            System.err.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saque não pôde ser realizado");
+        }
     }
 
     @GetMapping("listar-transacoes")
     @ResponseStatus(HttpStatus.OK)
     public List<TransacaoDTO> listarTodasTransacoes() {
 
-        return transacaoService.listarTodasTransacoes();
+        try {
 
+            return transacaoService.listarTodasTransacoes();
+
+        } catch (TransacaoNaoEncontradaException e) {
+            throw new TransacaoNaoEncontradaException("Não há nenhum registro de transações disponível");
+        }
     }
 
     @DeleteMapping("delete-transacao/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> deleteTransacao(@PathVariable("id") Long id) {
 
-        transacaoService.deleteTransacao(id);
+        try {
+            transacaoService.deleteTransacao(id);
+        } catch (TransacaoRemocaoException e) {
+            System.err.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível deletar a transação");
+        }
 
         return ResponseEntity.ok("Transação deletada com sucesso!");
-
     }
 
 }

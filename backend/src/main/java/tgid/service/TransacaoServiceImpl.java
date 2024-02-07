@@ -8,10 +8,7 @@ import tgid.dto.TransacaoDTO;
 import tgid.entity.Cliente;
 import tgid.entity.Empresa;
 import tgid.entity.Transacao;
-import tgid.exception.ClienteNaoEncontradoException;
-import tgid.exception.EmpresaNaoEncontradaException;
-import tgid.exception.SaldoInsuficienteException;
-import tgid.exception.TransacaoNaoEncontradaException;
+import tgid.exception.*;
 import tgid.notification.NotificacaoCliente;
 import tgid.notification.NotificacaoEmpresa;
 import tgid.repository.ClienteRepository;
@@ -46,7 +43,7 @@ public class TransacaoServiceImpl implements TransacaoService {
     }
 
     @Override
-    public ResponseEntity<?> realizarDeposito(Long empresaId, Long clienteId, double valor) {
+    public ResponseEntity<?> realizarDeposito(Long empresaId, Long clienteId, double valor) throws TransacaoInvalidaException {
 
         Empresa empresa = empresaRepository.getReferenceById(empresaId);
         Cliente cliente = clienteRepository.getReferenceById(clienteId);
@@ -81,13 +78,18 @@ public class TransacaoServiceImpl implements TransacaoService {
                     return ResponseEntity.badRequest().body(saldoInsuficienteDTO);
                 }
 
+                // Tratamento de Exceção
+                double saldoClienteAtualizado = cliente.getSaldo() + valor;
+                double saldoEmpresaAtualizado = empresa.getSaldo() - (valor + taxa);
+                if (saldoClienteAtualizado < 0 || saldoEmpresaAtualizado < 0) {
+                    throw new SaldoInsuficienteException("depósito");
+                }
+
                 // Atualiza o saldo do cliente
-                double saldoClienteAtualizado = cliente.getSaldo() - valor;
                 cliente.setSaldo(saldoClienteAtualizado);
                 clienteRepository.atualizarSaldo(cliente.getId(), cliente.getSaldo());
 
                 // Atualiza o saldo da empresa considerando a taxa
-                double saldoEmpresaAtualizado = empresa.getSaldo() + (valor - taxa);
                 empresa.setSaldo(saldoEmpresaAtualizado);
                 empresaRepository.atualizarSaldo(empresa.getId(), empresa.getSaldo());
 
@@ -118,7 +120,7 @@ public class TransacaoServiceImpl implements TransacaoService {
     }
 
     @Override
-    public ResponseEntity<?> realizarSaque(Long empresaId, Long clienteId, double valor) {
+    public ResponseEntity<?> realizarSaque(Long empresaId, Long clienteId, double valor) throws TransacaoInvalidaException {
 
         Empresa empresa = empresaRepository.getReferenceById(empresaId);
         Cliente cliente = clienteRepository.getReferenceById(clienteId);
@@ -132,14 +134,19 @@ public class TransacaoServiceImpl implements TransacaoService {
 
                 if (empresa.getSaldo() >= (valor + taxa)) {
 
-                    // Atualiza o saldo do cliente
+                    // Tratamento de Exceção
                     double saldoClienteAtualizado = cliente.getSaldo() + valor;
+                    double saldoEmpresaAtualizado = empresa.getSaldo() - (valor + taxa);
+                    if (saldoClienteAtualizado < 0 || saldoEmpresaAtualizado < 0) {
+                        throw new SaldoInsuficienteException("depósito");
+                    }
+
+                    // Atualiza o saldo do cliente
                     cliente.setSaldo(saldoClienteAtualizado);
                     clienteRepository.atualizarSaldo(cliente.getId(), cliente.getSaldo());
 
                     // Atualiza o saldo da empresa considerando a taxa
-                    double saldoAtualizado = empresa.getSaldo() - (valor + taxa);
-                    empresa.setSaldo(saldoAtualizado);
+                    empresa.setSaldo(saldoEmpresaAtualizado);
                     empresaRepository.atualizarSaldo(empresa.getId(), empresa.getSaldo());
 
                     // Registra a transação
@@ -191,7 +198,7 @@ public class TransacaoServiceImpl implements TransacaoService {
     }
 
     @Override
-    public List<TransacaoDTO> listarTodasTransacoes() {
+    public List<TransacaoDTO> listarTodasTransacoes() throws TransacaoNaoEncontradaException {
 
         List<TransacaoDTO> transacoesDTO = new ArrayList<>();
 
@@ -218,11 +225,11 @@ public class TransacaoServiceImpl implements TransacaoService {
 
     @Override
     @Transactional
-    public void deleteTransacao(Long id) {
+    public void deleteTransacao(Long id) throws TransacaoRemocaoException {
         Transacao transacao = transacaoRepository.getReferenceById(id);
 
         if (transacao == null) {
-            throw new TransacaoNaoEncontradaException(id);
+            throw new TransacaoNaoEncontradaException("ERRO: a transação não existe no banco");
         }
 
         transacaoRepository.delete(transacao);

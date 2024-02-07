@@ -1,10 +1,10 @@
 package tgid.service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tgid.entity.Empresa;
-import tgid.exception.EmpresaNaoEncontradaException;
-import tgid.exception.TaxaInvalidoException;
+import tgid.exception.*;
 import tgid.repository.EmpresaRepository;
 import tgid.repository.TransacaoRepository;
 import java.util.List;
@@ -22,14 +22,23 @@ public class EmpresaServiceImpl implements EmpresaService {
     }
 
     @Override
-    public void registrarEmpresa(String cnpj, String nome, Double saldo, double taxaDeposito, double taxaSaque) {
+    public void registrarEmpresa(String cnpj, String nome, Double saldo, double taxaDeposito, double taxaSaque)
+            throws EmpresaRegistroException {
         Empresa empresa = new Empresa(cnpj, nome, saldo, taxaDeposito, taxaSaque);
         empresaRepository.save(empresa);
+
+
     }
 
     @Override
-    public void mudarTaxaValorEmpresa(Long empresaId, String tipoTaxa, double valor) {
+    public void mudarTaxaValorEmpresa(Long empresaId, String tipoTaxa, double valor) throws TaxaInvalidoException {
+
+
         Empresa empresa = empresaRepository.getReferenceById(empresaId);
+
+        if (empresa == null) {
+            throw new EmpresaNaoEncontradaException("Não há empresa com esse id: " + empresaId);
+        }
 
         if (Objects.equals(tipoTaxa, "DEPÓSITO")) {
             empresaRepository.atualizarTaxaDeposito(empresaId, valor);
@@ -41,20 +50,25 @@ public class EmpresaServiceImpl implements EmpresaService {
     }
 
     @Override
-    public List<Empresa> listarTodasEmpresas() {
+    public List<Empresa> listarTodasEmpresas() throws EmpresaNaoEncontradaException {
         return empresaRepository.findAll();
     }
 
     @Override
     @Transactional
-    public void deleteEmpresa(Long id) {
+    public void deleteEmpresa(Long id) throws EmpresaRemocaoException {
         Empresa empresa = empresaRepository.getReferenceById(id);
 
         if (empresa == null) {
             throw new EmpresaNaoEncontradaException("Não há empresa com esse id: " + id);
         }
 
-        transacaoRepository.deleteApartirDaEmpresa(empresa);
+        try {
+            transacaoRepository.deleteApartirDaEmpresa(empresa);
+        } catch (Exception e) {
+            throw new TransacaoRemocaoException("Não foi possível deletar a transação");
+        }
+
         empresaRepository.delete(empresa);
     }
 }

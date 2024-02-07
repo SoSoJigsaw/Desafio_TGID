@@ -31,20 +31,25 @@ public class KafkaConsumer {
             containerFactory = "kafkaListenerContainerFactory",
             topicPartitions = @TopicPartition(topic = "transacao.request.topic", partitions = {"0"})
     )
-    public void processarMensagemTransacao(String conteudo) throws JsonProcessingException {
+    public void processarMensagemTransacao(String conteudo) {
 
         logger.info("Processando a mensagem do produtor...");
 
-        // Converte a mensagem JSON de volta para um objeto EmailDTO
-        EmailDTO emailDTO = objectMapper.readValue(conteudo, EmailDTO.class);
+        try {
+            // Converte a mensagem JSON de volta para um objeto EmailDTO
+            EmailDTO emailDTO = objectMapper.readValue(conteudo, EmailDTO.class);
 
-        // Extrai os atributos do objeto EmailDTO
-        String destinatario = emailDTO.getDestinatario();
-        String assunto = emailDTO.getAssunto();
-        String corpo = emailDTO.getCorpo();
+            // Extrai os atributos do objeto EmailDTO
+            String destinatario = emailDTO.getDestinatario();
+            String assunto = emailDTO.getAssunto();
+            String corpo = emailDTO.getCorpo();
 
-        // Lógica de enviar o email
-        enviarEmailAoUsuario(destinatario, assunto, corpo);
+            // Lógica de enviar o email
+            enviarEmailAoUsuario(destinatario, assunto, corpo);
+
+        } catch (JsonProcessingException e) {
+            logger.info("Erro no processo de leitura do JSON para convertê-lo ao formato de email: {}", e.getMessage());
+        }
     }
 
     private void enviarEmailAoUsuario(String destinatario, String assunto, String corpo) {
@@ -61,6 +66,7 @@ public class KafkaConsumer {
             mailSender.send(email);
 
             logger.info("E-mail enviado com sucesso para: {}", destinatario);
+
         } catch (MessagingException e) {
             logger.info("Erro ao enviar e-mail: {}", e.getMessage());
         }
