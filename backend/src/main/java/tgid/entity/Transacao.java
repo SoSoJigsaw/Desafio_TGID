@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.Setter;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -24,6 +23,7 @@ public class Transacao {
     private String tipo;
 
     @Column(nullable = false)
+    @NotNull
     private double valor;
 
     @Column
