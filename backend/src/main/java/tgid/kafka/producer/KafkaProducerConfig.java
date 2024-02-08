@@ -2,10 +2,7 @@ package tgid.kafka.producer;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
-import org.springframework.boot.ssl.SslBundles;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -22,11 +19,11 @@ import java.util.Map;
 @EnableKafka
 public class KafkaProducerConfig {
 
-    @Autowired
-    private KafkaProperties kafkaProperties;
-
     @Value("${transacao.request.topic}")
-    private String transacaoResquestTopic;
+    String transacaoResquestTopic;
+
+    @Value("${callback.request.topic}")
+    String callbackRequestTopic;
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
@@ -41,7 +38,6 @@ public class KafkaProducerConfig {
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         KafkaTemplate<String, String> kafkaTemplate = new KafkaTemplate<>(producerFactory());
-        kafkaTemplate.setDefaultTopic(transacaoResquestTopic);
         return kafkaTemplate;
     }
 
@@ -49,6 +45,15 @@ public class KafkaProducerConfig {
     public NewTopic transacaoRequestTopicBuilder() {
         return TopicBuilder
                 .name(transacaoResquestTopic)
+                .partitions(1)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic callbackRequestTopicBuilder() {
+        return TopicBuilder
+                .name(callbackRequestTopic)
                 .partitions(1)
                 .replicas(1)
                 .build();

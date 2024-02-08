@@ -1,32 +1,26 @@
 package tgid.notification;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tgid.dto.EmailDTO;
 import tgid.kafka.producer.KafkaProducer;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
+@Slf4j
 @Service
 public class NotificacaoClienteImpl implements NotificacaoCliente {
 
-    private static final Logger logger = LoggerFactory.getLogger(NotificacaoCliente.class);
+    private final KafkaProducer kafkaProducer;
 
-    @Autowired
-    public KafkaProducer kafkaProducer;
-
-    public NotificacaoClienteImpl(KafkaProducer kafkaProducerMock) {
-        this.kafkaProducer = kafkaProducerMock;
+    public NotificacaoClienteImpl(KafkaProducer kafkaProducer) {
+        this.kafkaProducer = kafkaProducer;
     }
 
-    public NotificacaoClienteImpl() {
-
-    }
 
     @Override
     public void enviarNotificacaoKafka(String destinatario, String assunto, String corpo) {
@@ -44,9 +38,9 @@ public class NotificacaoClienteImpl implements NotificacaoCliente {
         EmailDTO emailDTO = new EmailDTO(destinatario, assunto, corpo);
 
         try {
-            kafkaProducer.enviarMensagemTransacao(emailDTO);
+            kafkaProducer.enviarMensagemTransacaoCliente(emailDTO);
         } catch (JsonProcessingException e) {
-            logger.info("Houve um erro ao solicitar o email: " + e.getMessage());
+            log.error("Houve um erro ao solicitar o email: " + e.getMessage());
         }
     }
 

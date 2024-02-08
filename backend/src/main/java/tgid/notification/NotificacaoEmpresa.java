@@ -3,7 +3,7 @@ package tgid.notification;
 import java.time.LocalDateTime;
 
 public interface NotificacaoEmpresa {
-    void enviarCallbackParaEmpresa(String url, String mensagem);
+    void enviarCallbackKafka(String url, String mensagem);
 
     String formatCallbackSucesso(String taxaNome, int valor, String clienteNome,
                                   String empresaNome, LocalDateTime dataTransacao,

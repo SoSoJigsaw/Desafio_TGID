@@ -1,54 +1,44 @@
 package tgid.notification;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.client.UnknownHttpStatusCodeException;
-import tgid.exception.NotificacaoEmpresaException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.MediaType;
+import tgid.dto.CallbackDTO;
+import tgid.kafka.producer.KafkaProducer;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
+@Slf4j
 @Service
 public class NotificacaoEmpresaImpl implements NotificacaoEmpresa {
 
-    private static final Logger logger = LoggerFactory.getLogger(NotificacaoEmpresa.class);
-    private final RestTemplate restTemplate;
+    private final KafkaProducer kafkaProducer;
 
-    public NotificacaoEmpresaImpl(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public NotificacaoEmpresaImpl(KafkaProducer kafkaProducer) {
+        this.kafkaProducer = kafkaProducer;
     }
 
     @Override
-    public void enviarCallbackParaEmpresa(String url, String mensagem) {
-        try {
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+    public void enviarCallbackKafka(String url, String mensagem) {
 
-            HttpEntity<String> requestEntity = new HttpEntity<>(mensagem, headers);
-
-            ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
-
-            if (response.getStatusCode().is2xxSuccessful()) {
-                logger.info("Callback enviado com sucesso. Resposta: {}", response.getBody());
-            } else {
-                throw new NotificacaoEmpresaException("Erro ao enviar callback. Status code: " + response.getStatusCode());
-            }
-        } catch (HttpServerErrorException e) {
-            logger.error("Erro no servidor ao enviar callback. Status code: {}", e.getStatusCode(), e);
-        } catch (UnknownHttpStatusCodeException e) {
-            logger.error("Erro desconhecido ao enviar callback. Status code: {}", e.getStatusCode(), e);
-        } catch (Exception e) {
-            throw new NotificacaoEmpresaException("Erro ao enviar callback: " + e.getMessage());
+        if (url == null || url.isEmpty()) {
+            throw new IllegalArgumentException("O Url não pode ser nulo");
         }
+        if (mensagem == null || mensagem.isEmpty()) {
+            throw new IllegalArgumentException("A mensagem não pode ser nula");
+        }
+
+        CallbackDTO callbackDTO = new CallbackDTO(url, mensagem);
+
+        try {
+            kafkaProducer.enviarMensagemTransacaoEmpresa(callbackDTO);
+        } catch (JsonProcessingException e) {
+            log.error("Houve um erro ao solicitar o callback: " + e.getMessage());
+        }
+
     }
 
     @Override
