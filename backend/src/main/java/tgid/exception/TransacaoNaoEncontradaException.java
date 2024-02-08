@@ -2,16 +2,13 @@ package tgid.exception;
 
 public class TransacaoNaoEncontradaException extends RuntimeException {
 
-    public TransacaoNaoEncontradaException() {
-        super();
+    public TransacaoNaoEncontradaException(Exception e) {
+
+        super("A lista de Transações não pôde ser encontrada: " + e.getMessage());
     }
 
-    public TransacaoNaoEncontradaException(String message) {
-        super(message);
-    }
-
-    public TransacaoNaoEncontradaException(String message, Throwable cause) {
-        super(message, cause);
+    public TransacaoNaoEncontradaException(String mensagem) {
+        super(mensagem);
     }
 
 }

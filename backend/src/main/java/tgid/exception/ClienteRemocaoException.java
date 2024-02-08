@@ -2,16 +2,13 @@ package tgid.exception;
 
 public class ClienteRemocaoException extends RuntimeException {
 
-    public ClienteRemocaoException() {
-        super();
+    public ClienteRemocaoException(Exception e) {
+
+        super("O cliente não pôde ser deletado: " + e.getMessage());
     }
 
-    public ClienteRemocaoException(String message) {
-        super(message);
-    }
-
-    public ClienteRemocaoException(String message, Throwable cause) {
-        super(message, cause);
+    public ClienteRemocaoException(String mensagem) {
+        super(mensagem);
     }
 
 }

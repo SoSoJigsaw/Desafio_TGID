@@ -4,16 +4,13 @@ import tgid.entity.Transacao;
 
 public class TransacaoRemocaoException extends RuntimeException {
 
-    public TransacaoRemocaoException() {
-        super();
+    public TransacaoRemocaoException(Exception e) {
+
+        super("O registro de transação não pôde ser deletado: " + e.getMessage());
     }
 
-    public TransacaoRemocaoException(String message) {
-        super(message);
-    }
-
-    public TransacaoRemocaoException(String message, Throwable cause) {
-        super(message, cause);
+    public TransacaoRemocaoException(String mensagem) {
+        super(mensagem);
     }
 
 }

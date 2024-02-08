@@ -3,15 +3,13 @@ package tgid.exception;
 public class TaxaInvalidoException extends RuntimeException {
 
     public TaxaInvalidoException() {
-        super();
+
+        super("Tipo de taxa de transação inválida. Valores esperados: DEPÓSITO ou SAQUE");
     }
 
-    public TaxaInvalidoException(String message) {
-        super(message);
-    }
+    public TaxaInvalidoException(Exception e) {
 
-    public TaxaInvalidoException(String message, Throwable cause) {
-        super(message, cause);
+        super("A atualização da taxa falhou: " + e.getMessage());
     }
 
 }

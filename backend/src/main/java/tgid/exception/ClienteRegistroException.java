@@ -1,17 +1,13 @@
 package tgid.exception;
 
 public class ClienteRegistroException extends RuntimeException {
+    public ClienteRegistroException(Exception e) {
 
-    public ClienteRegistroException() {
-        super();
+        super("O cliente não pôde ser registrado: " + e.getMessage());
     }
 
-    public ClienteRegistroException(String message) {
-        super(message);
-    }
-
-    public ClienteRegistroException(String message, Throwable cause) {
-        super(message, cause);
+    public ClienteRegistroException(String mensagem) {
+        super(mensagem);
     }
 
 }

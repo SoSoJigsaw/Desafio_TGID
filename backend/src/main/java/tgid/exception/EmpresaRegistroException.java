@@ -2,16 +2,13 @@ package tgid.exception;
 
 public class EmpresaRegistroException extends RuntimeException {
 
-    public EmpresaRegistroException() {
-        super();
+    public EmpresaRegistroException(Exception e) {
+
+        super("A empresa não pôde ser registrada: " + e.getMessage());
     }
 
-    public EmpresaRegistroException(String message) {
-        super(message);
-    }
-
-    public EmpresaRegistroException(String message, Throwable cause) {
-        super(message, cause);
+    public EmpresaRegistroException(String mensagem) {
+        super(mensagem);
     }
 
 }

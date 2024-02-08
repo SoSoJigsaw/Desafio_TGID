@@ -1,9 +1,22 @@
 package tgid.exception;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import tgid.dto.SaldoInsuficienteDTO;
+import com.google.gson.Gson;
+
 public class SaldoInsuficienteException extends RuntimeException {
 
-    public SaldoInsuficienteException(String tipo) {
-        super("Saldo insuficiente para realizar a transação de " + tipo);
+    private final String saldoInsuficiente;
+
+    public SaldoInsuficienteException(SaldoInsuficienteDTO saldoInsuficiente) {
+        Gson gson = new Gson();
+        this.saldoInsuficiente = gson.toJson(saldoInsuficiente);
     }
+
+    @Override
+    public String getMessage() {
+        return saldoInsuficiente;
+    }
+
 }
 

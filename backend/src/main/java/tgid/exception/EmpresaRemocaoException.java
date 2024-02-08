@@ -2,16 +2,13 @@ package tgid.exception;
 
 public class EmpresaRemocaoException extends RuntimeException {
 
-    public EmpresaRemocaoException() {
-        super();
+    public EmpresaRemocaoException(Exception e) {
+
+        super("A empresa não pôde ser deletada: " + e.getMessage());
     }
 
-    public EmpresaRemocaoException(String message) {
-        super(message);
-    }
-
-    public EmpresaRemocaoException(String message, Throwable cause) {
-        super(message, cause);
+    public EmpresaRemocaoException(String mensagem) {
+        super(mensagem);
     }
 
 }
