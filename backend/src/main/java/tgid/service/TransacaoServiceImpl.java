@@ -1,6 +1,8 @@
 package tgid.service;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tgid.dto.SaldoInsuficienteDTO;
@@ -21,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class TransacaoServiceImpl implements TransacaoService {
 
@@ -62,7 +65,7 @@ public class TransacaoServiceImpl implements TransacaoService {
                             "Cliente", cliente.getNome(), saldo, "Depósito", (int) valor);
 
                     // Realizar callback à empresa de falha por falta de saldo na transação
-                    notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
+                    notificacaoEmpresa.enviarCallbackKafka("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
                             notificacaoEmpresa.formatCallbackFalhaCliente("Depósito", (int) valor,
                                     cliente.getNome(), empresa.getNome(),
                                     LocalDateTime.now(), empresa.getSaldo(),
@@ -75,21 +78,16 @@ public class TransacaoServiceImpl implements TransacaoService {
                             notificacaoCliente.formatCorpoOperacaoNegadaCliente("depósito", (int) valor,
                                     empresa.getNome(), LocalDateTime.now(), cliente.getSaldo()));
 
-                    return ResponseEntity.badRequest().body(saldoInsuficienteDTO);
-                }
-
-                // Tratamento de Exceção
-                double saldoClienteAtualizado = cliente.getSaldo() + valor;
-                double saldoEmpresaAtualizado = empresa.getSaldo() - (valor + taxa);
-                if (saldoClienteAtualizado < 0 || saldoEmpresaAtualizado < 0) {
-                    throw new SaldoInsuficienteException("depósito");
+                    throw new SaldoInsuficienteException(saldoInsuficienteDTO);
                 }
 
                 // Atualiza o saldo do cliente
+                double saldoClienteAtualizado = cliente.getSaldo() + valor;
                 cliente.setSaldo(saldoClienteAtualizado);
                 clienteRepository.atualizarSaldo(cliente.getId(), cliente.getSaldo());
 
                 // Atualiza o saldo da empresa considerando a taxa
+                double saldoEmpresaAtualizado = empresa.getSaldo() - (valor + taxa);
                 empresa.setSaldo(saldoEmpresaAtualizado);
                 empresaRepository.atualizarSaldo(empresa.getId(), empresa.getSaldo());
 
@@ -98,7 +96,7 @@ public class TransacaoServiceImpl implements TransacaoService {
                 transacaoRepository.save(transacao);
 
                 // Realizar callback à empresa de sucesso na transação
-                notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
+                notificacaoEmpresa.enviarCallbackKafka("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
                         notificacaoEmpresa.formatCallbackSucesso("Depósito", (int) transacao.getValor(),
                                 transacao.getCliente().getNome(), transacao.getEmpresa().getNome(),
                                 transacao.getDataTransacao(), empresa.getSaldo()));
@@ -109,11 +107,11 @@ public class TransacaoServiceImpl implements TransacaoService {
                         notificacaoCliente.formatCorpoOperacaoRealizada("depósito", (int) transacao.getValor(),
                                 transacao.getEmpresa().getNome(), transacao.getDataTransacao(), cliente.getSaldo()));
             } else {
-                throw new ClienteNaoEncontradoException("ERRO: o cliente buscado para a operação não existe");
+                throw new ClienteNaoEncontradoException("O cliente buscado para a operação não existe");
             }
 
         } else {
-            throw new EmpresaNaoEncontradaException("ERRO: a empresa buscada para a operação não existe.");
+            throw new EmpresaNaoEncontradaException("A empresa buscada para a operação não existe.");
         }
 
         return ResponseEntity.ok().body("Transação de Depósito realizada com sucesso");
@@ -134,18 +132,13 @@ public class TransacaoServiceImpl implements TransacaoService {
 
                 if (empresa.getSaldo() >= (valor + taxa)) {
 
-                    // Tratamento de Exceção
-                    double saldoClienteAtualizado = cliente.getSaldo() + valor;
-                    double saldoEmpresaAtualizado = empresa.getSaldo() - (valor + taxa);
-                    if (saldoClienteAtualizado < 0 || saldoEmpresaAtualizado < 0) {
-                        throw new SaldoInsuficienteException("depósito");
-                    }
-
                     // Atualiza o saldo do cliente
+                    double saldoClienteAtualizado = cliente.getSaldo() + valor;
                     cliente.setSaldo(saldoClienteAtualizado);
                     clienteRepository.atualizarSaldo(cliente.getId(), cliente.getSaldo());
 
                     // Atualiza o saldo da empresa considerando a taxa
+                    double saldoEmpresaAtualizado = empresa.getSaldo() - (valor + taxa);
                     empresa.setSaldo(saldoEmpresaAtualizado);
                     empresaRepository.atualizarSaldo(empresa.getId(), empresa.getSaldo());
 
@@ -154,7 +147,7 @@ public class TransacaoServiceImpl implements TransacaoService {
                     transacaoRepository.save(transacao);
 
                     // Realizar callback à empresa de sucesso na transação
-                    notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
+                    notificacaoEmpresa.enviarCallbackKafka("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
                             notificacaoEmpresa.formatCallbackSucesso("Saque", (int) transacao.getValor(),
                                     transacao.getCliente().getNome(), transacao.getEmpresa().getNome(),
                                     transacao.getDataTransacao(), empresa.getSaldo()));
@@ -172,7 +165,7 @@ public class TransacaoServiceImpl implements TransacaoService {
                             "Empresa", empresa.getNome(), saldo, "Saque", (int) valor);
 
                     // Realizar callback à empresa de falha por falta de saldo na transação
-                    notificacaoEmpresa.enviarCallbackParaEmpresa("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
+                    notificacaoEmpresa.enviarCallbackKafka("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
                             notificacaoEmpresa.formatCallbackFalhaEmpresa("Saque", (int) valor,
                                     cliente.getNome(), empresa.getNome(),
                                     LocalDateTime.now(), empresa.getSaldo(),
@@ -185,19 +178,20 @@ public class TransacaoServiceImpl implements TransacaoService {
                             notificacaoCliente.formatCorpoOperacaoNegadaEmpresa("Saque", (int) valor,
                                     empresa.getNome(), LocalDateTime.now(), cliente.getSaldo()));
 
-                    return ResponseEntity.badRequest().body(saldoInsuficienteDTO);
+                    throw new SaldoInsuficienteException(saldoInsuficienteDTO);
                 }
             } else {
-                throw new ClienteNaoEncontradoException("ERRO: o cliente buscado para a operação não existe.");
+                throw new ClienteNaoEncontradoException("O cliente buscado para a operação não existe.");
             }
         } else {
-            throw new EmpresaNaoEncontradaException("ERRO: a empresa buscada para a operação não existe.");
+            throw new EmpresaNaoEncontradaException("A empresa buscada para a operação não existe.");
         }
 
         return ResponseEntity.ok().body("Transação de Saque realizada com sucesso");
     }
 
     @Override
+    @Cacheable
     public List<TransacaoDTO> listarTodasTransacoes() throws TransacaoNaoEncontradaException {
 
         List<TransacaoDTO> transacoesDTO = new ArrayList<>();
@@ -229,7 +223,7 @@ public class TransacaoServiceImpl implements TransacaoService {
         Transacao transacao = transacaoRepository.getReferenceById(id);
 
         if (transacao == null) {
-            throw new TransacaoNaoEncontradaException("ERRO: a transação não existe no banco");
+            throw new TransacaoNaoEncontradaException("O registro dessa transação não existe no banco");
         }
 
         transacaoRepository.delete(transacao);

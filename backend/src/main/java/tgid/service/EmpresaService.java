@@ -1,6 +1,8 @@
 package tgid.service;
 
 import java.util.List;
+
+import tgid.dto.EmpresaDTO;
 import tgid.entity.Empresa;
 
 public interface EmpresaService {
@@ -8,7 +10,7 @@ public interface EmpresaService {
 
     void mudarTaxaValorEmpresa(Long empresaId, String tipoTaxa, double valor);
 
-    List<Empresa> listarTodasEmpresas();
+    List<EmpresaDTO> listarTodasEmpresas();
 
     void deleteEmpresa(Long id);
 }
