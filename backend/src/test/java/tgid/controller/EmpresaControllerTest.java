@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
+import tgid.dto.EmpresaDTO;
 import tgid.dto.TaxaDTO;
 import tgid.entity.Empresa;
 import tgid.exception.CnpjInvalidoException;
@@ -33,7 +34,7 @@ public class EmpresaControllerTest {
         CNPJValidator cnpjValidator = mock(CNPJValidator.class);
         TaxaValidator taxaValidator = mock(TaxaValidator.class);
         EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator, taxaValidator);
-        Empresa empresa = new Empresa();
+        EmpresaDTO empresa = new EmpresaDTO();
         empresa.setCnpj("valid_cnpj");
         empresa.setNome("Test Empresa");
         empresa.setSaldo(1000.0);
@@ -59,15 +60,15 @@ public class EmpresaControllerTest {
         CNPJValidator cnpjValidator = mock(CNPJValidator.class);
         TaxaValidator taxaValidator = mock(TaxaValidator.class);
         EmpresaController empresaController = new EmpresaController(empresaService, cnpjValidator, taxaValidator);
-        List<Empresa> empresas = new ArrayList<>();
-        empresas.add(new Empresa());
-        empresas.add(new Empresa());
+        List<EmpresaDTO> empresas = new ArrayList<>();
+        empresas.add(new EmpresaDTO());
+        empresas.add(new EmpresaDTO());
 
         // Simular empresaService.listarTodasEmpresas()
         when(empresaService.listarTodasEmpresas()).thenReturn(empresas);
 
         // Act
-        List<Empresa> result = empresaController.listarTodasEmpresas();
+        List<EmpresaDTO> result = empresaController.listarTodasEmpresas();
 
         // Assert
         assertEquals(empresas, result);

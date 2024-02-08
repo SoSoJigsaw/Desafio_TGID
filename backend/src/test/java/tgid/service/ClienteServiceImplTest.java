@@ -2,8 +2,11 @@ package tgid.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
 import tgid.entity.Cliente;
 import tgid.repository.ClienteRepository;
 import tgid.repository.TransacaoRepository;
@@ -11,7 +14,6 @@ import tgid.repository.TransacaoRepository;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
-
 
 @SpringBootTest
 public class ClienteServiceImplTest {

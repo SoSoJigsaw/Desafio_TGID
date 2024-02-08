@@ -3,8 +3,13 @@ package tgid.service;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
 import tgid.entity.Cliente;
 import tgid.entity.Empresa;
 import tgid.entity.Transacao;
@@ -17,7 +22,6 @@ import tgid.util.CalcularTaxa;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 
 @SpringBootTest
 class TransacaoServiceImplTest {

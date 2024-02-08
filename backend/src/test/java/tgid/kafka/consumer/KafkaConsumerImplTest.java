@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.messaging.MessagingException;
 import tgid.dto.EmailDTO;
 
 import static org.junit.Assert.assertEquals;
@@ -15,8 +12,8 @@ import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.mock;
 
 @SpringBootTest
-@Import(KafkaConsumer.class)
-public class KafkaConsumerTest {
+@Import(KafkaConsumerImpl.class)
+public class KafkaConsumerImplTest {
 
     // O método deve converter corretamente a mensagem JSON de volta para um objeto EmailDTO.
     @Test

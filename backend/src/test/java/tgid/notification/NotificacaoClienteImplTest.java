@@ -2,13 +2,9 @@ package tgid.notification;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
 import tgid.dto.EmailDTO;
-import tgid.kafka.producer.KafkaProducer;
+import tgid.kafka.producer.KafkaProducerImpl;
 
 import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.*;
@@ -20,7 +16,7 @@ public class NotificacaoClienteImplTest {
     @Test
     public void test_sendNotificationEmail_ValidParameters() throws JsonProcessingException {
         // Arrange
-        KafkaProducer kafkaProducerMock = mock(KafkaProducer.class);
+        KafkaProducerImpl kafkaProducerMock = mock(KafkaProducerImpl.class);
         NotificacaoClienteImpl notificacaoCliente = new NotificacaoClienteImpl(kafkaProducerMock);
 
         String destinatario = "test@example.com";
@@ -31,14 +27,14 @@ public class NotificacaoClienteImplTest {
         notificacaoCliente.enviarNotificacaoKafka(destinatario, assunto, corpo);
 
         // Assert
-        verify(kafkaProducerMock, times(1)).enviarMensagemTransacao(any(EmailDTO.class));
+        verify(kafkaProducerMock, times(1)).enviarMensagemTransacaoCliente(any(EmailDTO.class));
     }
 
     // Deve lançar IllegalArgumentException quando o parâmetro 'destinatario' for nulo ou vazio
     @Test
     public void test_sendNotificationEmail_NullOrEmptyDestinatario() {
         // Arrange
-        KafkaProducer kafkaProducerMock = mock(KafkaProducer.class);
+        KafkaProducerImpl kafkaProducerMock = mock(KafkaProducerImpl.class);
         NotificacaoClienteImpl notificacaoCliente = new NotificacaoClienteImpl(kafkaProducerMock);
 
         String destinatario = null;
@@ -55,7 +51,7 @@ public class NotificacaoClienteImplTest {
     @Test
     public void test_sendNotificationEmail_NullOrEmptyAssunto() {
         // Arrange
-        KafkaProducer kafkaProducerMock = mock(KafkaProducer.class);
+        KafkaProducerImpl kafkaProducerMock = mock(KafkaProducerImpl.class);
         NotificacaoClienteImpl notificacaoCliente = new NotificacaoClienteImpl(kafkaProducerMock);
 
         String destinatario = "test@example.com";
@@ -73,7 +69,7 @@ public class NotificacaoClienteImplTest {
     @Test
     public void test_sendNotificationEmail_MaxLengthParameters() throws JsonProcessingException {
         // Arrange
-        KafkaProducer kafkaProducerMock = mock(KafkaProducer.class);
+        KafkaProducerImpl kafkaProducerMock = mock(KafkaProducerImpl.class);
         NotificacaoClienteImpl notificacaoCliente = new NotificacaoClienteImpl(kafkaProducerMock);
 
         String destinatario = "a".repeat(255);
@@ -84,7 +80,7 @@ public class NotificacaoClienteImplTest {
         notificacaoCliente.enviarNotificacaoKafka(destinatario, assunto, corpo);
 
         // Assert
-        verify(kafkaProducerMock, times(1)).enviarMensagemTransacao(any(EmailDTO.class));
+        verify(kafkaProducerMock, times(1)).enviarMensagemTransacaoCliente(any(EmailDTO.class));
     }
 
     // Deve enviar com sucesso um e-mail de notificação quando os parâmetros 'destinatario', 'assunto' e 'corpo'
@@ -92,7 +88,7 @@ public class NotificacaoClienteImplTest {
     @Test
     public void test_sendNotificationEmail_MinLengthParameters() throws JsonProcessingException {
         // Arrange
-        KafkaProducer kafkaProducerMock = mock(KafkaProducer.class);
+        KafkaProducerImpl kafkaProducerMock = mock(KafkaProducerImpl.class);
         NotificacaoClienteImpl notificacaoCliente = new NotificacaoClienteImpl(kafkaProducerMock);
 
         String destinatario = "a";
@@ -103,7 +99,7 @@ public class NotificacaoClienteImplTest {
         notificacaoCliente.enviarNotificacaoKafka(destinatario, assunto, corpo);
 
         // Assert
-        verify(kafkaProducerMock, times(1)).enviarMensagemTransacao(any(EmailDTO.class));
+        verify(kafkaProducerMock, times(1)).enviarMensagemTransacaoCliente(any(EmailDTO.class));
     }
 
     // Deve enviar com sucesso um e-mail de notificação quando os parâmetros 'destinatario', 'assunto' e 'corpo'
@@ -111,7 +107,7 @@ public class NotificacaoClienteImplTest {
     @Test
     public void test_sendNotificationEmail_SpecialCharactersParameters() throws JsonProcessingException {
         // Arrange
-        KafkaProducer kafkaProducerMock = mock(KafkaProducer.class);
+        KafkaProducerImpl kafkaProducerMock = mock(KafkaProducerImpl.class);
         NotificacaoClienteImpl notificacaoCliente = new NotificacaoClienteImpl(kafkaProducerMock);
 
         String destinatario = "test@example.com";
@@ -122,7 +118,7 @@ public class NotificacaoClienteImplTest {
         notificacaoCliente.enviarNotificacaoKafka(destinatario, assunto, corpo);
 
         // Assert
-        verify(kafkaProducerMock, times(1)).enviarMensagemTransacao(any(EmailDTO.class));
+        verify(kafkaProducerMock, times(1)).enviarMensagemTransacaoCliente(any(EmailDTO.class));
     }
 
 }
