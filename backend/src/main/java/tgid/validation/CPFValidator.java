@@ -2,9 +2,11 @@ package tgid.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import tgid.exception.CpfInvalidoException;
 
+@Slf4j
 @Component
 public class CPFValidator implements ConstraintValidator<CPF, String> {
 
@@ -46,7 +48,7 @@ public class CPFValidator implements ConstraintValidator<CPF, String> {
                     && (digitoVerificador2 == Character.getNumericValue(cpfLimpo.charAt(10)));
 
         } catch (Exception e) {
-            throw new CpfInvalidoException("CPF Inválido", e);
+            throw new CpfInvalidoException(e);
         }
 
     }

@@ -2,9 +2,11 @@ package tgid.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import tgid.exception.CnpjInvalidoException;
 
+@Slf4j
 @Component
 public class CNPJValidator implements ConstraintValidator<CNPJ, String> {
 
@@ -51,7 +53,7 @@ public class CNPJValidator implements ConstraintValidator<CNPJ, String> {
             return Character.getNumericValue(cnpjLimpo.charAt(12)) == digitoVerificador2;
 
         } catch (Exception e) {
-            throw new CnpjInvalidoException("CNPJ inválido", e);
+            throw new CnpjInvalidoException(e);
         }
 
     }
