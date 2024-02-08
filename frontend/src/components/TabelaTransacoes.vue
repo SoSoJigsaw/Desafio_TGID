@@ -10,6 +10,11 @@
             </div>
         </div>
 
+        <div v-if="alertaDeErro" class="filter-download">
+            <p class="title-popup">{{ outrosErros }}</p>
+            <button class="btn-popup" @click.prevent="alertaDeErro = false">OK</button>
+        </div>
+
         <div class="legenda">
             <p class="deposito"><span>•</span> Depósito <input type="checkbox" v-model="mostrarDeposito" @change="checkBoxHandler"></p>
             <p class="saque"><span>•</span> Saque <input type="checkbox" v-model="mostrarSaque" @change="checkBoxHandler"></p>
@@ -66,6 +71,8 @@ export default {
             edicaoId: '',
             mostrarDeposito: true,
             mostrarSaque: true,
+            alertaDeErro: false,
+            outrosErros: '',
         }
     },
 
@@ -114,11 +121,21 @@ export default {
 
         async deletarRegistro(id: String) {
 
-            await axios.delete('http://localhost:8080/transacoes/delete-transacao/' + id);
+            try {
 
-            this.confirmarDelete = false;
+                await axios.delete('http://localhost:8080/transacoes/delete-transacao/' + id);
 
-            this.getTransacoes();
+                this.confirmarDelete = false;
+
+                this.getTransacoes();
+
+            } catch (error) {
+
+                this.outrosErros = error.response.data.mensagem.toString();
+
+                this.alertaDeErro = true;
+
+            }
 
         },
 

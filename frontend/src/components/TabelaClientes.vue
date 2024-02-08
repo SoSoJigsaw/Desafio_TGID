@@ -10,6 +10,11 @@
             </div>
         </div>
 
+        <div v-if="alertaDeErro" class="filter-download">
+            <p class="title-popup">{{ outrosErros }}</p>
+            <button class="btn-popup" @click.prevent="alertaDeErro = false">OK</button>
+        </div>
+
         <div class="legenda">
             <p class="saldo-positivo"><span>•</span> Saldo positivo <input type="checkbox" v-model="mostrarPositivo" @change="checkBoxHandler"></p>
             <p class="saldo-negativo"><span>•</span> Saldo zerado <input type="checkbox" v-model="mostrarNegativo" @change="checkBoxHandler"></p>
@@ -64,6 +69,8 @@ export default {
             clienteNome: '',
             mostrarPositivo: true,
             mostrarNegativo: true,
+            alertaDeErro: false,
+            outrosErros: '',
         }
     },
 
@@ -118,11 +125,21 @@ export default {
 
         async deletarRegistro(id: number) {
 
-            await axios.delete('http://localhost:8080/cliente/delete-cliente/' + id);
+            try {
 
-            this.confirmarDelete = false;
+                await axios.delete('http://localhost:8080/cliente/delete-cliente/' + id);
 
-            this.getClientes();
+                this.confirmarDelete = false;
+
+                this.getClientes();
+
+            } catch (error) {
+
+                this.outrosErros = error.response.data.mensagem.toString();
+
+                this.alertaDeErro = true;
+
+            }
 
         },
 

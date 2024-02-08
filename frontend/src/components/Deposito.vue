@@ -2,13 +2,18 @@
     <main>
         <h3>Depositar</h3>
 
-        <div v-if="mostrarAlerta" class="filter-download">
+        <div v-if="mostrarAlertaSaldoInsuficiente" class="filter-download">
             <p class="title-popup">
                 Operação de {{ saldoInsuficiente.operacao }} não pôde ser realizada. O valor excede o
                 saldo atual do cliente <strong>{{ saldoInsuficiente.nome }}</strong> de
                 <strong>{{ saldoInsuficiente.saldo }}</strong> reais. Tente novamente.
             </p>
-            <button class="btn-popup" @click.prevent="mostrarAlerta = false">OK</button>
+            <button class="btn-popup" @click.prevent="mostrarAlertaSaldoInsuficiente = false">OK</button>
+        </div>
+
+        <div v-if="mostrarAlertaOutrosErros" class="filter-download">
+            <p class="title-popup">{{ outrosErros }}</p>
+            <button class="btn-popup" @click.prevent="mostrarAlertaOutrosErros = false">OK</button>
         </div>
 
         <div v-if="mostrarSucesso" class="filter-download">
@@ -48,8 +53,10 @@ export default {
             empresas: [],
             clientes: [],
             mostrarSucesso: false,
-            mostrarAlerta: false,
+            mostrarAlertaSaldoInsuficiente: false,
             saldoInsuficiente: [],
+            mostrarAlertaOutrosErros: false,
+            outrosErros: '',
         }
     },
 
@@ -99,12 +106,30 @@ export default {
                 this.valor = '';
             
             } catch (error) {
-                
-                console.log('Erro:', error.message);
 
-                this.saldoInsuficiente = error.response.data;
+                if (error.response.data.mensagem.toString().toLowerCase().includes('Erro no processamento da transação de depósito: {"entidade":'.toLowerCase())) {
+                    
+                    const jsonStartIndex = error.response.data.mensagem.indexOf('{'); // Encontra o índice do início do JSON
+                    const jsonStringWithoutText = error.response.data.mensagem.substring(jsonStartIndex); // Remove o texto antes do JSON
+                    const jsonObject = JSON.parse(jsonStringWithoutText); // Faz o parsing da string JSON
 
-                this.mostrarAlerta = true;
+                    this.saldoInsuficiente = {
+                        entidade: jsonObject.entidade,
+                        nome: jsonObject.nome,
+                        saldo: jsonObject.saldo,
+                        operacao: jsonObject.operacao,
+                        valorTransacao: jsonObject.valorTransacao
+                    }
+
+                    this.mostrarAlertaSaldoInsuficiente = true;
+
+                } else {
+
+                    this.outrosErros = error.response.data.mensagem.toString();
+
+                    this.mostrarAlertaOutrosErros = true;
+
+                }
 
             }    
         },

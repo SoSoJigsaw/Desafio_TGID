@@ -10,6 +10,11 @@
             </div>
         </div>
 
+        <div v-if="alertaDeErro" class="filter-download">
+            <p class="title-popup">{{ outrosErros }}</p>
+            <button class="btn-popup" @click.prevent="alertaDeErro = false">OK</button>
+        </div>
+
         <div v-if="mostrarSucesso" class="filter-download">
             <p class="title-popup">Alteração de taxa <strong>{{ taxaNome }}</strong> realizada com sucesso para <strong>{{ taxaValor }}</strong></p>
             <button class="btn-popup" @click.prevent="mostrarSucesso = false">OK</button>
@@ -128,6 +133,8 @@ export default {
             empresaNome: '',
             mostrarPositivo: true,
             mostrarNegativo: true,
+            alertaDeErro: false,
+            outrosErros: '',
         }
     },
 
@@ -183,46 +190,67 @@ export default {
 
         async deletarRegistro(id: String) {
 
-            await axios.delete('http://localhost:8080/empresa/delete-empresa/' + id);
+            try {
 
-            this.confirmarDelete = false;
+                await axios.delete('http://localhost:8080/empresa/delete-empresa/' + id);
+            
+                this.confirmarDelete = false;
 
-            this.getEmpresas();
+                this.getEmpresas();
+
+            } catch (error) {
+
+                this.outrosErros = error.response.data.mensagem.toString();
+
+                this.alertaDeErro = true;
+
+            } 
 
         },
 
         async editarTaxa(id: String, tipoTaxa: string, valor: any) {
 
-            this.taxaNome = tipoTaxa;
-            this.taxaValor = valor;
+            try {
 
-            this.taxaDTO = {
-                id: id,
-                tipoTaxa: tipoTaxa,
-                valor: valor
-            };
+                this.taxaNome = tipoTaxa;
+                this.taxaValor = valor;
 
-            await axios.post('http://localhost:8080/empresa/atualizar-taxa', this.taxaDTO, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-            });
+                this.taxaDTO = {
+                    id: id,
+                    tipoTaxa: tipoTaxa,
+                    valor: valor
+                };
 
-            this.mostrarSucesso = true;
+                await axios.post('http://localhost:8080/empresa/atualizar-taxa', this.taxaDTO, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                });
 
-            this.getEmpresas();
+                this.mostrarSucesso = true;
 
-            if (tipoTaxa === 'DEPÓSITO') {
-                this.taxaDeposito = '';
-                this.editTaxaDeposito = '';
+                this.getEmpresas();
+
+                if (tipoTaxa === 'DEPÓSITO') {
+                    this.taxaDeposito = '';
+                    this.editTaxaDeposito = '';
+                }
+                
+                if (tipoTaxa === 'SAQUE') {
+                    this.taxaSaque = '';
+                    this.editTaxaSaque = '';
+                }
+                
+                this.taxaDTO = {};
+
+            } catch (error) {
+
+                this.outrosErros = error.response.data.mensagem.toString();
+
+                this.alertaDeErro = true;
+
             }
             
-            if (tipoTaxa === 'SAQUE') {
-                this.taxaSaque = '';
-                this.editTaxaSaque = '';
-            }
-            
-            this.taxaDTO = {};
         },
 
         checkBoxHandler() {
