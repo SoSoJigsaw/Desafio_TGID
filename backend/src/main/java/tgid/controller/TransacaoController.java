@@ -1,12 +1,11 @@
 package tgid.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tgid.dto.TransacaoDTO;
-import tgid.entity.Cliente;
-import tgid.entity.Transacao;
 import tgid.exception.TransacaoInvalidaException;
 import tgid.exception.TransacaoNaoEncontradaException;
 import tgid.exception.TransacaoRemocaoException;
@@ -14,6 +13,7 @@ import tgid.service.TransacaoService;
 
 import java.util.List;
 
+@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/transacoes")
@@ -32,9 +32,9 @@ public class TransacaoController {
                          @RequestBody double valor) {
         try {
             return transacaoService.realizarDeposito(empresaId, clienteId, valor);
-        } catch (TransacaoInvalidaException e) {
-            System.err.println(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Depósito não pôde ser realizado");
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            throw new TransacaoInvalidaException("depósito", e);
         }
     }
 
@@ -45,22 +45,23 @@ public class TransacaoController {
                       @RequestBody double valor) {
         try {
             return transacaoService.realizarSaque(empresaId, clienteId, valor);
-        } catch (TransacaoInvalidaException e) {
-            System.err.println(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saque não pôde ser realizado");
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            throw new TransacaoInvalidaException("saque", e);
         }
     }
 
     @GetMapping("listar-transacoes")
     @ResponseStatus(HttpStatus.OK)
+    @Cacheable
     public List<TransacaoDTO> listarTodasTransacoes() {
 
         try {
 
             return transacaoService.listarTodasTransacoes();
 
-        } catch (TransacaoNaoEncontradaException e) {
-            throw new TransacaoNaoEncontradaException("Não há nenhum registro de transações disponível");
+        } catch (Exception e) {
+            throw new TransacaoNaoEncontradaException(e);
         }
     }
 
@@ -70,9 +71,9 @@ public class TransacaoController {
 
         try {
             transacaoService.deleteTransacao(id);
-        } catch (TransacaoRemocaoException e) {
-            System.err.println(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível deletar a transação");
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            throw new TransacaoRemocaoException(e);
         }
 
         return ResponseEntity.ok("Transação deletada com sucesso!");
