@@ -4,18 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaldoInsuficienteDTO {
+public class EmpresaDTO {
 
-    private String entidade;
+    private Long id;
+    private String cnpj;
     private String nome;
-    private int saldo;
-    private String operacao;
-    private int valorTransacao;
+    private Double saldo;
+    private Double taxaDeposito;
+    private Double taxaSaque;
 
 }

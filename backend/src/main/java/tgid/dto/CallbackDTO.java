@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailDTO {
+public class CallbackDTO {
 
-    private String destinatario;
-    private String assunto;
-    private String corpo;
+    private String url;
+    private String mensagem;
 
 }

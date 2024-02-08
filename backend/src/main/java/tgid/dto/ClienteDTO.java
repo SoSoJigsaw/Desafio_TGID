@@ -1,21 +1,21 @@
 package tgid.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaldoInsuficienteDTO {
+public class ClienteDTO {
 
-    private String entidade;
+    private long id;
+    private String cpf;
     private String nome;
-    private int saldo;
-    private String operacao;
-    private int valorTransacao;
+    private String email;
+    private Double saldo;
 
 }
