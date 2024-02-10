@@ -134,4 +134,36 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
     }
 
+    @ExceptionHandler(TransacaoZeradaException.class)
+    private ResponseEntity<?> TransacaoZeradaExceptionHandler(TransacaoZeradaException e) {
+
+        ErroDTO erro = new ErroDTO(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(TransacaoNegativaException.class)
+    private ResponseEntity<?> TransacaoNegativaExceptionHandler(TransacaoNegativaException e) {
+
+        ErroDTO erro = new ErroDTO(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(ViolacaoConstraintCpfException.class)
+    private ResponseEntity<?> ViolacaoConstraintCpfExceptionHandler(ViolacaoConstraintCpfException e) {
+
+        ErroDTO erro = new ErroDTO(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(ViolacaoConstraintCnpjException.class)
+    private ResponseEntity<?> ViolacaoConstraintCnpjExceptionHandler(ViolacaoConstraintCnpjException e) {
+
+        ErroDTO erro = new ErroDTO(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
 }
