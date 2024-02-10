@@ -48,6 +48,7 @@ public class CPFValidator implements ConstraintValidator<CPF, String> {
                     && (digitoVerificador2 == Character.getNumericValue(cpfLimpo.charAt(10)));
 
         } catch (Exception e) {
+            log.error("Ocorreu uma exceção durante a execução do algoritmo autenticador de CPF: " + e.getMessage());
             throw new CpfInvalidoException(e);
         }
 

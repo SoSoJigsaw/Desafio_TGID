@@ -25,9 +25,11 @@ public class NotificacaoEmpresaImpl implements NotificacaoEmpresa {
     public void enviarCallbackKafka(String url, String mensagem) {
 
         if (url == null || url.isEmpty()) {
+            log.error("Erro ao enviar callback empresa para processamento do KafkaListener. URL é nulo");
             throw new IllegalArgumentException("O Url não pode ser nulo");
         }
         if (mensagem == null || mensagem.isEmpty()) {
+            log.error("Erro ao enviar callback empresa para processamento do KafkaListener. Mensagem é nula");
             throw new IllegalArgumentException("A mensagem não pode ser nula");
         }
 

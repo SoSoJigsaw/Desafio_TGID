@@ -3,18 +3,17 @@ package tgid.service;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import tgid.dto.ClienteDTO;
 import tgid.entity.Cliente;
-import tgid.exception.ClienteNaoEncontradoException;
-import tgid.exception.ClienteRegistroException;
-import tgid.exception.ClienteRemocaoException;
-import tgid.exception.TransacaoRemocaoException;
+import tgid.exception.*;
 import tgid.repository.ClienteRepository;
 import tgid.repository.TransacaoRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -33,11 +32,25 @@ public class ClienteServiceImpl implements ClienteService {
             throws ClienteRegistroException {
 
         if (cpf == null || nome == null || email == null || saldo == null) {
-            throw new ClienteRegistroException("Os parâmetros do input não podem ser nulos");
+            log.error("Os parâmetros de entrada não podem ser nulos");
+            throw new ClienteRegistroException("Os parâmetros de entrada não podem ser nulos");
         }
 
+        // Remove todos os caracteres não numéricos do CPF para padronizar em seguida o formato
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        // Formata o CPF com os caracteres especiais
+        cpf = cpf.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+
         Cliente cliente = new Cliente(cpf, nome, email, saldo);
-        clienteRepository.save(cliente);
+
+        try {
+            clienteRepository.save(cliente);
+        } catch (DataIntegrityViolationException e) {
+            log.error("Violação da constraint cpf_unique_key. Registro de cliente negado");
+            throw new ViolacaoConstraintCpfException("O CPF " + cpf + " já foi utilizado por outro cliente. " +
+                    "Tente Novamente");
+        }
     }
 
     @Override
@@ -61,24 +74,38 @@ public class ClienteServiceImpl implements ClienteService {
             clientesDTO.add(dto);
         }
 
+        if (clientesDTO.isEmpty()) {
+            log.error("clientesDTO é nulo. Não há portanto clientes registrados na base de dados");
+            throw new ClienteNaoEncontradoException("Não há Clientes registrados na base de dados");
+        }
+
         return clientesDTO;
     }
 
     @Override
     @Transactional
     public void deleteCliente(Long id) throws ClienteRemocaoException {
-        Cliente cliente = clienteRepository.getReferenceById(id);
 
-        if (cliente == null) {
+        Optional<Cliente> clienteOptional = clienteRepository.findById(id);
+
+        if (clienteOptional.isPresent()) {
+
+            Cliente cliente = clienteRepository.getReferenceById(id);
+
+            try {
+                transacaoRepository.deleteApartirDoCliente(cliente);
+            } catch (Exception e) {
+                log.error("Erro ao deletar as transações relacionadas ao cliente " + cliente.getNome() +
+                        " durante tentativa de deletar esse mesmo cliente do banco");
+                throw new TransacaoRemocaoException("Não foi possível deletar as transações relacionadas a esse cliente");
+            }
+
+            clienteRepository.delete(cliente);
+
+        } else {
+            log.error("Não há cliente com esse id: " + id + ". Método de deletar cancelado");
             throw new ClienteNaoEncontradoException("Não há cliente com esse id: " + id);
         }
-
-        try {
-            transacaoRepository.deleteApartirDoCliente(cliente);
-        } catch (Exception e) {
-            throw new TransacaoRemocaoException(e);
-        }
-
-        clienteRepository.delete(cliente);
     }
+
 }

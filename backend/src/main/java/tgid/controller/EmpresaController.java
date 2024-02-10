@@ -47,7 +47,7 @@ public class EmpresaController {
                     empresa.getTaxaDeposito(), empresa.getTaxaSaque());
 
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             throw new EmpresaRegistroException(e);
         }
 
@@ -60,13 +60,14 @@ public class EmpresaController {
 
         try {
             if (!taxaValidator.isValid(taxaDTO.getTipoTaxa(), null)) {
-                log.info("Taxa Inválida: a taxa deve ser ou DEPÓSITO ou SAQUE");
+                log.error("Taxa Inválida: a taxa deve ser ou DEPÓSITO ou SAQUE");
                 throw new TaxaInvalidoException();
             }
 
             empresaService.mudarTaxaValorEmpresa(taxaDTO.getId(), taxaDTO.getTipoTaxa(), taxaDTO.getValor());
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new TaxaInvalidoException(e);
         }
 
@@ -83,6 +84,7 @@ public class EmpresaController {
             return empresaService.listarTodasEmpresas();
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new EmpresaNaoEncontradaException(e);
         }
     }
@@ -94,7 +96,7 @@ public class EmpresaController {
         try {
             empresaService.deleteEmpresa(id);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             throw new EmpresaRemocaoException(e);
         }
 

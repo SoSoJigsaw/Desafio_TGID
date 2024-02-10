@@ -43,7 +43,7 @@ public class ClienteController {
             clienteService.registrarCliente(cliente.getCpf(), cliente.getNome(), cliente.getEmail(), cliente.getSaldo());
 
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             throw new ClienteRegistroException(e);
         }
 
@@ -60,6 +60,7 @@ public class ClienteController {
             return clienteService.listarTodosClientes();
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new ClienteNaoEncontradoException(e);
         }
 
@@ -72,7 +73,7 @@ public class ClienteController {
         try {
             clienteService.deleteCliente(id);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             throw new ClienteRemocaoException(e);
         }
 

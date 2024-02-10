@@ -53,6 +53,7 @@ public class CNPJValidator implements ConstraintValidator<CNPJ, String> {
             return Character.getNumericValue(cnpjLimpo.charAt(12)) == digitoVerificador2;
 
         } catch (Exception e) {
+            log.error("Ocorreu uma exceção durante a execução do algoritmo autenticador de CNPJ: " + e.getMessage());
             throw new CnpjInvalidoException(e);
         }
 

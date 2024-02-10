@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -48,15 +49,19 @@ public class TransacaoServiceImpl implements TransacaoService {
     @Override
     public ResponseEntity<?> realizarDeposito(Long empresaId, Long clienteId, double valor) throws TransacaoInvalidaException {
 
-        Empresa empresa = empresaRepository.getReferenceById(empresaId);
-        Cliente cliente = clienteRepository.getReferenceById(clienteId);
+        Optional<Empresa> empresaOptional = empresaRepository.findById(empresaId);
 
-        if (empresa != null) {
+        if (empresaOptional.isPresent()) {
 
-            // Lógica para calcular a taxa correspondente ao depósito
-            double taxa = calcularTaxa.calcularTaxaDeposito(valor, empresa.getTaxaDeposito());
+            Optional<Cliente> clienteOptional = clienteRepository.findById(clienteId);
 
-            if (cliente != null) {
+            if (clienteOptional.isPresent()) {
+
+                Empresa empresa = empresaRepository.getReferenceById(empresaId);
+                Cliente cliente = clienteRepository.getReferenceById(clienteId);
+
+                // Lógica para calcular a taxa correspondente ao depósito
+                double taxa = calcularTaxa.calcularTaxaDeposito(valor, empresa.getTaxaDeposito());
 
                 if ((cliente.getSaldo() - valor) < 0) {
 
@@ -78,16 +83,18 @@ public class TransacaoServiceImpl implements TransacaoService {
                             notificacaoCliente.formatCorpoOperacaoNegadaCliente("depósito", (int) valor,
                                     empresa.getNome(), LocalDateTime.now(), cliente.getSaldo()));
 
+                    log.error("Cliente " + cliente.getNome() + " tentou realizar depósito, mas a transação iria" +
+                            " negativar o seu saldo. Transação negada.");
                     throw new SaldoInsuficienteException(saldoInsuficienteDTO);
                 }
 
                 // Atualiza o saldo do cliente
-                double saldoClienteAtualizado = cliente.getSaldo() + valor;
+                double saldoClienteAtualizado = cliente.getSaldo() - valor;
                 cliente.setSaldo(saldoClienteAtualizado);
                 clienteRepository.atualizarSaldo(cliente.getId(), cliente.getSaldo());
 
                 // Atualiza o saldo da empresa considerando a taxa
-                double saldoEmpresaAtualizado = empresa.getSaldo() - (valor + taxa);
+                double saldoEmpresaAtualizado = empresa.getSaldo() + (valor - taxa);
                 empresa.setSaldo(saldoEmpresaAtualizado);
                 empresaRepository.atualizarSaldo(empresa.getId(), empresa.getSaldo());
 
@@ -107,10 +114,14 @@ public class TransacaoServiceImpl implements TransacaoService {
                         notificacaoCliente.formatCorpoOperacaoRealizada("depósito", (int) transacao.getValor(),
                                 transacao.getEmpresa().getNome(), transacao.getDataTransacao(), cliente.getSaldo()));
             } else {
+                log.error("Durante tentativa de transação de depósito, foi informado um cliente como " +
+                        "parâmetro que não existe. Operação negada.");
                 throw new ClienteNaoEncontradoException("O cliente buscado para a operação não existe");
             }
 
         } else {
+            log.error("Durante tentativa de transação de depósito, foi informado uma empresa como parâmetro " +
+                    "que não existe. Operação negada");
             throw new EmpresaNaoEncontradaException("A empresa buscada para a operação não existe.");
         }
 
@@ -120,12 +131,16 @@ public class TransacaoServiceImpl implements TransacaoService {
     @Override
     public ResponseEntity<?> realizarSaque(Long empresaId, Long clienteId, double valor) throws TransacaoInvalidaException {
 
-        Empresa empresa = empresaRepository.getReferenceById(empresaId);
-        Cliente cliente = clienteRepository.getReferenceById(clienteId);
+        Optional<Empresa> empresaOptional = empresaRepository.findById(empresaId);
 
-        if (empresa != null) {
+        if (empresaOptional.isPresent()) {
 
-            if (cliente != null) {
+            Optional<Cliente> clienteOptional = clienteRepository.findById(clienteId);
+
+            if (clienteOptional.isPresent()) {
+
+                Empresa empresa = empresaRepository.getReferenceById(empresaId);
+                Cliente cliente = clienteRepository.getReferenceById(clienteId);
 
                 // Lógica para calcular a taxa correspondente ao saque
                 double taxa = calcularTaxa.calcularTaxaSaque(valor, empresa.getTaxaSaque());
@@ -178,12 +193,18 @@ public class TransacaoServiceImpl implements TransacaoService {
                             notificacaoCliente.formatCorpoOperacaoNegadaEmpresa("Saque", (int) valor,
                                     empresa.getNome(), LocalDateTime.now(), cliente.getSaldo()));
 
+                    log.error("Cliente " + cliente.getNome() + " tentou realizar saque na empresa " + empresa.getNome() +
+                            ", mas a transação iria negativar o saldo da empresa. Transação negada.");
                     throw new SaldoInsuficienteException(saldoInsuficienteDTO);
                 }
             } else {
+                log.error("Durante tentativa de transação de saque, foi informado um cliente como " +
+                        "parâmetro que não existe. Operação negada.");
                 throw new ClienteNaoEncontradoException("O cliente buscado para a operação não existe.");
             }
         } else {
+            log.error("Durante tentativa de transação de saque, foi informado uma empresa como " +
+                    "parâmetro que não existe. Operação negada.");
             throw new EmpresaNaoEncontradaException("A empresa buscada para a operação não existe.");
         }
 
@@ -214,18 +235,31 @@ public class TransacaoServiceImpl implements TransacaoService {
 
             transacoesDTO.add(dto);
         }
+
+        if (transacoesDTO.isEmpty()) {
+            log.error("transacoesDTO é nulo. Não há portanto transações registrados na base de dados");
+            throw new TransacaoNaoEncontradaException("Não há Transações registradas na base de dados");
+        }
+
         return transacoesDTO;
     }
 
     @Override
     @Transactional
     public void deleteTransacao(Long id) throws TransacaoRemocaoException {
-        Transacao transacao = transacaoRepository.getReferenceById(id);
 
-        if (transacao == null) {
+        Optional<Transacao> transacaoOptional = transacaoRepository.findById(id);
+
+        if (transacaoOptional.isPresent()) {
+
+            Transacao transacao = transacaoRepository.getReferenceById(id);
+
+            transacaoRepository.delete(transacao);
+
+        } else {
+            log.error("Não há transação com esse id: " + id + ". Método de deletar cancelado");
             throw new TransacaoNaoEncontradaException("O registro dessa transação não existe no banco");
         }
-
-        transacaoRepository.delete(transacao);
     }
+
 }

@@ -6,9 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tgid.dto.TransacaoDTO;
-import tgid.exception.TransacaoInvalidaException;
-import tgid.exception.TransacaoNaoEncontradaException;
-import tgid.exception.TransacaoRemocaoException;
+import tgid.exception.*;
 import tgid.service.TransacaoService;
 
 import java.util.List;
@@ -30,10 +28,23 @@ public class TransacaoController {
     public ResponseEntity<?> deposito(@PathVariable("empresaId") Long empresaId,
                          @PathVariable("clienteId") Long clienteId,
                          @RequestBody double valor) {
+
         try {
+
+            if (valor < 0) {
+                log.error("Tentativa de realizar depósito com valor negativo. Negado");
+                throw new TransacaoNegativaException("depósito");
+            }
+
+            if (valor == 0) {
+                log.error("Tentativa de realizar depósito com valor zerado. Negado");
+                throw new TransacaoZeradaException("depósito");
+            }
+
             return transacaoService.realizarDeposito(empresaId, clienteId, valor);
+
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             throw new TransacaoInvalidaException("depósito", e);
         }
     }
@@ -44,9 +55,21 @@ public class TransacaoController {
                       @PathVariable("clienteId") Long clienteId,
                       @RequestBody double valor) {
         try {
+
+            if (valor < 0) {
+                log.error("Tentativa de saque com valor negativo. Negado");
+                throw new TransacaoNegativaException("saque");
+            }
+
+            if (valor == 0) {
+                log.error("Tentativa de saque com valor zerado. Negado");
+                throw new TransacaoZeradaException("saque");
+            }
+
             return transacaoService.realizarSaque(empresaId, clienteId, valor);
+
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             throw new TransacaoInvalidaException("saque", e);
         }
     }
@@ -61,6 +84,7 @@ public class TransacaoController {
             return transacaoService.listarTodasTransacoes();
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new TransacaoNaoEncontradaException(e);
         }
     }
@@ -72,7 +96,7 @@ public class TransacaoController {
         try {
             transacaoService.deleteTransacao(id);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
             throw new TransacaoRemocaoException(e);
         }
 

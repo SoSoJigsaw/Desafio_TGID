@@ -26,12 +26,15 @@ public class NotificacaoClienteImpl implements NotificacaoCliente {
     public void enviarNotificacaoKafka(String destinatario, String assunto, String corpo) {
 
         if (destinatario == null || destinatario.isEmpty()) {
+            log.error("Erro ao enviar notificação cliente para processamento do KafkaListener. Destinatário é nulo");
             throw new IllegalArgumentException("Destinatario não pode ser nulo");
         }
         if (assunto == null || assunto.isEmpty()) {
+            log.error("Erro ao enviar notificação cliente para processamento do KafkaListener. Assunto é nulo");
             throw new IllegalArgumentException("Assunto não pode ser nulo");
         }
         if (corpo == null || corpo.isEmpty()) {
+            log.error("Erro ao enviar notificação cliente para processamento do KafkaListener. Corpo é nulo");
             throw new IllegalArgumentException("Corpo não pode ser nulo");
         }
 

@@ -80,6 +80,7 @@ public class KafkaConsumerImpl implements KafkaConsumer {
             log.info("E-mail enviado com sucesso para: {}", destinatario);
 
         } catch (Exception e) {
+            log.error("Envio de email de notificação ao cliente falhou: " + e.getMessage());
             throw new NotificacaoClienteException(e);
         }
     }
@@ -124,9 +125,11 @@ public class KafkaConsumerImpl implements KafkaConsumer {
             if (response.getStatusCode().is2xxSuccessful()) {
                 log.info("Callback enviado com sucesso. Resposta: {}", response.getBody());
             } else {
+                log.error("Callback para a empresa falhou. StatusCode: {}", response.getStatusCode());
                 throw new NotificacaoEmpresaException(response.getStatusCode());
             }
         } catch (Exception e) {
+            log.error("Callback para a empresa falhou: " + e.getMessage());
             throw new NotificacaoEmpresaException(e);
         }
     }
