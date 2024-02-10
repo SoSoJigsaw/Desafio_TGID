@@ -86,37 +86,45 @@ export default {
 
         async getTransacoes() {
 
-            const response = await axios.get('http://localhost:8080/transacoes/listar-transacoes');
-            this.transacoes = response.data.map((t: String) => ({ 
-                id: t.id,
-                tipo: t.tipo,
-                valor: t.valor, 
-                dataTransacao: t.dataTransacao,
-                clienteNome: t.clienteNome,
-                empresaNome: t.empresaNome
-            }));
+            try {
+                const response = await axios.get('http://localhost:8080/transacoes/listar-transacoes');
+                this.transacoes = response.data.map((t: String) => ({ 
+                    id: t.id,
+                    tipo: t.tipo,
+                    valor: t.valor, 
+                    dataTransacao: t.dataTransacao,
+                    clienteNome: t.clienteNome,
+                    empresaNome: t.empresaNome
+                }));
 
-            for (let i = 0; i < this.transacoes.length; i++) {
-                
-                let valor = parseInt(this.transacoes[i].valor);
-                
-                this.transacoes[i].valor = valor; 
-            }
+                for (let i = 0; i < this.transacoes.length; i++) {
+                    
+                    let valor = parseInt(this.transacoes[i].valor);
+                    
+                    this.transacoes[i].valor = valor; 
+                }
 
-            if (this.mostrarDeposito && !this.mostrarSaque) {
-                this.transacoes = this.transacoes.filter(transacao => transacao.tipo === 'DEPÓSITO');    
-            }
+                if (this.mostrarDeposito && !this.mostrarSaque) {
+                    this.transacoes = this.transacoes.filter(transacao => transacao.tipo === 'DEPÓSITO');    
+                }
 
-            if (!this.mostrarDeposito && this.mostrarSaque) {
-                this.transacoes = this.transacoes.filter(transacao => transacao.tipo === 'SAQUE')
-            }
+                if (!this.mostrarDeposito && this.mostrarSaque) {
+                    this.transacoes = this.transacoes.filter(transacao => transacao.tipo === 'SAQUE')
+                }
 
-            if (!this.mostrarDeposito && !this.mostrarSaque) {
-                this.transacoes = [];
-            }
+                if (!this.mostrarDeposito && !this.mostrarSaque) {
+                    this.transacoes = [];
+                }
 
-            this.transacoes.sort((a, b) => a.id - b.id);
+                this.transacoes.sort((a, b) => a.id - b.id);
             
+            } catch (error) {
+
+                this.outrosErros = error.response.data.mensagem.toString();
+
+                this.alertaDeErro = true;
+
+            }
         },
 
         async deletarRegistro(id: String) {

@@ -7,11 +7,6 @@
             <button class="btn-popup" @click.prevent="mostrarAlertaCNPJInvalido = false">OK</button>
         </div>
 
-        <div v-if="mostrarAlertaConstraint" class="filter-download">
-            <p class="title-popup">Já existe uma empresa com esse CNPJ. Revise e tente novamente</p>
-            <button class="btn-popup" @click.prevent="mostrarAlertaConstraint = false">OK</button>
-        </div>
-
         <div v-if="mostrarAlertaOutrosErros" class="filter-download">
             <p class="title-popup">{{ outrosErros }}</p>
             <button class="btn-popup" @click.prevent="mostrarAlertaOutrosErros = false">OK</button>
@@ -58,7 +53,6 @@ export default {
             mostrarAlertaCNPJInvalido: false,
             mostrarSucesso: false,
             empresaNome: '',
-            mostrarAlertaConstraint: false,
             mostrarAlertaOutrosErros: false,
             outrosErros: '',
         }
@@ -91,8 +85,7 @@ export default {
                 
                 if (error.response.data.mensagem === 'A empresa não pôde ser registrada: CNPJ Inválido') {
                     this.mostrarAlertaCNPJInvalido = true;
-                } else if (error.response.data.mensagem.toString().toLowerCase().includes('A empresa não pôde ser registrada: could not execute statement [ERROR: duplicate key value violates unique constraint "empresa_cnpj_key"'.toLowerCase())) {
-                    this.mostrarAlertaConstraint = true;
+                
                 } else {
 
                     this.outrosErros = error.response.data.mensagem.toString();

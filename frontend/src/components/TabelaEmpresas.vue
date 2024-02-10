@@ -148,44 +148,52 @@ export default {
 
         async getEmpresas() {
 
-            const response = await axios.get('http://localhost:8080/empresa/listar-empresas');
-            this.empresas = response.data.map((e: String) => ({ 
-                id: e.id,
-                cnpj: e.cnpj,
-                nome: e.nome, 
-                saldo: e.saldo,
-                taxaDeposito: e.taxaDeposito,
-                taxaSaque: e.taxaSaque
-            }));
+            try {
+                const response = await axios.get('http://localhost:8080/empresa/listar-empresas');
+                this.empresas = response.data.map((e: String) => ({ 
+                    id: e.id,
+                    cnpj: e.cnpj,
+                    nome: e.nome, 
+                    saldo: e.saldo,
+                    taxaDeposito: e.taxaDeposito,
+                    taxaSaque: e.taxaSaque
+                }));
 
-            for (let i = 0; i < this.empresas.length; i++) {
-                
-                let saldo = parseInt(this.empresas[i].saldo);
-                
-                this.empresas[i].saldo = saldo; 
-            }
-
-            for (let i = 0; i < this.empresas.length; i++) {
-                let saldo = parseInt(this.empresas[i].saldo);
-                if (saldo === 0 || saldo === 0.0 || saldo === 0.00) {
-                    this.empresas[i].saldo = 'Sem Saldo';
+                for (let i = 0; i < this.empresas.length; i++) {
+                    
+                    let saldo = parseInt(this.empresas[i].saldo);
+                    
+                    this.empresas[i].saldo = saldo; 
                 }
-            }
 
-            if (this.mostrarPositivo && !this.mostrarNegativo) {
-                this.empresas = this.empresas.filter(empresa => parseInt(empresa.saldo) > 0);    
-            }
+                for (let i = 0; i < this.empresas.length; i++) {
+                    let saldo = parseInt(this.empresas[i].saldo);
+                    if (saldo === 0 || saldo === 0.0 || saldo === 0.00) {
+                        this.empresas[i].saldo = 'Sem Saldo';
+                    }
+                }
 
-            if (!this.mostrarPositivo && this.mostrarNegativo) {
-                this.empresas = this.empresas.filter(empresa => empresa.saldo === 'Sem Saldo')
-            }
+                if (this.mostrarPositivo && !this.mostrarNegativo) {
+                    this.empresas = this.empresas.filter(empresa => parseInt(empresa.saldo) > 0);    
+                }
 
-            if (!this.mostrarPositivo && !this.mostrarNegativo) {
-                this.empresas = [];
-            }
+                if (!this.mostrarPositivo && this.mostrarNegativo) {
+                    this.empresas = this.empresas.filter(empresa => empresa.saldo === 'Sem Saldo')
+                }
 
-            this.empresas.sort((a, b) => a.id - b.id);
+                if (!this.mostrarPositivo && !this.mostrarNegativo) {
+                    this.empresas = [];
+                }
+
+                this.empresas.sort((a, b) => a.id - b.id);
             
+            } catch (error) {
+
+                this.outrosErros = error.response.data.mensagem.toString();
+
+                this.alertaDeErro = true;
+
+            }
         },
 
         async deletarRegistro(id: String) {

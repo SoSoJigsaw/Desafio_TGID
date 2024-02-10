@@ -71,21 +71,38 @@ export default {
 
         async getClientes() {
 
-            const response = await axios.get('http://localhost:8080/cliente/listar-clientes');
-            this.clientes = response.data.map((cliente: String) => ({ 
-                id: cliente.id,
-                nome: cliente.nome, 
-            }));
+            try {
+                const response = await axios.get('http://localhost:8080/cliente/listar-clientes');
+                this.clientes = response.data.map((cliente: String) => ({ 
+                    id: cliente.id,
+                    nome: cliente.nome, 
+                }));
+            
+            } catch (error) {
+
+                this.outrosErros = error.response.data.mensagem.toString();
+
+                this.mostrarAlertaOutrosErros = true;
+
+            }
             
         },
 
         async getEmpresas() {
 
-            const response = await axios.get('http://localhost:8080/empresa/listar-empresas');
-            this.empresas = response.data.map((empresa: String) => ({ 
-                id: empresa.id,
-                nome: empresa.nome, 
-            }));
+            try {
+                const response = await axios.get('http://localhost:8080/empresa/listar-empresas');
+                this.empresas = response.data.map((empresa: String) => ({ 
+                    id: empresa.id,
+                    nome: empresa.nome, 
+                }));
+
+            } catch (error) {
+
+                this.outrosErros = error.response.data.mensagem.toString();
+
+                this.mostrarAlertaOutrosErros = true;
+            }
 
         },
 

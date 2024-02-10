@@ -7,11 +7,6 @@
             <button class="btn-popup" @click.prevent="mostrarAlertaCPFInvalido = false">OK</button>
         </div>
 
-        <div v-if="mostrarAlertaConstraint" class="filter-download">
-            <p class="title-popup">Já existe um cliente com esse CPF. Revise e tente novamente</p>
-            <button class="btn-popup" @click.prevent="mostrarAlertaConstraint = false">OK</button>
-        </div>
-
         <div v-if="mostrarAlertaOutrosErros" class="filter-download">
             <p class="title-popup">{{ outrosErros }}</p>
             <button class="btn-popup" @click.prevent="mostrarAlertaOutrosErros = false">OK</button>
@@ -54,7 +49,6 @@ export default {
             mostrarAlertaCPFInvalido: false,
             mostrarSucesso : false,
             clienteNome: '',
-            mostrarAlertaConstraint: false,
             mostrarAlertaOutrosErros: false,
             outrosErros: '',
         }
@@ -86,8 +80,7 @@ export default {
 
                 if (error.response.data.mensagem === 'O cliente não pôde ser registrado: CPF Inválido') {
                     this.mostrarAlertaCPFInvalido = true;
-                } else if (error.response.data.mensagem.toString().toLowerCase().includes('O cliente não pôde ser registrado: could not execute statement [ERROR: duplicate key value violates unique constraint "cliente_cpf_key"'.toLowerCase())) {
-                    this.mostrarAlertaConstraint = true;
+                
                 } else {
 
                     this.outrosErros = error.response.data.mensagem.toString();

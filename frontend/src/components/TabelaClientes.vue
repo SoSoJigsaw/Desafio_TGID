@@ -84,43 +84,51 @@ export default {
 
         async getClientes() {
 
-            const response = await axios.get('http://localhost:8080/cliente/listar-clientes');
-            this.clientes = response.data.map((cliente: String) => ({ 
-                id: cliente.id,
-                cpf: cliente.cpf,
-                nome: cliente.nome, 
-                email: cliente.email,
-                saldo: cliente.saldo
-            }));
+            try {
+                const response = await axios.get('http://localhost:8080/cliente/listar-clientes');
+                this.clientes = response.data.map((cliente: String) => ({ 
+                    id: cliente.id,
+                    cpf: cliente.cpf,
+                    nome: cliente.nome, 
+                    email: cliente.email,
+                    saldo: cliente.saldo
+                }));
 
-            for (let i = 0; i < this.clientes.length; i++) {
-                
-                let saldo = parseInt(this.clientes[i].saldo);
-                
-                this.clientes[i].saldo = saldo; 
-            }
-
-            for (let i = 0; i < this.clientes.length; i++) {
-                let saldo = parseInt(this.clientes[i].saldo);
-                if (saldo === 0 || saldo === 0.0 || saldo === 0.00) {
-                    this.clientes[i].saldo = 'Sem Saldo';
+                for (let i = 0; i < this.clientes.length; i++) {
+                    
+                    let saldo = parseInt(this.clientes[i].saldo);
+                    
+                    this.clientes[i].saldo = saldo; 
                 }
-            }
 
-            if (this.mostrarPositivo && !this.mostrarNegativo) {
-                this.clientes = this.clientes.filter(cliente => parseInt(cliente.saldo) > 0);    
-            }
+                for (let i = 0; i < this.clientes.length; i++) {
+                    let saldo = parseInt(this.clientes[i].saldo);
+                    if (saldo === 0 || saldo === 0.0 || saldo === 0.00) {
+                        this.clientes[i].saldo = 'Sem Saldo';
+                    }
+                }
 
-            if (!this.mostrarPositivo && this.mostrarNegativo) {
-                this.clientes = this.clientes.filter(cliente => cliente.saldo === 'Sem Saldo')
-            }
+                if (this.mostrarPositivo && !this.mostrarNegativo) {
+                    this.clientes = this.clientes.filter(cliente => parseInt(cliente.saldo) > 0);    
+                }
 
-            if (!this.mostrarPositivo && !this.mostrarNegativo) {
-                this.clientes = [];
-            }
+                if (!this.mostrarPositivo && this.mostrarNegativo) {
+                    this.clientes = this.clientes.filter(cliente => cliente.saldo === 'Sem Saldo')
+                }
 
-            this.clientes.sort((a, b) => a.id - b.id);
+                if (!this.mostrarPositivo && !this.mostrarNegativo) {
+                    this.clientes = [];
+                }
+
+                this.clientes.sort((a, b) => a.id - b.id);
             
+            } catch (error) {
+
+                this.outrosErros = error.response.data.mensagem.toString();
+
+                this.alertaDeErro = true;
+
+            }
         },
 
         async deletarRegistro(id: number) {
