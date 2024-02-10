@@ -1,26 +1,28 @@
 package tgid.entity;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class ClienteTest {
 
     // Criar uma nova instância de Cliente com CPF, nome, email e saldo válidos
     @Test
-    public void test_criar_novo_cliente_com_dados_validos() {
-        // Arrange
+    public void testCriarNovoClienteComDadosValidos() {
+        // Arranjo
         Cliente cliente = new Cliente();
         cliente.setCpf("12345678901");
         cliente.setNome("John Doe");
         cliente.setEmail("johndoe@example.com");
         cliente.setSaldo(100.0);
 
-        // Act and Assert
+        // Agir e Afirmar
         assertNotNull(cliente);
         assertEquals("12345678901", cliente.getCpf());
         assertEquals("John Doe", cliente.getNome());
@@ -30,33 +32,33 @@ public class ClienteTest {
 
     // Obter o ID de uma instância existente de Cliente
     @Test
-    public void test_obter_id_de_cliente_existente() {
-        // Arrange
+    public void testObterIdDeClienteExistente() {
+        // Arranjo
         Cliente cliente = new Cliente();
         cliente.setId(1L);
 
-        // Act and Assert
+        // Agir e Afirmar
         assertNotNull(cliente.getId());
         assertEquals(1L, cliente.getId().longValue());
     }
 
     // Atualizar CPF, nome, email e saldo de uma instância existente de Cliente
     @Test
-    public void test_atualizar_dados_de_cliente_existente() {
-        // Arrange
+    public void testAtualizarDadosDeClienteExistente() {
+        // Arranjo
         Cliente cliente = new Cliente();
         cliente.setCpf("12345678901");
         cliente.setNome("John Doe");
         cliente.setEmail("johndoe@example.com");
         cliente.setSaldo(100.0);
 
-        // Act
+        // Agir
         cliente.setCpf("98765432109");
         cliente.setNome("Jane Smith");
         cliente.setEmail("janesmith@example.com");
         cliente.setSaldo(200.0);
 
-        // Assert
+        // Afirmar
         assertEquals("98765432109", cliente.getCpf());
         assertEquals("Jane Smith", cliente.getNome());
         assertEquals("janesmith@example.com", cliente.getEmail());

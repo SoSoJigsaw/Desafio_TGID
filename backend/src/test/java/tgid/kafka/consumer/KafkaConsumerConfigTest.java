@@ -2,27 +2,26 @@ package tgid.kafka.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
-import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@Import(KafkaConsumerConfig.class)
 public class KafkaConsumerConfigTest {
+
+    @Autowired
+    KafkaConsumerConfig kafkaConsumerConfig;
 
     // O método consumerFactory() deve retornar um objeto ConsumerFactory válido com as propriedades corretas definidas
     @Test
-    public void test_consumerFactory_validObjectWithCorrectProperties() {
-        KafkaConsumerConfig config = new KafkaConsumerConfig();
-        ConsumerFactory<String, String> factory = config.consumerFactory();
+    public void testSeConsumerFactoryRetornaUmObjetoValidoComAsPropriedadesCorretas() {
+        ConsumerFactory<String, String> factory = kafkaConsumerConfig.consumerFactory();
 
         assertNotNull(factory);
         assertEquals("localhost:9092", factory.getConfigurationProperties().get(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG));
@@ -35,9 +34,8 @@ public class KafkaConsumerConfigTest {
 
     // A propriedade BOOTSTRAP_SERVERS_CONFIG deve ser definida para o endereço correto do servidor Kafka
     @Test
-    public void test_BOOTSTRAP_SERVERS_CONFIG_correctAddress() {
-        KafkaConsumerConfig config = new KafkaConsumerConfig();
-        ConsumerFactory<String, String> factory = config.consumerFactory();
+    public void testSeBOOTSTRAP_SERVERS_CONFIG_EstaDefinidoCorretamente() {
+        ConsumerFactory<String, String> factory = kafkaConsumerConfig.consumerFactory();
 
         assertEquals("localhost:9092", factory.getConfigurationProperties().get(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG));
     }

@@ -1,20 +1,19 @@
 package tgid.entity;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Persistence;
-import org.hibernate.exception.ConstraintViolationException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class EmpresaTest {
 
     // Pode criar uma instância de 'Empresa' com atributos válidos
     @Test
-    public void test_criar_instancia_com_atributos_validos() {
+    public void testCriarInstanciaComAtributosValidos() {
         Empresa empresa = new Empresa();
         empresa.setCnpj("04.252.011/0001-10");
         empresa.setNome("Test Empresa");
@@ -31,7 +30,7 @@ public class EmpresaTest {
 
     // Pode definir e obter atributos de 'Empresa'
     @Test
-    public void test_definir_e_obter_atributos() {
+    public void testDefinirObterAtributos() {
         Empresa empresa = new Empresa();
         empresa.setCnpj("04.252.011/0001-10");
         empresa.setNome("Test Empresa");

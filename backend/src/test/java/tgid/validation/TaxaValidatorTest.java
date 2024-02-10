@@ -1,53 +1,53 @@
 package tgid.validation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@Import(TaxaValidator.class)
 public class TaxaValidatorTest {
 
+    @InjectMocks
+    TaxaValidator taxaValidator;
+    
     // Testa se uma entrada válida de "SAQUE" retorna verdadeiro
     @Test
-    public void test_valid_input_saque_returns_true() {
-        TaxaValidator validator = new TaxaValidator();
-        boolean result = validator.isValid("SAQUE", null);
+    public void testEntradaValidaRetornaTrue() {
+        boolean result = taxaValidator.isValid("SAQUE", null);
         assertTrue(result);
     }
 
     // Testa se uma entrada inválida de "TRANSFERÊNCIA" retorna falso
     @Test
-    public void test_invalid_input_transferencia_returns_false() {
-        TaxaValidator validator = new TaxaValidator();
-        boolean result = validator.isValid("TRANSFERÊNCIA", null);
+    public void testEntradaInvalidaRetornaFalse() {
+        boolean result = taxaValidator.isValid("TRANSFERÊNCIA", null);
         assertFalse(result);
     }
 
     // Testa se uma entrada de "depósito" (minúsculo) retorna falso
     @Test
-    public void test_input_deposito_lowercase_returns_false() {
-        TaxaValidator validator = new TaxaValidator();
-        boolean result = validator.isValid("depósito", null);
+    public void testEntradaDepositoMinusculoRetornaFalse() {
+        boolean result = taxaValidator.isValid("depósito", null);
         assertFalse(result);
     }
 
-    // Testa se uma entrada de "Saque" (maiúsculo) retorna falso
+    // Testa se uma entrada de "Saque" (capitalizada) retorna falso
     @Test
-    public void test_input_saque_capitalized_returns_false() {
-        TaxaValidator validator = new TaxaValidator();
-        boolean result = validator.isValid("Saque", null);
+    public void testEntradaSaqueCapitalizadaRetornaFalse() {
+        boolean result = taxaValidator.isValid("Saque", null);
         assertFalse(result);
     }
 
     // Testa se uma entrada de "depósito " (com espaço final) retorna falso
     @Test
-    public void test_input_deposito_with_trailing_space_returns_false() {
-        TaxaValidator validator = new TaxaValidator();
-        boolean result = validator.isValid("depósito ", null);
+    public void testEntradaDepositoComEspacoFinalRetornaFalse() {
+        boolean result = taxaValidator.isValid("depósito ", null);
         assertFalse(result);
     }
 

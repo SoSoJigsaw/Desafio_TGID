@@ -1,42 +1,49 @@
 package tgid.validation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@Import(CNPJValidator.class)
 public class CNPJValidatorTest {
+
+    @InjectMocks
+    CNPJValidator cnpjValidator;
 
     // Deve retornar Verdadeiro para um CNPJ válido
     @Test
-    public void test_valid_cnpj() {
-        CNPJValidator cnpjValidator = new CNPJValidator();
+    public void testCnpjValido() {
         assertTrue(cnpjValidator.isValid("12345678000190", null));
     }
 
     // Deve retornar Verdadeiro para um CNPJ válido com caracteres especiais
     @Test
-    public void test_valid_cnpj_with_special_characters() {
-        CNPJValidator cnpjValidator = new CNPJValidator();
+    public void testCnpjValidoComCaracteresEspeciais() {
         assertTrue(cnpjValidator.isValid("12.345.678/0001-90", null));
     }
 
     // Deve retornar Falso para um CNPJ vazio
     @Test
-    public void test_empty_cnpj() {
-        CNPJValidator cnpjValidator = new CNPJValidator();
+    public void testCnpjVazio() {
         assertFalse(cnpjValidator.isValid("", null));
     }
 
     // Deve retornar Falso para um CNPJ com menos de 14 dígitos
     @Test
-    public void test_short_cnpj() {
-        CNPJValidator cnpjValidator = new CNPJValidator();
+    public void testCnpjComMenosDigitosQueNecessario() {
         assertFalse(cnpjValidator.isValid("1234567890123", null));
+    }
+
+    // Deve retornar Falso para um CNPJ com mais de 18 dígitos
+    @Test
+    public void testCnpjComMaisDigitosQueNecessario() {
+        assertFalse(cnpjValidator.isValid("84.867.778/0001-923", null));
     }
 
 }

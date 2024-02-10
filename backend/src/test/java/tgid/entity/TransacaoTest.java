@@ -1,18 +1,21 @@
 package tgid.entity;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class TransacaoTest {
 
     // Criar uma transação com um 'tipo', 'valor', 'dataTransacao', 'cliente' e 'empresa' válidos
     @Test
-    public void test_criar_transacao_valida() {
+    public void testCriarTransacaoValida() {
         Transacao transacao = new Transacao();
         transacao.setTipo("valid_tipo");
         transacao.setValor(100.0);
@@ -33,7 +36,7 @@ public class TransacaoTest {
 
     // Criar uma transação com uma 'dataTransacao' no passado
     @Test
-    public void test_criar_transacao_com_data_passada() {
+    public void testCriarTransacaoComDataPassada() {
         Transacao transacao = new Transacao();
         transacao.setTipo("tipo");
         transacao.setValor(100.0);
@@ -55,7 +58,7 @@ public class TransacaoTest {
 
     // Criar uma transação com um 'valor' igual a zero
     @Test
-    public void test_criar_transacao_com_valor_zero() {
+    public void testCriarTransacaoComValorZero() {
         Transacao transacao = new Transacao();
         transacao.setTipo("tipo");
         transacao.setValor(0.0);
@@ -76,7 +79,7 @@ public class TransacaoTest {
 
     // Criar uma transação com um 'tipo' nulo
     @Test
-    public void test_criar_transacao_com_tipo_nulo() {
+    public void testCriarTransacaoComTipoNulo() {
         Transacao transacao = new Transacao();
         transacao.setTipo(null);
         transacao.setValor(100.0);
@@ -97,7 +100,7 @@ public class TransacaoTest {
 
     // Criar uma transação com um 'cliente' nulo
     @Test
-    public void test_criar_transacao_com_cliente_nulo() {
+    public void testCriarTransacaoComClienteNulo() {
         Transacao transacao = new Transacao();
         transacao.setTipo("tipo");
         transacao.setValor(100.0);
