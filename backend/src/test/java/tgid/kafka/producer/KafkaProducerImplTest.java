@@ -3,10 +3,11 @@ package tgid.kafka.producer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tgid.dto.CallbackDTO;
 import tgid.dto.EmailDTO;
 
@@ -16,8 +17,9 @@ import static org.mockito.Mockito.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class KafkaProducerImplTest {
 
     @Mock
