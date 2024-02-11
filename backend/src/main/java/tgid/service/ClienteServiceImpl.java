@@ -1,6 +1,7 @@
 package tgid.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -31,9 +32,9 @@ public class ClienteServiceImpl implements ClienteService {
     public void registrarCliente(String cpf, String nome, String email, Double saldo)
             throws ClienteRegistroException {
 
-        if (cpf == null || nome == null || email == null || saldo == null) {
-            log.error("Os parâmetros de entrada não podem ser nulos");
-            throw new ClienteRegistroException("Os parâmetros de entrada não podem ser nulos");
+        if (saldo < 0) {
+            log.error("O saldo fornecido no registro do cliente é um valor negativo. Procedimento negado");
+            throw new SaldoNegativoException("O valor do saldo não pode ser negativo. Tente Novamente");
         }
 
         // Remove todos os caracteres não numéricos do CPF para padronizar em seguida o formato
@@ -50,6 +51,9 @@ public class ClienteServiceImpl implements ClienteService {
             log.error("Violação da constraint cpf_unique_key. Registro de cliente negado");
             throw new ViolacaoConstraintCpfException("O CPF " + cpf + " já foi utilizado por outro cliente. " +
                     "Tente Novamente");
+        } catch (ConstraintViolationException e) {
+            log.error("Os parâmetros de entrada não podem ser nulos");
+            throw new ClienteRegistroException("Os parâmetros de entrada não podem ser nulos");
         }
     }
 

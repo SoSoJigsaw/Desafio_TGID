@@ -27,7 +27,7 @@ public class TransacaoController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> deposito(@PathVariable("empresaId") Long empresaId,
                          @PathVariable("clienteId") Long clienteId,
-                         @RequestBody double valor) {
+                         @RequestBody Double valor) {
 
         try {
 
@@ -53,7 +53,7 @@ public class TransacaoController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> saque(@PathVariable("empresaId") Long empresaId,
                       @PathVariable("clienteId") Long clienteId,
-                      @RequestBody double valor) {
+                      @RequestBody Double valor) {
         try {
 
             if (valor < 0) {

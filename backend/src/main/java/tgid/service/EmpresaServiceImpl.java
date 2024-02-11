@@ -1,6 +1,7 @@
 package tgid.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -29,12 +30,22 @@ public class EmpresaServiceImpl implements EmpresaService {
     }
 
     @Override
-    public void registrarEmpresa(String cnpj, String nome, Double saldo, double taxaDeposito, double taxaSaque)
+    public void registrarEmpresa(String cnpj, String nome, Double saldo, Double taxaDeposito, Double taxaSaque)
             throws EmpresaRegistroException {
 
-        if (cnpj == null || nome == null || saldo == null) {
-            log.error("Os parâmetros de entrada não podem ser nulos");
-            throw new EmpresaRegistroException("Os parâmetros de entrada não podem ser nulos");
+        if (saldo < 0) {
+            log.error("O saldo fornecido no registro da empresa é um valor negativo. Procedimento negado");
+            throw new SaldoNegativoException("O valor do saldo não pode ser negativo. Tente Novamente");
+        }
+
+        if (taxaDeposito < 0) {
+            log.error("A taxa de depósito fornecida no registro da empresa é um valor negativo. Procedimento negado");
+            throw new TaxaNegativaException("O valor da taxa de depósito não pode ser negativo. Tente Novamente");
+        }
+
+        if (taxaSaque < 0) {
+            log.error("A taxa de saque fornecida no registro da empresa é um valor negativo. Procedimento negado");
+            throw new TaxaNegativaException("O valor da taxa de saque não pode ser negativo. Tente Novamente");
         }
 
         // Remove todos os caracteres não numéricos do CNPJ para padronizar em seguida o formato
@@ -50,30 +61,33 @@ public class EmpresaServiceImpl implements EmpresaService {
             log.error("Violação da constraint cnpj_unique_key. Registro de empresa negado");
             throw new ViolacaoConstraintCnpjException("O CNPJ " + cnpj + " já foi utilizado por outra empresa. " +
                     "Tente Novamente");
+        } catch (ConstraintViolationException e) {
+            log.error("Os parâmetros de entrada não podem ser nulos");
+            throw new ClienteRegistroException("Os parâmetros de entrada não podem ser nulos");
         }
     }
 
     @Override
-    public void mudarTaxaValorEmpresa(Long empresaId, String tipoTaxa, double valor) throws TaxaInvalidoException {
+    public void mudarTaxaValorEmpresa(Long empresaId, String tipoTaxa, Double valor) {
 
         Optional<Empresa> empresa = empresaRepository.findById(empresaId);
 
         if (empresa.isPresent()) {
 
+            if (valor == null) {
+                log.error("Tentativa de mudar taxa de " + tipoTaxa + " para um valor nulo. Procedimento negado");
+                throw new TaxaNulaException("O valor da taxa não pode ser nula. Tente Novamente");
+            }
+
             if (Objects.equals(tipoTaxa, "DEPÓSITO")) {
                 empresaRepository.atualizarTaxaDeposito(empresaId, valor);
             } else if (Objects.equals(tipoTaxa, "SAQUE")) {
                 empresaRepository.atualizarTaxaSaque(empresaId, valor);
-            } else {
-                log.error("Ao tentar realizar mudança de valor de taxa, foi inserido pelo usuário o " +
-                        "tipo de taxa " + tipoTaxa + ". Esse valor não é válido, tente utilizar DEPÓSITO " +
-                        "ou SAQUE");
-                throw new TaxaInvalidoException();
             }
 
         } else {
-            log.error("Ao tentar realizar mudança do valor de taxa, o usuário utilizou um id inexistente no banco. " +
-                    "Procedimento negado.");
+            log.error("Ao tentar realizar mudança do valor de taxa, o usuário utilizou um id de uma empresa " +
+                    "inexistente no banco. Procedimento negado.");
             throw new EmpresaNaoEncontradaException("Não há empresa com esse id: " + empresaId);
         }
 

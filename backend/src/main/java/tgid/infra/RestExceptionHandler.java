@@ -166,4 +166,28 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 
+    @ExceptionHandler(SaldoNegativoException.class)
+    private ResponseEntity<?> SaldoNegativoExceptionHandler(SaldoNegativoException e) {
+
+        ErroDTO erro = new ErroDTO(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(TaxaNegativaException.class)
+    private ResponseEntity<?> TaxaNegativaExceptionHandler(TaxaNegativaException e) {
+
+        ErroDTO erro = new ErroDTO(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(TaxaNulaException.class)
+    private ResponseEntity<?> TaxaNulaExceptionHandler(TaxaNulaException e) {
+
+        ErroDTO erro = new ErroDTO(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
 }

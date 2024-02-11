@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.Integer.parseInt;
+
 @Slf4j
 @Service
 public class TransacaoServiceImpl implements TransacaoService {
@@ -47,7 +49,7 @@ public class TransacaoServiceImpl implements TransacaoService {
     }
 
     @Override
-    public ResponseEntity<?> realizarDeposito(Long empresaId, Long clienteId, double valor) throws TransacaoInvalidaException {
+    public ResponseEntity<?> realizarDeposito(Long empresaId, Long clienteId, Double valor) throws TransacaoInvalidaException {
 
         Optional<Empresa> empresaOptional = empresaRepository.findById(empresaId);
 
@@ -67,11 +69,11 @@ public class TransacaoServiceImpl implements TransacaoService {
 
                     int saldo = cliente.getSaldo().intValue();
                     SaldoInsuficienteDTO saldoInsuficienteDTO = new SaldoInsuficienteDTO(
-                            "Cliente", cliente.getNome(), saldo, "Depósito", (int) valor);
+                            "Cliente", cliente.getNome(), saldo, "Depósito", valor.intValue());
 
                     // Realizar callback à empresa de falha por falta de saldo na transação
                     notificacaoEmpresa.enviarCallbackKafka("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
-                            notificacaoEmpresa.formatCallbackFalhaCliente("Depósito", (int) valor,
+                            notificacaoEmpresa.formatCallbackFalhaCliente("Depósito", valor.intValue(),
                                     cliente.getNome(), empresa.getNome(),
                                     LocalDateTime.now(), empresa.getSaldo(),
                                     empresa.getSaldo() + (valor - taxa)));
@@ -79,8 +81,8 @@ public class TransacaoServiceImpl implements TransacaoService {
 
                     // Realizar notificação ao cliente por email de falha por falta de saldo na transação
                     notificacaoCliente.enviarNotificacaoKafka(cliente.getEmail(),
-                            notificacaoCliente.formatAssuntoOperacaoNegada("Depósito", (int) valor),
-                            notificacaoCliente.formatCorpoOperacaoNegadaCliente("depósito", (int) valor,
+                            notificacaoCliente.formatAssuntoOperacaoNegada("Depósito", valor.intValue()),
+                            notificacaoCliente.formatCorpoOperacaoNegadaCliente("depósito", valor.intValue(),
                                     empresa.getNome(), LocalDateTime.now(), cliente.getSaldo()));
 
                     log.error("Cliente " + cliente.getNome() + " tentou realizar depósito, mas a transação iria" +
@@ -129,7 +131,7 @@ public class TransacaoServiceImpl implements TransacaoService {
     }
 
     @Override
-    public ResponseEntity<?> realizarSaque(Long empresaId, Long clienteId, double valor) throws TransacaoInvalidaException {
+    public ResponseEntity<?> realizarSaque(Long empresaId, Long clienteId, Double valor) throws TransacaoInvalidaException {
 
         Optional<Empresa> empresaOptional = empresaRepository.findById(empresaId);
 
@@ -177,11 +179,11 @@ public class TransacaoServiceImpl implements TransacaoService {
                 } else {
                     int saldo = empresa.getSaldo().intValue();
                     SaldoInsuficienteDTO saldoInsuficienteDTO = new SaldoInsuficienteDTO(
-                            "Empresa", empresa.getNome(), saldo, "Saque", (int) valor);
+                            "Empresa", empresa.getNome(), saldo, "Saque", valor.intValue());
 
                     // Realizar callback à empresa de falha por falta de saldo na transação
                     notificacaoEmpresa.enviarCallbackKafka("https://webhook.site/5897243b-cbcd-492c-843e-ca3830f9de3b",
-                            notificacaoEmpresa.formatCallbackFalhaEmpresa("Saque", (int) valor,
+                            notificacaoEmpresa.formatCallbackFalhaEmpresa("Saque", valor.intValue(),
                                     cliente.getNome(), empresa.getNome(),
                                     LocalDateTime.now(), empresa.getSaldo(),
                                     empresa.getSaldo() - (valor + taxa)));
@@ -189,8 +191,8 @@ public class TransacaoServiceImpl implements TransacaoService {
 
                     // Realizar notificação ao cliente por email de falha por falta de saldo na transação
                     notificacaoCliente.enviarNotificacaoKafka(cliente.getEmail(),
-                            notificacaoCliente.formatAssuntoOperacaoNegada("Saque", (int) valor),
-                            notificacaoCliente.formatCorpoOperacaoNegadaEmpresa("Saque", (int) valor,
+                            notificacaoCliente.formatAssuntoOperacaoNegada("Saque", valor.intValue()),
+                            notificacaoCliente.formatCorpoOperacaoNegadaEmpresa("Saque", valor.intValue(),
                                     empresa.getNome(), LocalDateTime.now(), cliente.getSaldo()));
 
                     log.error("Cliente " + cliente.getNome() + " tentou realizar saque na empresa " + empresa.getNome() +
