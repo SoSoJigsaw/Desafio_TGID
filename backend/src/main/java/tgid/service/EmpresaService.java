@@ -6,9 +6,9 @@ import tgid.dto.EmpresaDTO;
 import tgid.entity.Empresa;
 
 public interface EmpresaService {
-    void registrarEmpresa(String cnpj, String nome, Double saldo, double taxaDeposito, double taxaSaque);
+    void registrarEmpresa(String cnpj, String nome, Double saldo, Double taxaDeposito, Double taxaSaque);
 
-    void mudarTaxaValorEmpresa(Long empresaId, String tipoTaxa, double valor);
+    void mudarTaxaValorEmpresa(Long empresaId, String tipoTaxa, Double valor);
 
     List<EmpresaDTO> listarTodasEmpresas();
 

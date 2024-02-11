@@ -16,12 +16,12 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     @Modifying
     @Transactional
     @Query("UPDATE Empresa e SET e.taxaDeposito = :novoValor WHERE e.id = :empresaId")
-    void atualizarTaxaDeposito(@Param("empresaId") Long empresaId, @Param("novoValor") double novoValor);
+    void atualizarTaxaDeposito(@Param("empresaId") Long empresaId, @Param("novoValor") Double novoValor);
 
     @Modifying
     @Transactional
     @Query("UPDATE Empresa e SET e.taxaSaque = :novoValor WHERE e.id = :empresaId")
-    void atualizarTaxaSaque(@Param("empresaId") Long empresaId, @Param("novoValor") double novoValor);
+    void atualizarTaxaSaque(@Param("empresaId") Long empresaId, @Param("novoValor") Double novoValor);
 
     @Modifying
     @Transactional

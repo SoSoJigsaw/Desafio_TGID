@@ -13,6 +13,6 @@ public class TaxaDTO {
 
     private Long id;
     private String tipoTaxa;
-    private double valor;
+    private Double valor;
 
 }
