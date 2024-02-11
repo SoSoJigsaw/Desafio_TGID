@@ -30,16 +30,3 @@ services:
       POSTGRES_DB: tgid
       POSTGRES_USER: tgid
       POSTGRES_PASSWORD: tgid
-
-  #backend:
-   # build:
-    #  context: ./backend
-   # ports:
-    #  - "8080:8080"
-
-  #frontend:
-   # build:
-    #  context: ./frontend
-    #ports:
-     # - "5173:5173"
-
