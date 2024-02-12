@@ -3,66 +3,22 @@
 ## <p align="center"> Índices </p>
 
 <div align="center">
-    <table>
-        <thead>
-            <tr>
-                <th>Nesse Documento</th>
-                <th>Sumários</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td></td>   
-                <td>[Controllers](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md)</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>[DTOs]()</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>[Entities]()</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>[Exceptions]()</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>[Infra]()</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>[Kafka]()</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>[Notification]()</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>[Repositories]()</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>[Services]()</td>
-            </tr>
-            <tr>
-                <td></td>   
-                <td>[Util]()</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>[Validation]()</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
 
+|                      Nesse Documento                     |               Sumários               |
+|:--------------------------------------------------------:|:-----------------------------------:|
+|                                                          | [Controllers](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md)                    |
+|                                                          | [DTOs]()                           |
+|                                                          | [Entities]()                       |
+|                                                          | [Exceptions]()                     |
+|                                                          | [Infra]()                          |
+|                                                          | [Kafka]()                          |
+|                                                          | [Notification]()                   |
+|                                                          | [Repositories]()                   |
+|                                                          | [Services]()                       |
+|                                                          | [Util]()                           |
+|                                                          | [Validation]()                     |
+
+</div>
 
 
 ## ClienteController.class
