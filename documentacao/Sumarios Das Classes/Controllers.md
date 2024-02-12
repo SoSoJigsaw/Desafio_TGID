@@ -13,7 +13,7 @@
         <tbody>
             <tr>
                 <td></td>   
-                <td>[Controllers]()</td>
+                <td>[Controllers](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md)</td>
             </tr>
             <tr>
                 <td></td>
