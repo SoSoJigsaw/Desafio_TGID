@@ -265,7 +265,7 @@ String empresaNome = transacao.getEmpresaNome();
 <br>
 <br>
 
-<div style="display: flex; flex-direction: row;">
-    <p align="center"><a href="https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md"><<< Anterior: Controllers</a></p>
+<div style="display: flex;">
+    <p align="left"><a href="https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md"><<< Anterior: Controllers</a></p>
     <p align="right"><a href="https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Entities.md">Próximo: Entities >>></a></p>
 </div>
