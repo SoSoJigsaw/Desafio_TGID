@@ -52,11 +52,11 @@
                             </button>
                         </td>
                         <td class="edit-taxa" v-else-if="editTaxaDeposito == c.id">
-                            <div>
-                                <input type="numeric" :placeholder="c.taxaDeposito" v-model="taxaDeposito">
-                                <button class="button-confirm" @click.prevent="editarTaxa(c.id, 'DEPÓSITO', taxaDeposito);">✔</button>
+                            <form @submit.prevent="taxaDeposito != null ? editarTaxa(c.id, 'DEPÓSITO', taxaDeposito) : '';">
+                                <input type="number" min="0.10" max="0.99" step=".01" :placeholder="c.taxaDeposito" v-model="taxaDeposito" required>
+                                <button class="button-confirm" type="submit">✔</button>
                                 <button class="button-delete" @click.prevent="editTaxaDeposito = ''; taxaDeposito = '';">X</button>
-                            </div>    
+                            </form>    
                         </td>
                         <td v-if="editTaxaSaque !== c.id">
                             {{ c.taxaSaque }}
@@ -65,11 +65,11 @@
                             </button>
                         </td>
                         <td class="edit-taxa" v-else-if="editTaxaSaque == c.id">
-                            <div>
-                                <input type="numeric" :placeholder="c.taxaSaque" v-model="taxaSaque">
-                                <button class="button-confirm" @click.prevent="editarTaxa(c.id, 'SAQUE', taxaSaque)">✔</button>                             
+                            <form @submit.prevent="taxaSaque != null ? editarTaxa(c.id, 'SAQUE', taxaSaque) : ''">
+                                <input type="number" min="0.10" max="0.99" step=".01" :placeholder="c.taxaSaque" v-model="taxaSaque" required>
+                                <button class="button-confirm" type="submit">✔</button>                             
                                 <button class="button-delete" @click.prevent="editTaxaSaque = ''; taxaSaque = '';">X</button>
-                            </div>
+                            </form>
                         </td>
                         <td><button class="button-delete" @click.prevent="confirmarDelete = true; edicaoId = c.id; empresaNome = c.nome">X</button></td>
                     </tr>
@@ -85,11 +85,11 @@
                             </button>
                         </td>
                         <td class="edit-taxa" v-else-if="editTaxaDeposito == c.id">
-                            <div>
-                                <input type="numeric" :placeholder="c.taxaDeposito" v-model="taxaDeposito">
-                                <button class="button-confirm" @click.prevent="editarTaxa(c.id, 'DEPÓSITO', taxaDeposito);">✔</button>
+                            <form @submit.prevent="taxaDeposito != null ? editarTaxa(c.id, 'DEPÓSITO', taxaDeposito) : '';">
+                                <input type="number" min="0.10" max="0.99" step=".01" :placeholder="c.taxaDeposito" v-model="taxaDeposito" required>
+                                <button class="button-confirm" type="submit">✔</button>
                                 <button class="button-delete" @click.prevent="editTaxaDeposito = ''; taxaDeposito = '';">X</button>
-                            </div>    
+                            </form>    
                         </td>
                         <td v-if="editTaxaSaque !== c.id">
                             {{ c.taxaSaque }}
@@ -98,11 +98,11 @@
                             </button>
                         </td>
                         <td class="edit-taxa" v-else-if="editTaxaSaque == c.id">
-                            <div>
-                                <input type="numeric" :placeholder="c.taxaSaque" v-model="taxaSaque">
-                                <button class="button-confirm" @click.prevent="editarTaxa(c.id, 'SAQUE', taxaSaque)">✔</button>                             
+                            <form @submit.prevent="taxaSaque != null ? editarTaxa(c.id, 'SAQUE', taxaSaque) : ''">
+                                <input type="number" min="0.10" max="0.99" step=".01" :placeholder="c.taxaSaque" v-model="taxaSaque" required>
+                                <button class="button-confirm" type="submit">✔</button>                             
                                 <button class="button-delete" @click.prevent="editTaxaSaque = false; taxaSaque = '';">X</button>
-                            </div>
+                            </form>
                         </td>
                         <td><button class="button-delete" @click.prevent="confirmarDelete = true; edicaoId = c.id; empresaNome = c.nome">X</button></td>
                     </tr>
@@ -354,7 +354,7 @@ button:not(.btn-popup) {
     white-space: nowrap;
 }
 
-.edit-taxa div {
+.edit-taxa form {
     display: flex;
     flex-direction: row;
     justify-content: center;

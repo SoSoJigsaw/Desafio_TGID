@@ -23,20 +23,20 @@
 
         <form @submit.prevent="sacar()">
             <div class="primeira-linha">
-                <select v-model="clienteId">
+                <select v-model="clienteId" required>
                     <option :value="''">Escolha o cliente...</option>
                     <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.id">{{ cliente.nome }}</option>
                 </select>
-                <select v-model="empresaId">
+                <select v-model="empresaId" required>
                     <option :value="''">Escolha a empresa...</option>
                     <option v-for="empresa in empresas" :key="empresa.id" :value="empresa.id">{{ empresa.nome }}</option>
                 </select>
             </div>    
             <div class="segunda-linha">
-                <input type="number" v-model="valor" placeholder="Digite aqui o valor...">
+                <input type="number" min="0.10" step=".01" v-model="valor" placeholder="Digite aqui o valor..." required>
             </div>
 
-            <button v-if="clienteId != '' && empresaId != '' && valor != ''" type="submit">Confirmar</button>
+            <button v-if="clienteId != '' && empresaId != '' && valor != null" type="submit">Confirmar</button>
         </form>
     </main>
 </template>
@@ -49,7 +49,7 @@ export default {
         return {
             empresaId: '',
             clienteId: '',
-            valor: '',
+            valor: null,
             empresas: [],
             clientes: [],
             mostrarSucesso: false,
@@ -120,7 +120,7 @@ export default {
 
                 this.empresaId = '';
                 this.clienteId = '';
-                this.valor = '';
+                this.valor = null;
 
             } catch (error) {
                 

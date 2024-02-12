@@ -19,12 +19,12 @@
 
         <form @submit.prevent="cadastrar()">
             <div class="primeira-linha">
-                <input type="text" placeholder="Digite seu CPF..." v-model="cliente.cpf">
-                <input type="text" placeholder="Digite seu nome..." v-model="cliente.nome">
+                <input type="text" placeholder="Digite seu CPF..." v-model="cliente.cpf" @change="formataCpf" required>
+                <input type="text" placeholder="Digite seu nome..." v-model="cliente.nome" required>
             </div>
             <div class="segunda-linha">
-                <input type="email" placeholder="Digite seu email..." v-model="cliente.email">
-                <input type="number" placeholder="Digite seu saldo..." v-model="cliente.saldo" required>
+                <input type="email" placeholder="Digite seu email..." v-model="cliente.email" required>
+                <input type="number" min="0" step="0.10" placeholder="Digite seu saldo..." v-model="cliente.saldo" required>
             </div>
 
             <button v-if="cliente.cpf != '' && cliente.nome != '' && cliente.email != '' && cliente.saldo != null" type="submit">Confirmar</button>
@@ -91,7 +91,16 @@ export default {
             }
         },
 
-    },
+            formataCpf() {
+                    // Remove todos os caracteres não numéricos
+                    let cpf = this.cliente.cpf.replace(/\D/g, '');
+                    // Adiciona a formatação do CPF
+                    cpf = cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
+                    // Atualiza o valor do campo
+                    this.cliente.cpf = cpf;
+                }
+            },
+                
 }
 </script>
 

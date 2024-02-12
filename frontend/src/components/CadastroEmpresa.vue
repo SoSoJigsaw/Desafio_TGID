@@ -19,15 +19,15 @@
         
         <form @submit.prevent="cadastrar()">
             <div class="primeira-linha">
-                <input type="text" placeholder="Digite seu CNPJ..." v-model="empresa.cnpj">
-                <input type="text" placeholder="Digite o nome da empresa..." v-model="empresa.nome">
+                <input type="text" placeholder="Digite seu CNPJ..." v-model="empresa.cnpj" @change="formataCnpj" required>
+                <input type="text" placeholder="Digite o nome da empresa..." v-model="empresa.nome" required>
             </div>
             <div class="segunda-linha">
-                <input type="number" placeholder="Digite seu saldo..." v-model="empresa.saldo" required>
+                <input type="number" min="0" step="0.10" placeholder="Digite seu saldo..." v-model="empresa.saldo" required>
             </div>
             <div class="terceira-linha">
-                <input type="decimal" placeholder="Digite sua taxa para depósito..." v-model="empresa.taxaDeposito">
-                <input type="decimal" placeholder="Digite sua taxa para saque..." v-model="empresa.taxaSaque">
+                <input type="number" min="0" step="0.10" placeholder="Digite sua taxa para depósito..." v-model="empresa.taxaDeposito" required>
+                <input type="number" min="0" step="0.10" placeholder="Digite sua taxa para saque..." v-model="empresa.taxaSaque" required>
             </div>
 
             <button v-if="empresa.cnpj != '' && empresa.nome != '' && empresa.saldo != null  && empresa.taxaDeposito && empresa.taxaSaque" type="submit">Confirmar</button>
@@ -95,6 +95,15 @@ export default {
 
             }
 
+        },
+
+        formataCnpj() {
+                    // Remove todos os caracteres não numéricos
+                    let cnpj = this.empresa.cnpj.replace(/\D/g, '');
+                    // Aplica a formatação do CNPJ
+                    cnpj = cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+                    // Atualiza o valor do campo
+                    this.empresa.cnpj = cnpj;
         },
 
     },
