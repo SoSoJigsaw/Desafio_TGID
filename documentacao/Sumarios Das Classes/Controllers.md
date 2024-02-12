@@ -1,5 +1,42 @@
 # Controllers
 
+## <p align="center"> Índices </p>
+
+<table style="margin-left:auto; margin-right:auto;">
+    <tr>
+        <td>
+            <table>
+                <thead>
+                    <tr><th>Nesse Documento</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td></td></tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+            <table>
+                <thead>
+                    <tr><th>Sumários</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>[Controllers]()</td></tr>
+                    <tr><td>[DTOs]()</td></tr>
+                    <tr><td>[Entities]()</td></tr>
+                    <tr><td>[Exceptions]()</td></tr>
+                    <tr><td>[Infra]()</td></tr>
+                    <tr><td>[Kafka]()</td></tr>
+                    <tr><td>[Notification]()</td></tr>
+                    <tr><td>[Repositories]()</td></tr>
+                    <tr><td>[Services]()</td></tr>
+                    <tr><td>[Util]()</td></tr>
+                    <tr><td>[Validation]()</td></tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</table>
+
 ## ClienteController.class
 
 A classe `ClienteController` é um controlador em uma aplicação Java Spring que lida com requisições HTTP relacionadas a clientes. Ela fornece endpoints para registrar um novo cliente, listar todos os clientes e deletar um cliente.
