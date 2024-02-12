@@ -2,40 +2,68 @@
 
 ## <p align="center"> Índices </p>
 
-<table style="margin-left:auto; margin-right:auto;">
-    <tr>
-        <td>
-            <table>
-                <thead>
-                    <tr><th>Nesse Documento</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td></td></tr>
-                </tbody>
-            </table>
-        </td>
-        <td>
-            <table>
-                <thead>
-                    <tr><th>Sumários</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>[Controllers]()</td></tr>
-                    <tr><td>[DTOs]()</td></tr>
-                    <tr><td>[Entities]()</td></tr>
-                    <tr><td>[Exceptions]()</td></tr>
-                    <tr><td>[Infra]()</td></tr>
-                    <tr><td>[Kafka]()</td></tr>
-                    <tr><td>[Notification]()</td></tr>
-                    <tr><td>[Repositories]()</td></tr>
-                    <tr><td>[Services]()</td></tr>
-                    <tr><td>[Util]()</td></tr>
-                    <tr><td>[Validation]()</td></tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-</table>
+<div align="center">
+    <table>
+        <thead>
+            <tr>
+                <th>Nesse Documento</th>
+                <th>Sumários</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>   
+                <td>[Controllers]()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[DTOs]()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[Entities]()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[Exceptions]()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[Infra]()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[Kafka]()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[Notification]()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[Repositories]()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[Services]()</td>
+            </tr>
+            <tr>
+                <td></td>   
+                <td>[Util]()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[Validation]()</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
 
 ## ClienteController.class
 
