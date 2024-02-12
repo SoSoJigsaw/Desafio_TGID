@@ -261,3 +261,11 @@ String empresaNome = transacao.getEmpresaNome();
 - `dataTransacao`: Representa a data da transação.
 - `clienteNome`: Representa o nome do cliente associado à transação.
 - `empresaNome`: Representa o nome da empresa associada à transação.
+
+<br>
+<br>
+
+<div style="display: flex; flex-direction: row;">
+    <p align="center"><a href="https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md"><<< Anterior: Controllers</a></p>
+    <p align="right"><a href="https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Entities.md">Próximo: Entities >>></a></p>
+</div>
