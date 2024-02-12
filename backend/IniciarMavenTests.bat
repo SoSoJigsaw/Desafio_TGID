@@ -1,0 +1,6 @@
+@echo off
+echo Iniciando Docker Compose...
+docker-compose -f src\test\resources\testContainers\docker-compose-test.yml up -d --build
+
+echo Executando testes com Maven...
+mvn test
