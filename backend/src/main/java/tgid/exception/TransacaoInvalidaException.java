@@ -6,4 +6,10 @@ public class TransacaoInvalidaException extends RuntimeException {
 
         super("Erro no processamento da transação de " + tipo + ": " + e.getMessage());
     }
+
+    public TransacaoInvalidaException(String tipo, String mensagem, Exception e) {
+
+        super("Erro no processamento da transação de " + tipo + ": " + mensagem);
+
+    }
 }

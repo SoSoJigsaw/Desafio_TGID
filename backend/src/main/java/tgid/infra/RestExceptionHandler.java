@@ -190,4 +190,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<?> NullPointerExceptionHandler(NullPointerException e) {
+
+        ErroDTO erro = new ErroDTO(HttpStatus.BAD_REQUEST, "Parâmetros numéricos não podem serem nulos. " +
+                "Tente novamente");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
 }

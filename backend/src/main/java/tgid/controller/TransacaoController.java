@@ -43,6 +43,9 @@ public class TransacaoController {
 
             return transacaoService.realizarDeposito(empresaId, clienteId, valor);
 
+        } catch (NullPointerException e) {
+            log.error("Parâmetros numéricos não podem serem nulos");
+            throw new TransacaoInvalidaException("depósito", "Parâmetros numéricos não podem serem nulos. Tente novamente", e);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new TransacaoInvalidaException("depósito", e);
@@ -68,6 +71,9 @@ public class TransacaoController {
 
             return transacaoService.realizarSaque(empresaId, clienteId, valor);
 
+        } catch (NullPointerException e) {
+            log.error("Parâmetros numéricos não podem serem nulos");
+            throw new TransacaoInvalidaException("saque", "Parâmetros numéricos não podem serem nulos. Tente novamente", e);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new TransacaoInvalidaException("saque", e);

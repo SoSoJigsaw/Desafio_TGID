@@ -1,8 +1,7 @@
 package tgid.exception;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import tgid.dto.SaldoInsuficienteDTO;
 import com.google.gson.Gson;
+import tgid.dto.SaldoInsuficienteDTO;
 
 public class SaldoInsuficienteException extends RuntimeException {
 

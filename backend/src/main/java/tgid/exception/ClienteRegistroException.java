@@ -10,4 +10,11 @@ public class ClienteRegistroException extends RuntimeException {
         super(mensagem);
     }
 
+
+    public ClienteRegistroException(String mensagem, NullPointerException e) {
+
+        super("O cliente não pôde ser registrado: " + mensagem);
+
+    }
+
 }

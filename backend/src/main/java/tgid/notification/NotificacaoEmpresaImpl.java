@@ -2,8 +2,6 @@ package tgid.notification;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import tgid.dto.CallbackDTO;
 import tgid.kafka.producer.KafkaProducer;

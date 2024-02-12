@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tgid.dto.EmpresaDTO;
 import tgid.dto.TaxaDTO;
-import tgid.entity.Empresa;
 import tgid.exception.*;
 import tgid.service.EmpresaService;
 import tgid.validation.CNPJValidator;
@@ -46,6 +45,9 @@ public class EmpresaController {
             empresaService.registrarEmpresa(empresa.getCnpj(), empresa.getNome(), empresa.getSaldo(),
                     empresa.getTaxaDeposito(), empresa.getTaxaSaque());
 
+        } catch (NullPointerException e) {
+            log.error("Parâmetros numéricos não podem serem nulos");
+            throw new EmpresaRegistroException("Parâmetros numéricos não podem serem nulos. Tente novamente", e);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new EmpresaRegistroException(e);

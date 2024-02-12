@@ -1,9 +1,6 @@
 package tgid.notification;
 
-import tgid.dto.EmailDTO;
-
 import java.time.LocalDateTime;
-import java.util.List;
 
 public interface NotificacaoCliente {
     void enviarNotificacaoKafka(String destinatario, String assunto, String corpo);

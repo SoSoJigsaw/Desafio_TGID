@@ -6,10 +6,11 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import tgid.dto.ClienteDTO;
-import tgid.entity.Cliente;
-import tgid.exception.*;
+import tgid.exception.ClienteNaoEncontradoException;
+import tgid.exception.ClienteRegistroException;
+import tgid.exception.ClienteRemocaoException;
+import tgid.exception.CpfInvalidoException;
 import tgid.service.ClienteService;
 import tgid.validation.CPFValidator;
 
@@ -42,6 +43,9 @@ public class ClienteController {
 
             clienteService.registrarCliente(cliente.getCpf(), cliente.getNome(), cliente.getEmail(), cliente.getSaldo());
 
+        } catch (NullPointerException e) {
+            log.error("Parâmetros numéricos não podem serem nulos");
+            throw new ClienteRegistroException("Parâmetros numéricos não podem serem nulos. Tente novamente", e);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new ClienteRegistroException(e);

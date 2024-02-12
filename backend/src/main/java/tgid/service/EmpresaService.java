@@ -1,9 +1,8 @@
 package tgid.service;
 
-import java.util.List;
-
 import tgid.dto.EmpresaDTO;
-import tgid.entity.Empresa;
+
+import java.util.List;
 
 public interface EmpresaService {
     void registrarEmpresa(String cnpj, String nome, Double saldo, Double taxaDeposito, Double taxaSaque);

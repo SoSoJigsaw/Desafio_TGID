@@ -11,4 +11,10 @@ public class EmpresaRegistroException extends RuntimeException {
         super(mensagem);
     }
 
+    public EmpresaRegistroException(String mensagem, NullPointerException e) {
+
+        super("A empresa não pôde ser registrada: " + mensagem);
+
+    }
+
 }

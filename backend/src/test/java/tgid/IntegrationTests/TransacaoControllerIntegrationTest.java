@@ -1,7 +1,5 @@
 package tgid.IntegrationTests;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,10 +9,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.testcontainers.containers.DockerComposeContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
-
-import java.io.File;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -162,6 +156,7 @@ public class TransacaoControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(transacaoJson))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
+
     }
 
     @Test

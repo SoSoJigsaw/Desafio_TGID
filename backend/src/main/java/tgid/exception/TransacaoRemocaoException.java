@@ -1,7 +1,5 @@
 package tgid.exception;
 
-import tgid.entity.Transacao;
-
 public class TransacaoRemocaoException extends RuntimeException {
 
     public TransacaoRemocaoException(Exception e) {
