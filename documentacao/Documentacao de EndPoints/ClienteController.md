@@ -45,7 +45,7 @@
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Cadastro realizado com sucesso!
+"Cadastro realizado com sucesso!"
 ```
 
 ### Hipótese 2
@@ -65,7 +65,7 @@ Cadastro realizado com sucesso!
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Cadastro realizado com sucesso!
+"Cadastro realizado com sucesso!"
 ```
 
 ### Hipótese 3
@@ -381,7 +381,7 @@ Cadastro realizado com sucesso!
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Cliente deletado com sucesso!
+"Cliente deletado com sucesso!"
 ```
 
 ### Hipótese 2

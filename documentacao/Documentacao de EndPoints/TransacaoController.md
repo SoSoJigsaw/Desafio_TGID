@@ -40,7 +40,7 @@
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Transação de Depósito realizada com sucesso
+"Transação de Depósito realizada com sucesso"
 ```
 
 ### Hipotése 2
@@ -170,7 +170,7 @@ null
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Transação de Saque realizada com sucesso
+"Transação de Saque realizada com sucesso"
 ```
 
 ### Hipotése 2
@@ -397,7 +397,7 @@ null
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Transação deletada com sucesso!
+"Transação deletada com sucesso!"
 ```
 
 ### Hipótese 2

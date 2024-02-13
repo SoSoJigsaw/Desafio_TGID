@@ -46,7 +46,7 @@
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Cadastro realizado com sucesso!
+"Cadastro realizado com sucesso!"
 ```
 
 ### Hipótese 2
@@ -67,7 +67,7 @@ Cadastro realizado com sucesso!
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Cadastro realizado com sucesso!
+"Cadastro realizado com sucesso!"
 ```
 
 ### Hipótese 3
@@ -383,7 +383,7 @@ Cadastro realizado com sucesso!
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Taxa associada com sucesso
+"Taxa associada com sucesso"
 ```
 
 ### Hipótese 2
@@ -402,7 +402,7 @@ Taxa associada com sucesso
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Taxa associada com sucesso
+"Taxa associada com sucesso"
 ```
 
 ### Hipótese 3
@@ -587,7 +587,7 @@ Taxa associada com sucesso
 #### Response
 - HTTP STATUS: `200 OK`
 ```json
-Empresa deletada com sucesso!
+"Empresa deletada com sucesso!"
 ```
 
 ### Hipótese 2
