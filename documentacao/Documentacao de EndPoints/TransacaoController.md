@@ -20,11 +20,13 @@
 
 </div>
 
+<br>
+
 ## Endpoint `/transacoes/deposito/{empresaId}/{clienteId}`
 
 - Método do endpoint: `POST`
 
-<br>
+
 
 ### Hipotése 1
 - Realiza o depósito com sucesso
@@ -154,7 +156,7 @@ null
 
 - Método do endpoint: `POST`
 
-<br>
+
 
 ### Hipotése 1
 - Realiza o saque com sucesso
@@ -284,7 +286,7 @@ null
 
 - Método do endpoint: `GET`
 
-<br>
+
 
 ### Hipótese 1
 - Retorna a lista de todas as transações cadastradas no banco de dados com sucesso
@@ -384,7 +386,7 @@ null
 
 - Método do endpoint: `DELETE`
 
-<br>
+
 
 ### Hipótese 1
 - Deleta um registro de transação do banco de dados a partir de seu id com sucesso

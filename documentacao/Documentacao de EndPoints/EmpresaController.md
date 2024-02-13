@@ -20,12 +20,13 @@
 
 </div>
 
+<br>
 
 ## Endpoint `/empresa/registrar-empresa`
 
 - Método do endpoint: `POST`
 
-<br>
+
 
 ### Hipótese 1
 - Registra a empresa com sucesso usando caracteres especiais no CNPJ
@@ -364,7 +365,7 @@ Cadastro realizado com sucesso!
 
 - Método do endpoint: `POST`
 
-<br>
+
 
 ### Hipótese 1
 - Atualiza a taxa de saque de uma empresa com sucesso
@@ -475,7 +476,7 @@ Taxa associada com sucesso
 
 - Método do endpoint: `GET`
 
-<br>
+
 
 ### Hipótese 1
 - Retorna a lista de todas as empresas cadastradas no banco de dados com sucesso
@@ -575,7 +576,7 @@ Taxa associada com sucesso
 
 - Método do endpoint: `DELETE`
 
-<br>
+
 
 ### Hipótese 1
 - Deleta uma empresa do banco de dados a partir de seu id com sucesso

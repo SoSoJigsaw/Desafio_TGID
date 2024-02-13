@@ -20,11 +20,13 @@
 
 </div>
 
+<br>
+
 ## Endpoint `/cliente/registrar-cliente`
 
 - Método do endpoint: `POST`
 
-<br>
+
 
 ### Hipótese 1
 - Registrar o cliente com sucesso usando caracteres especiais no CPF
@@ -278,7 +280,7 @@ Cadastro realizado com sucesso!
 
 - Método do endpoint: `GET`
 
-<br>
+
 
 ### Hipótese 1
 - Retorna a lista de todos os clientes cadastrados no banco de dados com sucesso
@@ -368,7 +370,7 @@ Cadastro realizado com sucesso!
 
 - Método do endpoint: `DELETE`
 
-<br>
+
 
 ### Hipótese 1
 - Deleta um cliente do banco de dados a partir de seu id com sucesso
