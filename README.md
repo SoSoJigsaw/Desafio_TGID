@@ -187,7 +187,14 @@ No caso de requisições que acabam por lançar exceções por conta da própria
 
 
 
-Além de essas exceções retornarem uma mensagem no console do Springboot, sendo útil ao desenvolvedor, as exceções retornam também uma mensagem a nível do usuário. Para esses casos, se tratando a aplicação de uma API REST onde o usuário fará requisições aos endpoints, os erros foram tratados de forma a enviar uma resposta `ResponseEntity<?>` com o HTTP Status adequado ao erro, como `400 BAD_REQUEST` ou `404 NOT_FOUND`, junto a um body é um JSON que contém as propriedades `status`, que tem como valor o HTTP STATUS correspondente, e `mensagem`, onde há a descrição do erro que ocorreu em uma linguagem simples, não técnica, e que possibilita contextualizar de forma clara em que operação o erro ocorreu e como poder solucioná-lo. Esse tipo de tratamento de erro, retornando ao lançar a exceção uma `ResponseEntity<?>`, é útil pelo fato da aplicação se tratar de uma API REST, e o usuário não tem conhecimento da lógica de negócio. Como neste projeto foi desenvolvido uma interface web para o usuário interagir, esse tratamento personalizado possibilita que o frontend (Vue.js) possa lidar com a resposta em casos de erro, e fornecer ao usuário um aviso que o deixa ciente que a requisição falhou. Um exemplo disso é quando há uma exceção lançada por um CPF inválido: neste caso, o tratamento do erro é feito enviando uma `ResponseEntity<?>` com body "O cliente não pôde ser registrado: CPF Inválido". Assim que o Vue.js reconhece essa resposta, ele cria alertas que avisam ao usuário do frontend a respeito do erro ocorrido e, ao mesmo tempo, o erro também é descrito no console do Spring.
+Além de essas exceções retornarem uma mensagem no console do Springboot, sendo útil ao desenvolvedor, as exceções retornam também uma mensagem a nível do usuário. Para esses casos, se tratando a aplicação de uma API REST onde o usuário fará requisições aos endpoints, os erros foram tratados de forma a enviar uma resposta `ResponseEntity<?>` com o HTTP Status adequado ao erro, como `400 BAD_REQUEST` ou `404 NOT_FOUND`, junto a um body que é um JSON que contém as propriedades `status`, que tem como valor o HTTP STATUS correspondente, e `mensagem`, onde há a descrição do erro que ocorreu em uma linguagem simples, não técnica, e que possibilita contextualizar de forma clara em que operação o erro ocorreu e como poder solucioná-lo. Esse tipo de tratamento de erro, retornando ao lançar a exceção uma `ResponseEntity<?>`, é útil pelo fato da aplicação se tratar de uma API REST, e o usuário não tem conhecimento da lógica de negócio. Como neste projeto foi desenvolvido uma interface web para o usuário interagir, esse tratamento personalizado possibilita que o frontend (Vue.js) possa lidar com a resposta em casos de erro, e fornecer ao usuário um aviso que o deixa ciente que a requisição falhou. Um exemplo disso é quando há uma exceção lançada por um CPF inválido: neste caso, o tratamento do erro é feito enviando uma `ResponseEntity<?>` com body "O cliente não pôde ser registrado: CPF Inválido". Assim que o Vue.js reconhece essa resposta, ele cria alertas que avisam ao usuário do frontend a respeito do erro ocorrido e, ao mesmo tempo, o erro também é descrito no console do Spring.
+
+```json
+{
+  "status": "BAD_REQUEST",
+  "mensagem": "O cliente não pôde ser registrado: O CPF 466.625.052-26 já foi utilizado por outro cliente. Tente Novamente"
+}
+```
 
 ### 4. Injeção de Dependências
 Injeção de dependências é um padrão de design utilizado no paradigma orientado a objetos, onde as dependências de um objeto são fornecidas a ele por meio de construtores, métodos de configuração ou de forma direta, em vez de o próprio objeto criar essas dependências. A importância da injeção de dependências no Spring Boot reside no fato de que ela promove um código mais limpo, modular e de fácil manutenção.
@@ -200,9 +207,56 @@ O Spring Boot utiliza principalmente dois tipos de injeção de dependências: a
 
 Como boa prática de desenvolvimento em Spring Boot, foi utilizado a <b>injeção de dependências por construtor</b>, já que traz maior clareza e transparência, pelo fato de todas as dependências serem explicitamente declaradas no construtor da classe, facilitando a compreensão do código e a identificação das dependências necessárias. Além disso, sua característica de imutabilidade é considerada uma prática recomendada. Por exemplo, os controllers geralmente têm uma ou algumas dependências que são essenciais para o seu funcionamento, como serviços para lidar com a lógica de negócios e acesso a dados. A injeção por construtor facilita a passagem dessas dependências de forma clara e explícita, tornando o código mais fácil de entender, testar e manter.
 
-
+```java
+    private final TransacaoRepository transacaoRepository;
+    private final EmpresaRepository empresaRepository;
+    private final ClienteRepository clienteRepository;
+    private final CalcularTaxa calcularTaxa;
+    private final NotificacaoEmpresa notificacaoEmpresa;
+    private final NotificacaoCliente notificacaoCliente;
+    
+    public TransacaoServiceImpl(TransacaoRepository transacaoRepository, EmpresaRepository empresaRepository,
+                                ClienteRepository clienteRepository, CalcularTaxa calcularTaxa,
+                                NotificacaoEmpresa notificacaoEmpresa, NotificacaoCliente notificacaoCliente) {
+        this.transacaoRepository = transacaoRepository;
+        this.empresaRepository = empresaRepository;
+        this.clienteRepository = clienteRepository;
+        this.calcularTaxa = calcularTaxa;
+        this.notificacaoEmpresa = notificacaoEmpresa;
+        this.notificacaoCliente = notificacaoCliente;
+    }
+```
 
 As classes de teste utilizaram a <b>injeção de dependências por anotação</b>, principalmente as anotações `@Mock` e `@InjectMocks`. já que facilita a criação de instâncias da classe de teste com dependências mockadas ou simuladas. É extremamente útil em testes unitários, onde se deseja isolar a unidade de código sendo testada e fornecer mocks para suas dependências. 
+
+```java
+@Mock
+    private TransacaoRepository transacaoRepository;
+
+    @Mock
+    private EmpresaRepository empresaRepository;
+
+    @Mock
+    private ClienteRepository clienteRepository;
+
+    @Mock
+    private ClienteService clienteService;
+
+    @Mock
+    private EmpresaService empresaService;
+
+    @Mock
+    CalcularTaxa calcularTaxa;
+
+    @Mock
+    NotificacaoEmpresa notificacaoEmpresa;
+
+    @Mock
+    NotificacaoCliente notificacaoCliente;
+
+    @InjectMocks
+    TransacaoServiceImpl transacaoService;
+```
 
 ### 5. Arquitetura em camadas (ou Arquitetura de três camadas)
 Quando se trata de desenvolver um software, a arquitetura é fundamental para garantir que o sistema seja bem organizado, escalável, e de fácil manutenção. Por isso, optei para esse projeto a `Arquitetura em Camadas`, que é um padrão arquitetural similar ao MVC, mas que é considerada uma implementação mais moderna e flexível, pois permite uma maior separação de responsabilidades e uma melhor modularidade do código.
@@ -234,9 +288,9 @@ Como práticas de desacoplamento no projeto, foram utilizados:
 - <b>Eventos e Listeners:</b> são componentes que reagem a eventos sem terem conhecimento direto uns dos outros. Isso é útil para desacoplar a lógica de negócios. O Apache Kafka, que está sendo utilizado na aplicação, pode ser considerado como uma forma de implementar a comunicação assíncrona entre componentes do sistema. Simplesmente, um produtor publica mensagens em um tópico do Kafka e um consumidor escuta esse tópico usando a anotação `@KafkaListener`. Quando o consumidor detecta uma nova mensagem no tópico, ele executa um método específico para processar essa mensagem, sem ter conhecimento direto do produtor.
 
 ### 7. Mensageria com Apache Kafka
+![kafka](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/kafka.png)
+
 O Apache Kafka é uma plataforma de streaming distribuída que permite a publicação e subscrição de fluxos de dados em tempo real. Ele permite que os serviços comuniquem-se de forma assíncrona, o que pode melhorar a escalabilidade e a resiliência da aplicação. O Kafka pode ser usado para processar grandes volumes de dados em tempo real, permitindo que as aplicações do Spring Boot processem e reajam a eventos em tempo real.
-
-
 
 Apesar de não ser um projeto de microsserviços, decidi adotar o Apache Kafka visando um deploy futuro que tenha um nível maior de complexidade, já que o Kafka traz uma solução flexível e expansível. Isso significa que, se no futuro a aplicação migrar para uma arquitetura baseada em microserviços, já terá a infraestrutura necessária em vigor. Minha decisão pelo Apache Kafka foi também por suas várias vantagens: 
 - Ao utilizar o Kafka, você pode executar operações de forma assíncrona. Isso significa que, quando um tópico é ouvido pelo KafkaListener, o método anotado com `@KafkaListener` pode ser executado de forma independente do restante da lógica do aplicativo. Isso pode melhorar o desempenho geral do aplicativo, permitindo que outras operações continuem enquanto o método do KafkaListener é executado.
@@ -247,12 +301,14 @@ Apesar de não ser um projeto de microsserviços, decidi adotar o Apache Kafka v
 #### Envio de emails aos Clientes
 Para enviar emails aos clientes envolvidos em transações, foi utilizado componentes do `Spring Mail` e também a biblioteca padrão do Java para enviar e receber emails, que é o `JavaMail`. Para criar um objeto de email no formato necessário, utilizou-se a classe `MimeMessage`, e foi usado a interface `JavaEmailSender` para o envio do email através da API do `JavaMail`. Antes do envio, como essa funcionalidade é baseada na utilização de um servidor Apache Kafka, foi necessário converter um objeto do tipo `EmailDTO` em String, enviar então essa String através do `KafkaTemplate` para o servidor Kafka no tópico `transacao.request.topic`. A mensagem enviada pelo Produtor é basicamente uma String contendo todos os dados necessários para a criação de um email (destinatário, assunto, corpo). Logo em seguida, de forma assíncrona, a mensagem produzida pelo Produtor `KakfaProducer` é ouvida pelo Consumidor `KafkaConsumer` através do método `processarMensagemTransacaoCliente` com anotação `@KafkaListener`, e então o método do Listener é executado, sem a necessidade de executar a chamada do método de maneira manual ou em declaração no código. Com a execução do método Listener do Consumidor, a String passada pelo Produtor é novamente configurada como um objeto `EmailDTO`, para que depois os atributos desse objeto sejam os argumentos do objeto email que será criado. Então, é feita a chamada do método `enviarEmailAoUsuario`, onde os atributos do objeto `EmailDTO` são passados como parâmetro. O método usa a classe `MimeMessageHelper` para auxiliar a criação e configuração do objeto `MimeMessage`, recebendo os parâmetros de destinatário, assunto e corpo da mensagem, para então criar o email. Por fim, a interface `JavaMailSender` é chamada para realizar o envio.
 
+![email](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/email-cliente.png)
+
 #### Callback para as Empresas
 No contexto de uma chamada assíncrona, o callback é executado quando a resposta da chamada é recebida. Para realizar o callback para a Empresa, foi utilizado o `RestTemplate`, com o qual um callback pode ser enviado como parte de uma chamada assíncrona a um serviço externo, que no caso foi usado o serviço online da [Webhook](https://webhook.site) de geração de endpoints temporários, usando-o para simular um callback para uma empresa que esteja envolvida em uma determinada transação.
 
-
-
 Essa funcionalidade também faz uso de um servidor Apache Kafka. Foi necessário converter um objeto do tipo CallbackDTO em String, enviar então essa String através do KafkaTemplate para o servidor Kafka no tópico `callback.request.topic`. A mensagem enviada pelo Produtor é basicamente uma String contendo a `url` do serviço externo que receberá o callback, e a `mensagem` que é o JSON enviado na resposta que contém informações a respeito da transação realizada. Logo em seguida, de forma assíncrona, a mensagem produzida pelo Produtor (`KakfaProducer`) é ouvida pelo Consumidor (`KafkaConsumer`) através do método `processarMensagemTransacaoEmpresa` com anotação `@KafkaListener`, e então o método do Listener é executado, sem a necessidade de executar a chamada do método de maneira manual ou em declaração no código. Com a execução do método Listener do Consumidor, a String passada pelo Produtor no referido tópico é novamente configurada como um objeto `CallbackDTO`, e então é feita a chamada do método `enviarCallbackEmpresa`, onde os atributos do objeto `CallbackDTO` são passados como parâmetro. Então, o método utiliza a classe `RestTemplate` para fazer a requisição HTTP `POST` para o servidor remoto da Webhook. Tendo sucesso a resposta da chamada, o callback é enfim executado com sucesso. 
+
+![callback](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/callback-empresa.png)
 
 ### 8. Testes Unitários e de Integração
 
