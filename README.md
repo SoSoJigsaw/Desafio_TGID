@@ -308,7 +308,7 @@ No contexto de uma chamada assíncrona, o callback é executado quando a respost
 
 Essa funcionalidade também faz uso de um servidor Apache Kafka. Foi necessário converter um objeto do tipo CallbackDTO em String, enviar então essa String através do KafkaTemplate para o servidor Kafka no tópico `callback.request.topic`. A mensagem enviada pelo Produtor é basicamente uma String contendo a `url` do serviço externo que receberá o callback, e a `mensagem` que é o JSON enviado na resposta que contém informações a respeito da transação realizada. Logo em seguida, de forma assíncrona, a mensagem produzida pelo Produtor (`KakfaProducer`) é ouvida pelo Consumidor (`KafkaConsumer`) através do método `processarMensagemTransacaoEmpresa` com anotação `@KafkaListener`, e então o método do Listener é executado, sem a necessidade de executar a chamada do método de maneira manual ou em declaração no código. Com a execução do método Listener do Consumidor, a String passada pelo Produtor no referido tópico é novamente configurada como um objeto `CallbackDTO`, e então é feita a chamada do método `enviarCallbackEmpresa`, onde os atributos do objeto `CallbackDTO` são passados como parâmetro. Então, o método utiliza a classe `RestTemplate` para fazer a requisição HTTP `POST` para o servidor remoto da Webhook. Tendo sucesso a resposta da chamada, o callback é enfim executado com sucesso. 
 
-![callback](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/callback-empresa.png)
+![callback](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/callback.png)
 
 ### 8. Testes Unitários e de Integração
 
