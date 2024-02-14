@@ -297,6 +297,8 @@ Portanto, a partir dos métodos criados para validar ou não CPF ou CNPJ, não h
 
 Quando ocorre a validação, caso ocorra um comportamento de erro, ocorre uma exceção que já está tratada: `CnpjInvalidoException` e `CpfInvalidoException`. No caso de não ocorrer nenhuma exceção, e o retorno do método `isValid()` seja `false`, a respectiva classe Controller (que é a responsável pela chamada dos métodos validadores) retornará uma response `400 BAD_REQUEST` com body informando que o CPF ou CNPJ é inválido. Essa response é acessada pelo frontend, determinando assim seu comportamento, como a criação de alertas para informar ao usuário que o CPF/CNPJ fornecido não é válido. No console do Spring, a invalidação também é informada.
 
+![cpf invalido](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/manual%20do%20usuario/cpf-invalido.gif)
+
 ## Sobre o desenvolvedor
 
 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;">
