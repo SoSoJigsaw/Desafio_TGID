@@ -12,7 +12,6 @@
     <a href="https://www.java.com/pt-BR/"><img src="https://img.shields.io/badge/Backend Framework%3A-SpringBoot-green"/></a>
     <a href="https://www.java.com/pt-BR/"><img src="https://img.shields.io/badge/Gerenciador de Dependências%3A-Maven-purple"/></a>
     <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Testes Unitários%3A-JUnit5 e Mockito-red"/></a>
-    <a href="https://www.javascript.com/"><img src="https://img.shields.io/badge/Testes de Integração%3A-MockMvc-yellow"/></a>
   </p>
 
   <p align="center">
@@ -44,7 +43,7 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
 - Testes
 
 ## Solução
-![gif]()
+![gif](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/gif-readme.gif)
 
 - Foi desenvolvida uma aplicação baseada em web que permite realizar transações (depósito ou saque), cadastrar novos clientes ou empresas, assim como ter acesso aos dados existentes no banco de dados. Muito além da criação da API no backend, foi também realizada uma interface simples e intuitiva que facilita o uso do usuário. Todas as exceções previstas nos testes realizados foram tratadas para fornecer ao usuário uma resposta agradável e, com relação ao CPF e o CNPJ, foram criados algoritmos de validação, considerando não apenas o número de dígitos, mas também fazendo a verificação dos dígitos de controle, que são os dois últimos presentes tanto no CPF quanto no CNPJ.
 - Além do tratamento de erros dentro do Spring Boot, foi configurado para o frontend Vue.js lidar com os erros retornados através de uma requisição, realizando assim um evento que informa ao usuário a respeito da exceção ocorrida de forma que o erro possa ser compreendido sem conhecimento técnico da lógica de negócio da aplicação e das exceções próprias do Java ao realizar uma operação não permitida por sua sintaxe ou por suas regras de tipagem.
@@ -107,16 +106,15 @@ notificação para o Cliente (seja e-mail, SMS ou algo do tipo).
 
 </details>
 
-## Estrutura do Banco (DER e Modelo Lógico)
+## Estrutura do Banco
 O projeto conta com três entidades: `Cliente`, `Empresa` e `Transacao`. A entidade `Transacao`, que representa os registros de depósitos e saques realizados entre clientes e empresas, possui duas chaves estrangeiras, portanto possui relacionamento com as demais entidades.
-![DER]()
-![Modelo Lógico]()
+![DER](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/DER.png)
 
 ## Manual de Uso
-Caso tenha interesse em executar o projeto, o Manual de Uso ensina como instalar as dependências, como executar o projeto, e como funciona cada uma das funcionalidades. [Acesse ele aqui]().
+Caso tenha interesse em executar o projeto, o Manual de Uso ensina como instalar as dependências, como executar o projeto, e como funciona cada uma das funcionalidades. [Acesse ele aqui](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Manual%20de%20Uso.md).
 
 ## Sumarização de Classes
-Caso tenha interesse em analisar para qual funcionalidade cada classe do projeto serve, assim como a motivação de cada um de seus atributos, métodos e seus retornos, [acesse a sumarização de classes por aqui]().
+Caso tenha interesse em analisar para qual funcionalidade cada classe do projeto serve, assim como a motivação de cada um de seus atributos, métodos e seus retornos, [acesse a sumarização de classes por aqui](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md).
 
 ## Documentação Técnica
 Nessa seção, será explorado alguns conceitos que foram implementados ao projeto e especificamente ao código, com o intuito de diminuir as chances de erros ocorrerem, seguir as boas práticas convencionadas no desenvolvimento SpringBoot, e para prover manutenbilidade ao código.
@@ -259,7 +257,7 @@ Essa funcionalidade também faz uso de um servidor Apache Kafka. Foi necessário
 ### 8. Testes Unitários e de Integração
 
 #### Testes Unitários
-Para garantir a qualidade e facilitar a manutenção do código, foram criados testes unitários para todas as classes existentes no projeto. Foi utilizado para os testes o JUnit5 junto ao Mockito. [Você pode acessar a Documentação de cada classe de teste aqui]().
+Para garantir a qualidade e facilitar a manutenção do código, foram criados testes unitários para todas as classes existentes no projeto. Foi utilizado para os testes o JUnit5 junto ao Mockito. [Você pode acessar a Documentação de cada classe de teste aqui](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20Testes%20Unitarios/ControllersTests.md).
 
 
 
@@ -278,7 +276,7 @@ Esses testes foram realizados utilizando a classe `MockMvc` do próprio Spring F
 
 
 
-Através dos testes de integração realizados, pude documentar os endpoints da API, demonstrando todas as hipóteses de requisições e suas devidas respostas. [Acesse aqui a Documentação de Endpoints.]()
+Através dos testes de integração realizados, pude documentar os endpoints da API, demonstrando todas as hipóteses de requisições e suas devidas respostas. [Acesse aqui a Documentação de Endpoints.](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/ClienteController.md)
 
 ### 9. Validação de CPF e CNPJ
 Para validar o CPF e CNPJ, foram criadas classes onde há um método com algoritmos de validação, que fazem diversos procedimentos de teste para verificar não só o número de dígitos fornecidos, mas também se o CPF ou CNPJ se enquadra nas regras dos dígitos de controle.
@@ -303,7 +301,7 @@ Quando ocorre a validação, caso ocorra um comportamento de erro, ocorre uma ex
 
 <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px;">
   
-<img src="img/perfil_felipe.png" alt="Sobre mim">
+<img src="img/perfil.png" alt="Sobre mim">
 
 
 
