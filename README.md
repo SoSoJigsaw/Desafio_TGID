@@ -313,11 +313,13 @@ Essa funcionalidade também faz uso de um servidor Apache Kafka. Foi necessário
 ### 8. Testes Unitários e de Integração
 
 #### Testes Unitários
-Para garantir a qualidade e facilitar a manutenção do código, foram criados testes unitários para todas as classes existentes no projeto. Foi utilizado para os testes o JUnit5 junto ao Mockito. [Você pode acessar a Documentação de cada classe de teste aqui](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20Testes%20Unitarios/ControllersTests.md).
+Para garantir a qualidade e facilitar a manutenção do código, foram criados testes unitários para todas as classes existentes no projeto. Foi utilizado para os testes o JUnit5 junto ao Mockito. 
 
-
+Essas classes de teste criaram instâncias mockadas de suas dependências, com o intuito de isolar a unidade de código sendo testada.
 
 Os testes unitários foram de grande ajuda para o meu processo de desenvolvimento, pois que me permitiu fazer alterações no código com mais confiança, já que os testes me passaram a garantia de que qualquer regressão seria detectada.
+
+Caso deseje compreender os testes realizados, há comentários explicativos em cada teste realizado, para compreender a sua utilidade prática. [Acesse por aqui o package de testes da aplicação.](https://github.com/SoSoJigsaw/Desafio_TGID/tree/main/backend/src/test/java/tgid)
 
 #### Testes de Integração
 Foram realizados testes de integração nas classes que representam os Controllers, já que é neles que se encontram todos os endpoints da API, que estão envolvidos com todos os demais componentes da aplicação de alguma forma. Portanto, testar os Controllers, possibilita testar a aplicação como um todo.
@@ -330,7 +332,7 @@ Outra motivação para realizar os testes de integração nos Controllers foi a 
 
 Esses testes foram realizados utilizando a classe `MockMvc` do próprio Spring Framework. Ele permite simular as solicitações HTTP enviadas para os Controllers e verificar as respostas retornadas por eles, tudo sem a necessidade de iniciar um contêiner de servlets.
 
-
+Para que os testes de integração funcionassem, seria necessário que os demais serviços do projeto (como o PostgreSQL e o Kafka) estivessem sendo executados. No entanto, para evitar que ocorresse uma alteração, por exemplo, nos registros do banco de dados em decorrência dos procedimentos dos testes, foi criado um arquivo `docker-compose-test.yml`, que basicamente é uma cópia do docker compose utilizado no projeto, de forma que os testes pudessem ocorrer sem ocasionar qualquer incongruência nos dados reais da aplicação.
 
 Através dos testes de integração realizados, pude documentar os endpoints da API, demonstrando todas as hipóteses de requisições e suas devidas respostas. [Acesse aqui a Documentação de Endpoints.](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/ClienteController.md)
 
