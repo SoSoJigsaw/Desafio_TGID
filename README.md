@@ -230,7 +230,7 @@ Como boa prática de desenvolvimento em Spring Boot, foi utilizado a <b>injeçã
 As classes de teste utilizaram a <b>injeção de dependências por anotação</b>, principalmente as anotações `@Mock` e `@InjectMocks`. já que facilita a criação de instâncias da classe de teste com dependências mockadas ou simuladas. É extremamente útil em testes unitários, onde se deseja isolar a unidade de código sendo testada e fornecer mocks para suas dependências. 
 
 ```java
-@Mock
+    @Mock
     private TransacaoRepository transacaoRepository;
 
     @Mock
