@@ -643,4 +643,4 @@ Quando ocorre a validação, caso ocorra um comportamento de erro, ocorre uma ex
 </div>              
 </div>
 
-<p align="right">(<a href="#top">Voltar ao Topo</a>)</p>
+<p align="right"><a href="#top">Voltar ao Topo</a></p>
