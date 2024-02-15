@@ -143,11 +143,11 @@ Nessa seção, será explorado alguns conceitos que foram implementados ao proje
 
 | Tópico                                                   |
 |----------------------------------------------------------|
-| [1. Implementação da Lógica de Negócios](#1-implementação-da-lógica-de-negócios)            |
+| [1. Implementação da Lógica de Negócios](#1-implementação-da-lógica-de-negócios)           |
 | [2. O uso de contêineres Docker e o Docker Compose](#2-o-uso-de-contêineres-docker-e-o-docker-compose) |
-| [3. Tratamento de Erros/Exceções](#3-tratamento-de-erros-exceções)                         |
+| [3. Tratamento de Erros/Exceções](#3-tratamento-de-errosexceções)                         |
 | [4. Injeção de Dependências](#4-injeção-de-dependências)                               |
-| [5. Arquitetura em camadas (ou Arquitetura de três camadas)](#5-arquitetura-em-camadas-ou-arquitetura-de-três-camadas)   |
+| [5. Arquitetura em camadas (ou Arquitetura de três camadas)](#5-arquitetura-em-camadas-ou-arquitetura-de-três-camadas)  |
 | [6. Desacoplamento de componentes](#6-desacoplamento-de-componentes)                     |
 | [7. Mensageria com Apache Kafka](#7-mensageria-com-apache-kafka)                         |
 | [8. Testes Unitários e de Integração](#8-testes-unitários-e-de-integração)               |
@@ -643,4 +643,4 @@ Quando ocorre a validação, caso ocorra um comportamento de erro, ocorre uma ex
 </div>              
 </div>
 
-<p align="right"><a href="#top">Voltar ao Topo</a></p>
+<p align="right">(<a href="#top">Voltar ao Topo</a>)</p>
