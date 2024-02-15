@@ -27,6 +27,24 @@
   </p>
 </div>
 
+## <p align="center"> Índice </p>
+
+<div align="center">
+
+| Tópico                   |
+|--------------------------|
+| [Desafio](#desafio)                     |
+| [Requisitos (Diferenciais)](#requisitos-diferenciais) |
+| [Solução](#solução)                     |
+| [Tecnologias Utilizadas](#tecnologias-utilizadas)   |
+| [Estrutura do Banco](#estrutura-do-banco)        |
+| [Manual de Uso](#manual-de-uso)               |
+| [Sumarização de Classes](#sumarização-de-classes)   |
+| [Documentação Técnica](#documentação-técnica)      |
+| [Sobre o desenvolvedor](#sobre-o-desenvolvedor)    |
+
+</div>
+
 ## Desafio
 Criação de um sistema utilizando ao menos dois usuários (Empresa e Cliente). Tanto o CPF quanto o CNPJ precisam serem validados. Para cada Empresa, deve haver ao menos um tipo de taxa de sistema que será 
 incidida no momento da transação (seja saque ou depósito ). As Empresas devem ter um saldo que advém dos depósitos e saques realizados por Clientes na sua empresa, e já com o abate das taxas de administração. Clientes podem fazer depósitos e saques pelas Empresas (a depender dos saldos das empresas). No momento em que a transação é realizada, deve ser enviado um callback para Empresa informando a transação, e algum tipo de 
@@ -119,6 +137,25 @@ Caso tenha interesse em analisar para qual funcionalidade cada classe do projeto
 ## Documentação Técnica
 Nessa seção, será explorado alguns conceitos que foram implementados ao projeto e especificamente ao código, com o intuito de diminuir as chances de erros ocorrerem, seguir as boas práticas convencionadas no desenvolvimento SpringBoot, e para prover manutenbilidade ao código.
 
+### <p align="center"> Índice da Documentação Técnica </p>
+
+<div align="center">
+
+| Tópico                                                   |
+|----------------------------------------------------------|
+| [1. Implementação da Lógica de Negócios](#1-implementação-da-lógica-de-negócios)            |
+| [2. O uso de contêineres Docker e o Docker Compose](#2-o-uso-de-contêineres-docker-e-o-docker-compose) |
+| [3. Tratamento de Erros/Exceções](#3-tratamento-de-erros-exceções)                         |
+| [4. Injeção de Dependências](#4-injeção-de-dependências)                               |
+| [5. Arquitetura em camadas (ou Arquitetura de três camadas)](#5-arquitetura-em-camadas-ou-arquitetura-de-três-camadas)   |
+| [6. Desacoplamento de componentes](#6-desacoplamento-de-componentes)                     |
+| [7. Mensageria com Apache Kafka](#7-mensageria-com-apache-kafka)                         |
+| [8. Testes Unitários e de Integração](#8-testes-unitários-e-de-integração)               |
+| [9. Validação de CPF e CNPJ](#9-validação-de-cpf-e-cnpj)                     
+
+</div>
+
+
 ### 1. Implementação da Lógica de Negócios
 Seguindo as boas práticas no ambiente de desenvolvimento Spring Boot, e a arquitetura adotada (arquitetura em camadas), a lógica principal de negócios da aplicação se desenvolveu dentro das classes que se encontram no package `service`. Todas as classes que possuem anotação `@Service` estão incluídas e são essenciais para a lógica de uma das funcionalidades da API. Ou seja, são nos services que a lógica de negócios se desenvolveu. Para a lógica principal de negócio, que é aquela que envolve a manipulação das entidades, foi criado um service para cada uma dessas entidades (Cliente, Empresa, Transacao).
 
@@ -194,6 +231,18 @@ Além de essas exceções retornarem uma mensagem no console do Springboot, send
   "status": "BAD_REQUEST",
   "mensagem": "O cliente não pôde ser registrado: O CPF 466.625.052-26 já foi utilizado por outro cliente. Tente Novamente"
 }
+```
+
+Por fim, é importante citar que esse comportamento das exceções personalizadas de retornarem respostas HTTP JSON, foi configurado na classe `RestExceptionHandler` do package `infra` que possui a anotação `@RestControllerAdvice`. Essa anotação permite centralizar o tratamento de exceções para os Controllers REST. Ou seja, quando uma exceção é lançada durante a execução de um dos controllers da aplicação, sendo todos eles anotados como `@RestController`, o Spring Boot automaticamente busca métodos anotados com `@ExceptionHandler` que estão dentro da classe marcada com a anotação `@RestControllerAdvice` para tratar a exceção específica. Dessa forma, para todas as exceções personalizadas criadas, foi criado na classe `RestExceptionHandler` um método handler para manipulá-lo globalmente a retornar respostas JSON.
+
+```java
+@ExceptionHandler(ClienteNaoEncontradoException.class)
+    private ResponseEntity<?> ClienteNaoEncontradoExceptionHandler(ClienteNaoEncontradoException e) {
+
+        ErroDTO erro = new ErroDTO(HttpStatus.NOT_FOUND, e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+    }
 ```
 
 ### 4. Injeção de Dependências
@@ -283,7 +332,7 @@ O desacoplamento de componentes é um princípio de design em engenharia de soft
 
 Como práticas de desacoplamento no projeto, foram utilizados:
 - <b>Injeção de Dependências:</b> com a injeção de dependência, as dependências de um componente são injetadas por um contêiner de IoC, em vez de serem instanciadas pelo próprio componente. Isso reduz as dependências diretas entre os componentes. Como método principal, foi utilizado a injeção de dependências por construtor.
-- <b>Interfaces:</b> definir interfaces para os componentes permite que diferentes implementações sejam trocadas sem afetar os clientes dessas interfaces, promovendo assim um alto grau de desacoplamento. Dentro do projeto, foram criadas interfaces para todas as classes com a anotação `@Service`, sendo uma boa prática conhecida em desenvolvimento Spring, e em classes genéricas com anotação `@Component`. Para classes de configuração, Controllers e Entities não foram criadas interfaces, já que não são diretamente instanciados ou usados como dependências em outras partes do código. Quanto aos Repositories, eles já são interfaces que estendem o `JpaRepository`, e como não houve a necessidade de personalizar ou estender os métodos fornecidos pelo JPA, não seria útil ou boa prática criar uma nova interface.
+- <b>Interfaces:</b> definir interfaces para os componentes permite que diferentes implementações sejam trocadas sem afetar os clientes dessas interfaces, promovendo assim um alto grau de desacoplamento. Dentro do projeto, foram criadas interfaces para todas as classes com a anotação `@Service`, sendo uma boa prática conhecida em desenvolvimento Spring, e em algumas classes genéricas com anotação `@Component` que já não eram uma implementação de outra interface, como é o caso, por exemplo, da classe de validação de CPF, que é uma implementação da interface `ConstraintValidator`, que faz parte do Jakarta (anteriormente conhecido como Java EE). Para classes de configuração, Controllers e Entities não foram criadas interfaces, já que não são diretamente instanciados ou usados como dependências em outras partes do código. Quanto aos Repositories, eles já são interfaces que estendem o `JpaRepository`, e como não houve a necessidade de personalizar ou estender os métodos fornecidos pelo JPA, não seria útil ou boa prática criar uma nova interface nessa circunstância.
 - <b>Uso de DTOs (Data Transfer Objects):</b> o uso de DTOs para transferência de dados ajuda a reduzir o acoplamento entre as entidades. No projeto, alguns DTOs foram criados com o intuito de formular a response de requisições em um formato que se aproxima do JSON, assim como para receber dados JSON de requests e poder manipulá-los no Spring Boot. Os métodos dos Controllers e Services, ao invés de lidarem diretamente com as suas respectivas entidades, utilizam de DTOs.
 - <b>Eventos e Listeners:</b> são componentes que reagem a eventos sem terem conhecimento direto uns dos outros. Isso é útil para desacoplar a lógica de negócios. O Apache Kafka, que está sendo utilizado na aplicação, pode ser considerado como uma forma de implementar a comunicação assíncrona entre componentes do sistema. Simplesmente, um produtor publica mensagens em um tópico do Kafka e um consumidor escuta esse tópico usando a anotação `@KafkaListener`. Quando o consumidor detecta uma nova mensagem no tópico, ele executa um método específico para processar essa mensagem, sem ter conhecimento direto do produtor.
 
@@ -300,6 +349,8 @@ Apesar de não ser um projeto de microsserviços, decidi adotar o Apache Kafka v
 
 #### Envio de emails aos Clientes
 Para enviar emails aos clientes envolvidos em transações, foi utilizado componentes do `Spring Mail` e também a biblioteca padrão do Java para enviar e receber emails, que é o `JavaMail`. Para criar um objeto de email no formato necessário, utilizou-se a classe `MimeMessage`, e foi usado a interface `JavaEmailSender` para o envio do email através da API do `JavaMail`. Antes do envio, como essa funcionalidade é baseada na utilização de um servidor Apache Kafka, foi necessário converter um objeto do tipo `EmailDTO` em String, enviar então essa String através do `KafkaTemplate` para o servidor Kafka no tópico `transacao.request.topic`. A mensagem enviada pelo Produtor é basicamente uma String contendo todos os dados necessários para a criação de um email (destinatário, assunto, corpo). Logo em seguida, de forma assíncrona, a mensagem produzida pelo Produtor `KakfaProducer` é ouvida pelo Consumidor `KafkaConsumer` através do método `processarMensagemTransacaoCliente` com anotação `@KafkaListener`, e então o método do Listener é executado, sem a necessidade de executar a chamada do método de maneira manual ou em declaração no código. Com a execução do método Listener do Consumidor, a String passada pelo Produtor é novamente configurada como um objeto `EmailDTO`, para que depois os atributos desse objeto sejam os argumentos do objeto email que será criado. Então, é feita a chamada do método `enviarEmailAoUsuario`, onde os atributos do objeto `EmailDTO` são passados como parâmetro. O método usa a classe `MimeMessageHelper` para auxiliar a criação e configuração do objeto `MimeMessage`, recebendo os parâmetros de destinatário, assunto e corpo da mensagem, para então criar o email. Por fim, a interface `JavaMailSender` é chamada para realizar o envio.
+
+Como servidor SMTP (Simple Mail Transfer Protocol), foi utilizado o serviço da [Ethereal Email](https://ethereal.email/). Como a grande maioria dos servidores SMTP são pagos, o Ethereal foi a opção mais viável, já que ele existe justamente para que desenvolvedores simulem e testem o envio de emails em suas aplicações, sem enviar mensagens para endereços de email reais. 
 
 ![email](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/email-cliente.png)
 
