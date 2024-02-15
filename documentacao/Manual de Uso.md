@@ -48,6 +48,7 @@ Com a execução do projeto vue, o terminal avisará a url para acessar a aplica
 
 ## Usando o Software
 ![Home Software](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/gif-readme.gif)
+<br>
 A interface da aplicação é bem simples, contendo apenas três seções, cada uma para realizar diferentes funcionalidades. As seções são `Transações`, `Cadastrar` e `Acesse os Dados`.
 
 ### 1. Realizar Transações
@@ -63,6 +64,7 @@ Tanto para realizar o depósito quanto para realizar o saque, é necessário ape
 
 #### Transação mal sucedida
 Uma transação pode não ser concretizada por diversas razões. O cliente ou empresa fornecidos podem na realidade não existirem, o valor da transação fornecido pode ser um valor negativo, nulo ou zero, e também o cliente ou a empresa pode não ter saldo suficiente para concretizar a transação. Em todos esses casos, a aplicação gerará um aviso ao usuário, indicando a ele o porquê da transação ter sido negada.
+<br>
 ![Saldo Insuficiente](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/manual%20do%20usuario/saldo-insuficiente.gif)
 
 ### 2. Cadastrar Clientes ou Empresas
@@ -79,16 +81,20 @@ Nos dois casos, será pedido dados cadastrais próprios de cada agente, sendo to
 
 #### Cadastro mal sucedido
 Uma tentativa de cadastro pode ser mal sucedida por diversas razões. O CPF ou CNPJ informado pode ser inválido ou então já foi utilizado para cadastrar outro cliente ou empresa, o saldo informado pode ser nulo ou negativo, entre outros invalidações possíveis. Em todos os casos, a aplicação alertará o usuário de qual erro foi cometido de forma clara, para que ele possa corrigi-lo devidamente.
+<br>
 ![CPF Inválido](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/manual%20do%20usuario/cpf-invalido.gif)
 
 ### 3. Visualizar os dados de Clientes, Empresas e Transações
 Acessando a seção `Acesse os Dados`, o usuário poderá acessar os dados referentes aos clientes, empresas e transações realizadas que estão salvas na base de dados.
+<br>
 ![Tabelas](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/manual%20do%20usuario/tabelas.gif)
 
 #### Deletar um registro
 Através das tabelas, o usuário pode deletar um cliente, empresa ou transação caso deseje. Antes de ser concluída a exclusão, a aplicação gerará um alerta de confirmação, para evitar uma exclusão não desejada.
+<br>
 ![Tabelas Deletar](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/manual%20do%20usuario/tabelas-deletar.gif)
 
 #### Alterar a taxa
 Na tabela de Empresas, é possível editar o valor das taxas de depósito e saque de uma empresa. Fornecendo um valor válido (não nulo, negativo ou zero) a operação será realizada com sucesso e a aplicação fornecerá um alerta de confirmação.
+<br>
 ![Alterar Taxa](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/img/manual%20do%20usuario/alterar-taxa.gif)
