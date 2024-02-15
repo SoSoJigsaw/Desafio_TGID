@@ -4,19 +4,11 @@
 
 <div align="center">
 
-|                      Nesse Documento                     |     Documentações de Endpoint     |
-|:--------------------------------------------------------:|:---------------------------------:|
-|                                                          |  [ClienteController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/ClienteController.md)  |
-|                                                          |  [EmpresaController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/EmpresaController.md)  |
-|                                                          | [TransacaoController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/TransacaoController.md) |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
+|                               Nesse Documento                                |     Documentações de Endpoint     |
+|:----------------------------------------------------------------------------:|:---------------------------------:|
+| [Endpoint `/cliente/registrar-cliente`](#endpoint-clienteregistrar-cliente)  |  [ClienteController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/ClienteController.md)  |
+|   [Endpoint `/cliente/listar-clientes`](#endpoint-clientelistar-clientes)    |  [EmpresaController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/EmpresaController.md)  |
+| [Endpoint `/cliente/delete-cliente/{id}`](#endpoint-clientedelete-clienteid) | [TransacaoController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/TransacaoController.md) |
 
 </div>
 
@@ -400,3 +392,7 @@
 ```
 
 
+<br>
+<br>
+
+<p align="center"><a href="https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/EmpresaController.md">Próximo: EmpresaController Endpoints >>></a></p>

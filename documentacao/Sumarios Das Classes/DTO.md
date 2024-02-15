@@ -4,23 +4,22 @@
 
 <div align="center">
 
-|                      Nesse Documento                     |                                                    Sumários de Classes                                                     |
-|:--------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
-|                                                          |  [Controllers](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md)  |
-|                                                          |         [DTOs](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/DTO.md)          |
-|                                                          |     [Entities](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Entities.md)     |
-|                                                          |   [Exceptions](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Exceptions.md)   |
-|                                                          |        [Infra](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Infra.md)        |
-|                                                          |        [Kafka](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Kafka.md)        |
-|                                                          | [Notification](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Notification.md) |
-|                                                          | [Repositories](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Repositories.md) |
-|                                                          |     [Services](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Services.md)     |
-|                                                          |         [Util](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Util.md)         |
-|                                                          |   [Validation](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Validation.md)   |
+|                    Nesse Documento                     |                                                    Sumários de Classes                                                     |
+|:------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
+|          [CallBackDTO.java](#callbackdtojava)          |  [Controllers](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md)  |
+|           [ClienteDTO.java](#clientedtojava)           |         [DTOs](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/DTO.md)          |
+|             [EmailDTO.java](#emaildtojava)             |     [Entities](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Entities.md)     |
+|           [EmpresaDTO.java](#empresadtojava)           |   [Exceptions](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Exceptions.md)   |
+|              [ErroDTO.java](#errodtojava)              |        [Infra](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Infra.md)        |
+| [SaldoInsuficienteDTO.java](#saldoinsuficientedtojava) |        [Kafka](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Kafka.md)        |
+|              [TaxaDTO.java](#taxadtojava)              | [Notification](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Notification.md) |
+|         [TransacaoDTO.java](#transacaodtojava)         |     [Services](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Services.md)     |
+|                                                        |         [Util](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Util.md)         |
+|                                                        |   [Validation](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Validation.md)   |
 
 </div>
 
-## CallbackDTO.class
+## CallbackDTO.java
 
 A classe `CallbackDTO` é uma classe simples em Java que representa um objeto de retorno com uma URL e uma mensagem.
 
@@ -47,7 +46,7 @@ String message = callback.getMensagem(); // "Mensagem Teste"
 - `url`: um campo de string que representa a URL de retorno.
 - `mensagem`: um campo de string que representa a mensagem de retorno.
 
-## ClienteDTO.class
+## ClienteDTO.java
 
 A classe `ClienteDTO` é um objeto de transferência de dados que representa um cliente com suas informações, como ID, CPF, nome, email e saldo.
 
@@ -81,7 +80,7 @@ A classe ClienteDTO não possui nenhum método adicional. Ela apenas fornece get
 - `email`: Representa o endereço de email do cliente.
 - `saldo`: Representa o saldo ou montante de dinheiro associado ao cliente.
 
-## EmailDTO.class
+## EmailDTO.java
 
 A classe `EmailDTO` é uma classe simples em Java que representa uma mensagem de e-mail. Ela possui três campos: destinatario (destinatário), assunto e corpo. A classe fornece métodos getter e setter para esses campos, além de construtores para criar instâncias da classe com diferentes combinações de valores dos campos.
 
@@ -109,7 +108,7 @@ A classe EmailDTO não possui métodos adicionais além dos métodos getter e se
 - `assunto`: Representa o assunto do e-mail.
 - `corpo`: Representa o corpo do e-mail.
 
-## EmpresaDTO.class
+## EmpresaDTO.java
 
 A classe `EmpresaDTO` é um objeto de transferência de dados que representa uma empresa. Ela contém campos para o ID da empresa, CNPJ (Cadastro Nacional da Pessoa Jurídica), nome, saldo, taxa de depósito e taxa de saque. Também inclui métodos getter e setter para esses campos, bem como construtores para criar instâncias da classe.
 
@@ -143,7 +142,7 @@ A classe EmpresaDTO não possui métodos adicionais além dos métodos getter e 
 - `taxaDeposito`: Representa a taxa de depósito da empresa. É do tipo Double.
 - `taxaSaque`: Representa a taxa de saque da empresa. É do tipo Double.
 
-## ErroDTO.class
+## ErroDTO.java
 
 A classe `ErroDTO` é uma classe Java que representa uma resposta de erro. Ela contém dois campos: `status` do tipo `HttpStatus` e `mensagem` do tipo `String`. A classe é anotada com anotações do Lombok para gerar métodos getter e setter, bem como um construtor com todos os campos.
 
@@ -168,7 +167,7 @@ A classe ErroDTO não possui métodos adicionais. Ela depende dos métodos gette
 - `status`: Representa o código de status HTTP da resposta de erro. É do tipo HttpStatus, que é uma enumeração fornecida pelo Spring Framework.
 - `mensagem`: Representa a mensagem de erro associada à resposta de erro. É do tipo String.
 
-## SaldoInsuficienteDTO.class
+## SaldoInsuficienteDTO.java
 
 A classe `SaldoInsuficienteDTO` é um objeto de transferência de dados (DTO) que representa informações sobre saldo insuficiente em uma conta. Ela contém campos para a entidade, nome, saldo atual, operação e valor da transação.
 
@@ -196,7 +195,7 @@ A classe SaldoInsuficienteDTO não possui métodos adicionais além dos getters 
 - `operacao`: Representa o tipo de operação que resultou em saldo insuficiente.
 - `valorTransacao`: Representa o valor da transação que causou o saldo insuficiente.
 
-## TaxaDTO.class
+## TaxaDTO.java
 
 A classe `TaxaDTO` é uma classe Java que representa um objeto de transferência de dados para uma taxa. Ela contém campos para o ID da taxa, tipo e valor.
 
@@ -225,7 +224,7 @@ A classe TaxaDTO não possui métodos personalizados. Ela apenas fornece método
 - `tipoTaxa`: Representa o tipo da taxa. É do tipo String.
 - `valor`: Representa o valor da taxa. É do tipo Double.
 
-## TransacaoDTO.class
+## TransacaoDTO.java
 
 A classe `TransacaoDTO` é um objeto de transferência de dados que representa uma transação. Ela contém campos para o ID da transação, tipo, valor, data da transação, nome do cliente e nome da empresa. Também inclui métodos getter e setter para esses campos, bem como construtores para criar instâncias da classe.
 

@@ -4,19 +4,12 @@
 
 <div align="center">
 
-|                      Nesse Documento                     |     Documentações de Endpoint     |
-|:--------------------------------------------------------:|:---------------------------------:|
-|                                                          |  [ClienteController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/ClienteController.md)  |
-|                                                          |  [EmpresaController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/EmpresaController.md)  |
-|                                                          | [TransacaoController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/TransacaoController.md) |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
-|                                                          |                                   |
+|                               Nesse Documento                                |     Documentações de Endpoint     |
+|:----------------------------------------------------------------------------:|:---------------------------------:|
+| [Endpoint `/empresa/registrar-empresa`](#endpoint-empresaregistrar-empresa)  |  [ClienteController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/ClienteController.md)  |
+|    [Endpoint `/empresa/atualizar-taxa`](#endpoint-empresaatualizar-taxa)     |      [EmpresaController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/EmpresaController.md)                                                                                                                                                 |
+|   [Endpoint `/empresa/listar-empresas`](#endpoint-empresalistar-empresas)    |   [TransacaoController Endpoints](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/TransacaoController.md) |
+| [Endpoint `/empresa/delete-empresa/{id}`](#endpoint-empresadelete-empresaid) |  |
 
 </div>
 
@@ -604,3 +597,12 @@
   "mensagem": "A empresa não pôde ser deletada: Não há empresa com esse id: 99"
 }
 ```
+
+
+<br>
+<br>
+
+
+
+<p align="left"><a href="https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/ClienteController.md"><<< Anterior: ClienteController Endpoints</a></p>
+<p align="right"><a href="https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Documentacao%20de%20EndPoints/TransacaoController.md">Próximo: TransacaoController Endpoints >>></a></p>

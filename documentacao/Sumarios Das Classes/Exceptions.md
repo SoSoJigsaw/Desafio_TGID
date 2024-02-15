@@ -4,19 +4,30 @@
 
 <div align="center">
 
-|                      Nesse Documento                     |                                                    Sumários de Classes                                                     |
-|:--------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
-|                                                          |  [Controllers](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md)  |
-|                                                          |         [DTOs](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/DTO.md)          |
-|                                                          |     [Entities](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Entities.md)     |
-|                                                          |   [Exceptions](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Exceptions.md)   |
-|                                                          |        [Infra](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Infra.md)        |
-|                                                          |        [Kafka](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Kafka.md)        |
-|                                                          | [Notification](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Notification.md) |
-|                                                          | [Repositories](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Repositories.md) |
-|                                                          |     [Services](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Services.md)     |
-|                                                          |         [Util](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Util.md)         |
-|                                                          |   [Validation](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Validation.md)   |
+|                               Nesse Documento                                |                                                    Sumários de Classes                                                     |
+|:----------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
+|   [ClienteNaoEncontradoException.java](#clientenaoencontradoexceptionjava)   |  [Controllers](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Controllers.md)  |
+|        [ClienteRegistroException.java](#clienteregistroexceptionjava)        |         [DTOs](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/DTO.md)          |
+|         [ClienteRemocaoException.java](#clienteremocaoexceptionjava)         |     [Entities](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Entities.md)     |
+|           [CnpjInvalidoException.java](#cnpjinvalidoexceptionjava)           |   [Exceptions](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Exceptions.md)   |
+|            [CpfInvalidoException.java](#cpfinvalidoexceptionjava)            |        [Infra](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Infra.md)        |
+|   [EmpresaNaoEncontradaException.java](#empresanaoencontradaexceptionjava)   |        [Kafka](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Kafka.md)        |
+|        [EmpresaRegistroException.java](#empresaregistroexceptionjava)        | [Notification](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Notification.md) |
+|         [EmpresaRemocaoException.java](#empresaremocaoexceptionjava)         |     [Services](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Services.md)     |
+|     [NotificacaoClienteException.java](#notificacaoclienteexceptionjava)     |         [Util](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Util.md)         |
+|     [NotificacaoEmpresaException.java](#notificacaoempresaexceptionjava)     |   [Validation](https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Validation.md)   |
+|      [SaldoInsuficienteException.java](#saldoinsuficienteexceptionjava)      |                                                                                                                            |
+|          [SaldoNegativoException.java](#saldonegativoexceptionjava)          |                                                                                                                            |
+|           [TaxaInvalidoException.java](#taxainvalidoexceptionjava)           |                                                                                                                            |
+|           [TaxaNegativaException.java](#taxanegativaexceptionjava)           |                                                                                                                            |
+|               [TaxaNulaException.java](#taxanulaexceptionjava)               |                                                                                                                            |
+|      [TransacaoInvalidaException.java](#transacaoinvalidaexceptionjava)      |                                                                                                                            |
+| [TransacaoNaoEncontradaException.java](#transacaonaoencontradaexceptionjava) |                                                                                                                            |
+|      [TransacaoNegativaException.java](#transacaonegativaexceptionjava)      |                                                                                                                            |
+|       [TransacaoRemocaoException.java](#transacaoremocaoexceptionjava)       |                                                                                                                            |
+|        [TransacaoZeradaException.java](#transacaozeradaexceptionjava)        |                                                                                                                            |
+| [ViolacaoConstraintCnpjException.java](#violacaoconstraintcnpjexceptionjava) |                                                                                                                            |
+|  [ViolacaoConstraintCpfException.java](#violacaoconstraintcpfexceptionjava)  |                                                                                                                            |
 
 </div>
 
@@ -251,7 +262,7 @@ try {
 
 - A classe `NotificacaoClienteException` não possui métodos adicionais além do construtor herdado da classe `RuntimeException`.
 
-## NotificacaoEmpresaException.class
+## NotificacaoEmpresaException.java
 
 A classe `NotificacaoEmpresaException` é uma exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com exceções relacionadas ao envio de notificações para uma empresa.
 
@@ -277,7 +288,7 @@ try {
 - `NotificacaoEmpresaException(Exception e)`: Construtor que recebe um objeto Exception como parâmetro e define a mensagem de erro para "Falha no envio de notificação para a empresa: " seguido da mensagem da exceção.
 - `NotificacaoEmpresaException(HttpStatusCode status)`: Construtor que recebe um objeto HttpStatusCode como parâmetro e define a mensagem de erro para "Erro ao enviar callback. Status code: " seguido do código de status.
 
-## SaldoInsuficienteException.class
+## SaldoInsuficienteException.java
 
 A classe `SaldoInsuficienteException` é uma exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com situações em que há saldo insuficiente em uma conta. A classe converte o objeto `SaldoInsuficienteDTO` em uma string JSON e a armazena como mensagem da exceção.
 
@@ -304,7 +315,7 @@ throw new SaldoInsuficienteException(saldoInsuficienteDTO);
 
 - `saldoInsuficiente`: Um campo privado e final que armazena a representação em string JSON do objeto SaldoInsuficienteDTO.
 
-## SaldoNegativoException.class
+## SaldoNegativoException.java
 
 A classe `SaldoNegativoException` é uma exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com situações em que um saldo negativo é encontrado em um sistema financeiro.
 
@@ -330,7 +341,7 @@ try {
 
 - A classe `SaldoNegativoException` herda todos os métodos da classe RuntimeException. Não define nenhum método adicional.
 
-## TaxaInvalidoException.class
+## TaxaInvalidoException.java
 
 A classe `TaxaInvalidoException` é uma exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com tipos de taxa de transação inválidos.
 
@@ -355,7 +366,7 @@ try {
 - `TaxaInvalidoException()`: Este é um método construtor que cria uma nova instância da classe TaxaInvalidoException. Ele define a mensagem de exceção como "Tipo de taxa de transação inválida. Valores esperados: DEPÓSITO ou SAQUE".
 - `TaxaInvalidoException(Exception e)`: Este é outro método construtor que cria uma nova instância da classe TaxaInvalidoException. Ele recebe uma exceção e como parâmetro e define a mensagem de exceção como "A atualização da taxa falhou: " seguido da mensagem da exceção fornecida.
 
-## TaxaNegativaException.class
+## TaxaNegativaException.java
 
 A classe `TaxaNegativaException` é uma classe de exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com situações em que um valor de taxa negativo é encontrado.
 
@@ -379,7 +390,7 @@ try {
 
 - A classe `TaxaNegativaException` não define nenhum método adicional. Ela herda todos os métodos da classe `RuntimeException`.
 
-## TaxaNulaException.class
+## TaxaNulaException.java
 
 A classe `TaxaNulaException` é uma exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com situações em que um valor de taxa é nulo.
 
@@ -403,7 +414,7 @@ try {
 
 - `TaxaNulaException(String mensagem)`: Este é o construtor da classe `TaxaNulaException`. Ele recebe uma mensagem como parâmetro e chama o construtor da superclasse RuntimeException com a mensagem fornecida.
 
-## TransacaoInvalidaException.class
+## TransacaoInvalidaException.java
 
 A classe `TransacaoInvalidaException` é uma exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com erros que ocorrem durante o processamento de transações.
 
@@ -428,7 +439,7 @@ try {
 - `TransacaoInvalidaException(String tipo, Exception e)`: Este construtor cria uma nova instância de TransacaoInvalidaException com uma mensagem que inclui o tipo de transação e a mensagem da exceção subjacente.
 - `TransacaoInvalidaException(String tipo, String mensagem, Exception e)`: Este construtor cria uma nova instância de TransacaoInvalidaException com uma mensagem personalizada que inclui o tipo de transação e uma mensagem de erro específica, juntamente com a mensagem da exceção subjacente.
 
-## TransacaoNaoEncontradaException.class
+## TransacaoNaoEncontradaException.java
 
 A classe `TransacaoNaoEncontradaException` é uma exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com situações em que uma lista de transações não pode ser encontrada.
 
@@ -454,7 +465,7 @@ try {
 - `TransacaoNaoEncontradaException(Exception e)`: Construtor que cria uma instância da exceção com uma mensagem de erro personalizada com base na exceção subjacente fornecida.
 - `TransacaoNaoEncontradaException(String mensagem)`: Construtor que cria uma instância da exceção com a mensagem de erro especificada.
 
-## TransacaoNegativaException.class
+## TransacaoNegativaException.java
 
 A classe `TransacaoNegativaException` é uma exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com casos em que o valor de uma transação é negativo.
 
@@ -475,7 +486,7 @@ throw exception;
 
 - A classe `TransacaoNegativaException` não possui métodos adicionais além do construtor padrão herdado da classe `RuntimeException`.
 
-## TransacaoRemocaoException.class
+## TransacaoRemocaoException.java
 
 A classe `TransacaoRemocaoException` é uma classe de exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com exceções relacionadas à exclusão de registros de transação.
 
@@ -500,7 +511,7 @@ try {
 - `TransacaoRemocaoException(Exception e)`: Este construtor recebe um objeto Exception como parâmetro e define a mensagem da exceção para "O registro de transação não pôde ser deletado: " seguido pela mensagem da exceção fornecida.
 - `TransacaoRemocaoException(String mensagem)`: Este construtor recebe uma mensagem de tipo String como parâmetro e define a mensagem da exceção para a mensagem fornecida.
 
-## TransacaoZeradaException.class
+## TransacaoZeradaException.java
 
 A classe `TransacaoZeradaException` é uma exceção personalizada que estende a classe `RuntimeException`. É usada para representar uma exceção que ocorre quando o valor de uma transação é zero.
 
@@ -545,7 +556,7 @@ try {
 
 - A classe `ViolacaoConstraintCnpjException` não define nenhum método adicional. Ela herda os métodos da classe `RuntimeException`.
 
-## ViolacaoConstraintCpfException.class
+## ViolacaoConstraintCpfException.java
 
 A classe `ViolacaoConstraintCpfException` é uma exceção personalizada que estende a classe `RuntimeException`. É usada para lidar com violações de uma restrição relacionada ao CPF (Cadastro de Pessoa Física) na aplicação.
 
@@ -568,3 +579,12 @@ try {
 #### Métodos
 
 - A classe `ViolacaoConstraintCpfException` não define nenhum método adicional além do construtor herdado da classe `RuntimeException`.
+
+<br>
+<br>
+
+
+
+<p align="left"><a href="https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Entities.md"><<< Anterior: Entities</a></p>
+<p align="right"><a href="https://github.com/SoSoJigsaw/Desafio_TGID/blob/main/documentacao/Sumarios%20Das%20Classes/Infra.md">Próximo: Infra >>></a></p>
+
