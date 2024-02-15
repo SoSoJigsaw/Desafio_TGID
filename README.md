@@ -27,23 +27,17 @@
   </p>
 </div>
 
-## <p align="center"> Índice </p>
+## Índice
+- [Desafio](#desafio)
+- [Requisitos (Diferenciais)](#requisitos-diferenciais)
+- [Solução](#solução)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Estrutura do Banco](#estrutura-do-banco)
+- [Manual de Uso](#manual-de-uso)
+- [Sumarização de Classes](#sumarização-de-classes)
+- [Documentação Técnica](#documentação-técnica)
+- [Sobre o desenvolvedor](#sobre-o-desenvolvedor)
 
-<div align="center">
-
-| Tópico                   |
-|--------------------------|
-| [Desafio](#desafio)                     |
-| [Requisitos (Diferenciais)](#requisitos-diferenciais) |
-| [Solução](#solução)                     |
-| [Tecnologias Utilizadas](#tecnologias-utilizadas)   |
-| [Estrutura do Banco](#estrutura-do-banco)        |
-| [Manual de Uso](#manual-de-uso)               |
-| [Sumarização de Classes](#sumarização-de-classes)   |
-| [Documentação Técnica](#documentação-técnica)      |
-| [Sobre o desenvolvedor](#sobre-o-desenvolvedor)    |
-
-</div>
 
 ## Desafio
 Criação de um sistema utilizando ao menos dois usuários (Empresa e Cliente). Tanto o CPF quanto o CNPJ precisam serem validados. Para cada Empresa, deve haver ao menos um tipo de taxa de sistema que será 
